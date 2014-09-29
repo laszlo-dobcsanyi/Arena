@@ -17,4 +17,4 @@ public:
 	void Use() { glUseProgram(this->ShaderProgram); }
 };
 
-#endif //SHDADER_H
+#endif // SHDADER_H

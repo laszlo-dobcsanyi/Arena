@@ -80,6 +80,7 @@
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -133,6 +134,7 @@
     <ClInclude Include="Hero.h" />
     <ClInclude Include="ListLockable.hpp" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Render.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="TreeLockable.hpp" />
     <ClInclude Include="Wall.h" />
@@ -141,6 +143,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Hero.cpp" />
+    <ClCompile Include="Render.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="MainWindow.cpp" />

@@ -8,6 +8,7 @@
 #include <GLFW/glfw3.h>
 
 #include "MainWindow.h"
+#include "Render.h"
 #include "InputHandler.hpp"
 
 MainWindow::MainWindow()
@@ -29,21 +30,18 @@ MainWindow::MainWindow()
 
 	glViewport(0, 0, 800, 600);
 
-	InitObjects();
+	Render* render = new Render;
 
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
 
+		render->Draw();
+
 		glfwSwapBuffers(window);
 	}
 
 	glfwTerminate();
-}
-
-void MainWindow::InitObjects()
-{
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
+	
+	delete render;
 }
