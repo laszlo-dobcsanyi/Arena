@@ -24,7 +24,7 @@ void Hero::Update(const float& _elapsed_time)
 	{
 		// Free fall
 		case Collision_Type::NONE:
-			velocity = velocity + (Vector2(-5., -.009867f)* _elapsed_time);
+			velocity = velocity + (Vector2(-1., +1.) * _elapsed_time);
 			break;
 
 		case Collision_Type::RIGHT:
@@ -50,7 +50,6 @@ void Hero::Update(const float& _elapsed_time)
 void Hero::Report()
 {
 	std::cout << "Hero C [" << center.x << ":" << center.y << "] V [" << velocity.x << ":" << velocity.y << "]" << std::endl;
-
 }
 
 ///
@@ -67,4 +66,6 @@ void Hero::Collision_Wall(boost::shared_ptr< Wall > _other, const Collision_Type
 
 	//velocity = Vector2(0., 0.);
 	updated_center = center;
+
+	std::cout << "Hero COLLISION: " << _type << " : C [" << center.x << ":" << center.y << "] V [" << velocity.x << ":" << velocity.y << "]" << std::endl;
 }
