@@ -10,8 +10,19 @@
 
 class MainWindow
 {
-	public:
-		MainWindow();
+public:
+	MainWindow();
+
+	void InitObjects();
+
+	GLuint& GetVAO() { return VAO; }
+	GLuint& GetVBO() { return VBO; }
+	GLuint& GetEBO() { return EBO; }
+
+private:
+	GLuint VAO;
+	GLuint VBO;
+	GLuint EBO;
 };
 
 

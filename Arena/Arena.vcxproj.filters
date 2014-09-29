@@ -39,6 +39,9 @@
     <ClInclude Include="Arena.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="InputHandler.hpp">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
