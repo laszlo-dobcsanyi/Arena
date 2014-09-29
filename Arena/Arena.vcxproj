@@ -66,8 +66,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>F:\Git\Arena\OpenGL includes;F:\Programming\Boost\boost_1_56_0;D:\boost_1_56_0;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Git\Arena\OpenGL libs;F:\Programming\Boost\boost_1_56_0\stage\lib;D:\boost_1_56_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Git\Arena\OpenGL includes;F:\Git\Arena\OpenGL includes;F:\Programming\Boost\boost_1_56_0;D:\boost_1_56_0;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Git\Arena\OpenGL libs;F:\Git\Arena\OpenGL libs;F:\Programming\Boost\boost_1_56_0\stage\lib;D:\boost_1_56_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>D:\Git\Arena\OpenGL includes;D:\boost_1_56_0;$(IncludePath)</IncludePath>
