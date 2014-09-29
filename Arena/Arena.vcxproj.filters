@@ -10,6 +10,9 @@
     <Filter Include="Game">
       <UniqueIdentifier>{4de0c1b1-6adc-40f1-9bc5-7e2ba61d98ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{2d4b03ac-4a90-405b-9efc-aad3a5efac6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Hero.h">
@@ -27,9 +30,11 @@
     <ClInclude Include="TreeLockable.hpp">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="MainWindow.h" />
-    <ClInclude Include="Game.h">
-      <Filter>Game</Filter>
+    <ClInclude Include="MainWindow.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -43,9 +48,6 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="MainWindow.cpp" />
-    <ClCompile Include="Game.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ListProcessable.hpp">
