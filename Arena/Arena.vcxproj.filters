@@ -30,6 +30,7 @@
     <ClInclude Include="TreeLockable.hpp">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="MainWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -44,6 +45,7 @@
     <ClCompile Include="Wall.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="MainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ListProcessable.hpp">

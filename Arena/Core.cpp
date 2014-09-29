@@ -1,9 +1,12 @@
 #include "Arena.h"
+#include "MainWindow.h"
 
 #define ARENA_UPDATE_INTERVAL 1./60
 
 int main()
 {
+	MainWindow window;
+
 	Arena* arena = new Arena();
 	arena->walls.Add(boost::shared_ptr< Wall >(new Wall(0., 32., 640., 0.)));
 	arena->walls.Add(boost::shared_ptr< Wall >(new Wall(0., 640., 32., 32.)));
