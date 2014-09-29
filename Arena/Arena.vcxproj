@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Arena.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Hero.h" />

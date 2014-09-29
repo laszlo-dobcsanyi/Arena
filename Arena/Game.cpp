@@ -1,7 +1,9 @@
 #include "Game.h"
 
+#include "Arena.h"
+
 Game::Game()
-: objects(new Object(Vector2(0, 0), 0, 0))
+	: objects(new Arena())
 {
 
 }
