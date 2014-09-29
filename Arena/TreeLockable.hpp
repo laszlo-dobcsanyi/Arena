@@ -10,14 +10,14 @@ template< class T >
 class TreeLockable_Node
 {
 public:
-	T* value = 0;
+	T value = 0;
 	TreeLockable_Node< T >* child = 0;
 	TreeLockable_Node< T >* next = 0;
 
-	TreeLockable_Node(T* _value) : value(_value), child(0), next(0) { };
+	TreeLockable_Node(T _value) : value(_value), child(0), next(0) { };
 	~TreeLockable_Node() { };
 
-	TreeLockable_Node< T >* Add(T* _element)
+	TreeLockable_Node< T >* Add(T _element)
 	{
 		if (!child)
 		{
@@ -28,12 +28,12 @@ public:
 		{
 			TreeLockable_Node< T >* current = child;
 			while (current->next) { current = current->next; }
-			curent->next = new TreeLockable_Node< T >(_element);
+			current->next = new TreeLockable_Node< T >(_element);
 			return current->next;
 		}
 	}
 
-	TreeLockable_Node< T >* Remove(T* _element, TreeLockable< T >* _tree)
+	TreeLockable_Node< T >* Remove(T _element, TreeLockable< T >* _tree)
 	{
 		if (!child) return;
 
@@ -71,8 +71,11 @@ class TreeLockable
 public:
 	TreeLockable_Node< T >* base = 0;
 
-	TreeLockable(T* _value) : base(new TreeLockable_Node< T >(_value)) { };
+	TreeLockable(T _value) : base(new TreeLockable_Node< T >(_value)) { };
 	~TreeLockable() { };
+
+	TreeLockable_Node< T >* Add(T _element) { return base->Add(_element); }
+	TreeLockable_Node< T >* Remove(T _element) { return base->Remove(_element); }
 
 private:
 	TreeLockable(const TreeLockable& _other);

@@ -9,7 +9,7 @@ public:
 	Arena() : Object(Vector2(0., 0.), 0., 0.) { }
 	~Arena() { }
 
-	void Update(const float& _elapsed_time) { updated_center = center + velocity; }
+	void Update(const float& _elapsed_time) { }
 	void Report() { }
 
 private:
