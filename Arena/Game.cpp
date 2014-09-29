@@ -1,18 +1,21 @@
+#include "Game.h"
+
 #include "Arena.h"
 
-Arena::Arena()
+Game::Game()
+	: objects(new Arena())
 {
 
 }
 
-Arena::~Arena()
+Game::~Game()
 {
 
 }
 
 //
 
-void Arena::Update(const float& _elapsed_time)
+void Game::Update(const float& _elapsed_time)
 {
 	heroes.Process_Adding();
 

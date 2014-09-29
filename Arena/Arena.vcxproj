@@ -127,6 +127,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Arena.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="ListLockable.hpp" />
@@ -136,7 +137,7 @@
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Arena.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Shader.cpp" />

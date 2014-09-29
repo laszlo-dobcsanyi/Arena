@@ -1,16 +1,16 @@
-#include "Arena.h"
+#include "Game.h"
 #include "MainWindow.h"
 
-#define ARENA_UPDATE_INTERVAL 1./60
+#define Game_UPDATE_INTERVAL 1./60
 
 int main()
 {
 	MainWindow window;
 
-	Arena* arena = new Arena();
-	arena->walls.Add(boost::shared_ptr< Wall >(new Wall(0., 32., 640., 0.)));
-	arena->walls.Add(boost::shared_ptr< Wall >(new Wall(0., 640., 32., 32.)));
-	arena->heroes.Add(boost::shared_ptr< Hero >(new Hero(Vector2(320., 320.))));
+	Game* game = new Game();
+	game->walls.Add(boost::shared_ptr< Wall >(new Wall(0., 32., 640., 0.)));
+	game->walls.Add(boost::shared_ptr< Wall >(new Wall(0., 640., 32., 32.)));
+	game->heroes.Add(boost::shared_ptr< Hero >(new Hero(Vector2(320., 320.))));
 
 	float elapsed_time = 0.;
 	boost::chrono::steady_clock::time_point last_update = boost::chrono::steady_clock::now();
@@ -21,9 +21,9 @@ int main()
 		elapsed_time += difference.count();
 		last_update = now;
 
-		if (ARENA_UPDATE_INTERVAL < elapsed_time)
+		if (Game_UPDATE_INTERVAL < elapsed_time)
 		{
-			arena->Update(elapsed_time);
+			game->Update(elapsed_time);
 			elapsed_time = 0.f;
 		}
 	} while (true);

@@ -1,25 +1,19 @@
 #ifndef ARENA_H
 #define ARENA_H
 
-#include <boost\shared_ptr.hpp>
+#include "Object.h"
 
-#include "Hero.h"
-#include "Wall.h"
-#include "ListProcessable.hpp"
-
-class Arena //: listProcessable_Callback< boost::shared_ptr< Hero> >
+class Arena : public Object
 {
 public:
-	ListProcessable< boost::shared_ptr< Hero > > heroes;
-	ListLockable< boost::shared_ptr < Wall > > walls;
+	Arena() : Object(Vector2(0., 0.), 0., 0.) { }
+	~Arena() { }
 
-	Arena();
-	~Arena();
-
-	void Update(const float& _elapsed_time);
+	void Update(const float& _elapsed_time) { updated_center = center + velocity; }
+	void Report() { }
 
 private:
 	Arena(const Arena& _other);
-	Arena& operator=(const Arena&_other);
+	Arena& operator=(const Arena& _other);
 };
 #endif
