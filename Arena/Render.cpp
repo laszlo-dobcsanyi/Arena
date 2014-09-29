@@ -10,8 +10,8 @@ Render::Render()
 void Render::Draw()
 {
 	DrawBackground();
-	DrawObjects();
-	DrawModells();
+	DrawWalls();
+	DrawModels();
 	DrawProjectiles();
 }
 
@@ -20,12 +20,12 @@ void Render::DrawBackground()
 
 }
 
-void Render::DrawObjects()
+void Render::DrawWalls()
 {
 
 }
 
-void Render::DrawModells()
+void Render::DrawModels()
 {
 
 }

@@ -8,6 +8,11 @@
 //GLFW
 #include <GLFW/glfw3.h>
 
+//Na ezzel mi a faszt kezdek így
+#include "CoreObjects.hpp"
+//Ezzel meg végképp
+#include "Model.h"
+
 class Render
 {
 public:
@@ -21,8 +26,8 @@ public:
 
 private:
 	void DrawBackground();
-	void DrawObjects();
-	void DrawModells();
+	void DrawWalls();
+	void DrawModels();
 	void DrawProjectiles();
 
 	GLuint VAO;
