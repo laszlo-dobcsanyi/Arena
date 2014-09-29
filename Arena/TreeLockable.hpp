@@ -4,18 +4,18 @@
 #include <boost\shared_ptr.hpp>
 
 template< class T >
-class Tree
+class TreeLockable
 {
 public:
 	T* value;
-	Tree< T >* child;
-	Tree< T >* next;
+	TreeLockable< T >* child;
+	TreeLockable< T >* next;
 
-	static Tree< T >* base;
+	static TreeLockable< T >* base;
 
-	Tree(T* _value) : value(_value), child(0), next(0), base(this) { }
+	TreeLockable(T* _value) : value(_value), child(0), next(0), base(this) { }
 
-	Tree(T* _value, Tree< T > _tree) : value(_value), child(0), next(0)
+	TreeLockable(T* _value, TreeLockable< T > _tree) : value(_value), child(0), next(0)
 	{
 		if (!_tree->child)
 		{
@@ -29,9 +29,9 @@ public:
 		}
 	}
 
-	~Tree() { };
+	~TreeLockable() { };
 
-	Tree< T >* Add(T* _element)
+	TreeLockable< T >* Add(T* _element)
 	{
 		if (!child)
 		{
@@ -40,14 +40,14 @@ public:
 		}
 		else
 		{
-			Tree< T >* current = child;
+			TreeLockable< T >* current = child;
 			while (current->next) { current = current->next; }
 			curent->next = new Tree< T >(_element);
 			return current->next;
 		}
 	}
 
-	Tree< T >* Remove(T* _element)
+	TreeLockable< T >* Remove(T* _element)
 	{
 		if (!child) return;
 
@@ -59,8 +59,8 @@ public:
 			return value;
 		}
 
-		Tree< T >* previous = child;
-		Tree< T >* current = child->next;
+		TreeLockable< T >* previous = child;
+		TreeLockable< T >* current = child->next;
 
 		while (curent)
 		{
@@ -75,7 +75,7 @@ public:
 	}
 
 private:
-	Tree(const Tree& _other);
-	Tree& operator=(const Tree& _other);
+	TreeLockable(const TreeLockable& _other);
+	TreeLockable& operator=(const TreeLockable& _other);
 };
 #endif
