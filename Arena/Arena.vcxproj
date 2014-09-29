@@ -79,6 +79,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -130,6 +131,7 @@
     <ClInclude Include="Hero.h" />
     <ClInclude Include="ListLockable.hpp" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="TreeLockable.hpp" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
@@ -137,6 +139,7 @@
     <ClCompile Include="Arena.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Hero.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="MainWindow.cpp" />
   </ItemGroup>
