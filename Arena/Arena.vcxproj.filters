@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{faefea8b-3eb1-44e2-8e0f-009db0bedb57}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{b94ef548-355d-4579-b172-1d876d40e26e}</UniqueIdentifier>
     </Filter>
@@ -11,7 +8,7 @@
       <UniqueIdentifier>{4de0c1b1-6adc-40f1-9bc5-7e2ba61d98ce}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics">
-      <UniqueIdentifier>{2d4b03ac-4a90-405b-9efc-aad3a5efac6a}</UniqueIdentifier>
+      <UniqueIdentifier>{bf53a9e3-8585-49dc-b5bc-64584e8c7115}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -30,6 +27,9 @@
     <ClInclude Include="TreeLockable.hpp">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
     <ClInclude Include="MainWindow.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -47,7 +47,15 @@
     <ClCompile Include="Wall.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ListProcessable.hpp">
