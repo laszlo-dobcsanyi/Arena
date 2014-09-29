@@ -10,6 +10,7 @@
 #include "MainWindow.h"
 #include "Render.h"
 #include "InputHandler.hpp"
+#include "Shader.h"
 
 MainWindow::MainWindow()
 {
@@ -31,12 +32,14 @@ MainWindow::MainWindow()
 	glViewport(0, 0, 800, 600);
 
 	Render* render = new Render;
+	
+	render->InitTest();
 
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
 
-		render->Draw();
+		render->DrawTest();
 
 		glfwSwapBuffers(window);
 	}

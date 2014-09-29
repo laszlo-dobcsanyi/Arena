@@ -13,12 +13,17 @@
 //Ezzel meg végképp
 #include "Model.h"
 
+#include "Shader.h"
+
 class Render
 {
 public:
 	Render();
 
 	void Draw();
+
+	void InitTest(); // TEST
+	void DrawTest(); // TEST
 
 	GLuint& GetVAO() { return VAO; }
 	GLuint& GetVBO() { return VBO; }
@@ -33,6 +38,8 @@ private:
 	GLuint VAO;
 	GLuint VBO;
 	GLuint EBO;
+
+	Shader TestShader; // TEST
 };
 
 #endif // RENDER_H
