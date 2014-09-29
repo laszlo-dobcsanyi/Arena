@@ -27,6 +27,9 @@
     <ClInclude Include="Object.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="TreeLockable.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">

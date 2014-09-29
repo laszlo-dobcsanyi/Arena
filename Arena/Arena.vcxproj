@@ -127,6 +127,7 @@
     <ClInclude Include="Hero.h" />
     <ClInclude Include="ListLockable.hpp" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="TreeLockable.hpp" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
