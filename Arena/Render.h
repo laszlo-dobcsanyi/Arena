@@ -4,6 +4,7 @@
 // GLEW
 #define GLEW_STATIC
 #include <GL\glew.h>
+#include <vector>
 
 // GLFW
 #include <GLFW/glfw3.h>
@@ -13,12 +14,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-//Na ezzel mi a faszt kezdek így
-#include "CoreObjects.hpp"
-//Ezzel meg végképp
 #include "Model.h"
-
 #include "Shader.h"
+#include "Platform.h"
 
 class Render
 {
@@ -29,6 +27,7 @@ public:
 
 	void InitTest(); // TEST
 	void DrawTest(); // TEST
+	void AddPlatform(const float& _xPos, const float& _yPos, const float& width, const float& height); // TEST
 
 	GLuint& GetVAO() { return VAO; }
 	GLuint& GetVBO() { return VBO; }
@@ -44,7 +43,17 @@ private:
 	GLuint VBO;
 	GLuint EBO;
 
-	Shader TestShader; // TEST
+	// TEST
+	Shader TestShaderModel;
+	Shader TestShaderPlatform;
+	Model TestModel;
+	std::vector<Platform> TestPlatforms;
+	glm::mat4 TestModelMat4;
+	glm::mat4 TestViewMat4;
+	glm::mat4 TestProjectionMat4;
+	GLint TestModelLoc;
+	GLint TestViewLoc;
+	GLint TestProjLoc;
 };
 
 #endif // RENDER_H

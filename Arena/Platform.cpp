@@ -1,17 +1,17 @@
-#include "Model.h"
+#include "Platform.h"
 
-Model::Model()
+Platform::Platform()
 {
 	Load();
 }
 
-void Model::Load()
+void Platform::Load()
 {
 	LoadVertices();
 	LoadTexture();
 }
 
-void Model::LoadVertices()
+void Platform::LoadVertices()
 {
 	vertices[0] = 0.5f;
 	vertices[1] = 0.5f;
@@ -30,7 +30,7 @@ void Model::LoadVertices()
 	indices[5] = 3;
 }
 
-void Model::LoadTexture()
+void Platform::LoadTexture()
 {
 
 }

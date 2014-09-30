@@ -60,6 +60,9 @@
     <ClInclude Include="WallBlock.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -95,6 +98,9 @@
     <ClCompile Include="WallBlock.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ListProcessable.hpp">
@@ -118,10 +124,10 @@
     <None Include="Shaders\Projectile.vs">
       <Filter>Graphics\Shaders</Filter>
     </None>
-    <None Include="Shaders\Wall.frag">
+    <None Include="Shaders\Platform.frag">
       <Filter>Graphics\Shaders</Filter>
     </None>
-    <None Include="Shaders\Wall.vs">
+    <None Include="Shaders\Platform.vs">
       <Filter>Graphics\Shaders</Filter>
     </None>
   </ItemGroup>

@@ -136,6 +136,7 @@
     <ClInclude Include="ListLockable.hpp" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
@@ -149,6 +150,7 @@
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -164,8 +166,8 @@
     <None Include="Shaders\Model.vs" />
     <None Include="Shaders\Projectile.frag" />
     <None Include="Shaders\Projectile.vs" />
-    <None Include="Shaders\Wall.frag" />
-    <None Include="Shaders\Wall.vs" />
+    <None Include="Shaders\Platform.frag" />
+    <None Include="Shaders\Platform.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
