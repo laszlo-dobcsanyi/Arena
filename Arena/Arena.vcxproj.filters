@@ -10,6 +10,9 @@
     <Filter Include="Graphics">
       <UniqueIdentifier>{bf53a9e3-8585-49dc-b5bc-64584e8c7115}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Shaders">
+      <UniqueIdentifier>{805ced59-a7b3-49ce-ab05-b4a278e3fbd6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Hero.h">
@@ -96,6 +99,30 @@
   <ItemGroup>
     <None Include="ListProcessable.hpp">
       <Filter>Core</Filter>
+    </None>
+    <None Include="Shaders\Background.frag">
+      <Filter>Graphics\Shaders</Filter>
+    </None>
+    <None Include="Shaders\Background.vs">
+      <Filter>Graphics\Shaders</Filter>
+    </None>
+    <None Include="Shaders\Model.frag">
+      <Filter>Graphics\Shaders</Filter>
+    </None>
+    <None Include="Shaders\Model.vs">
+      <Filter>Graphics\Shaders</Filter>
+    </None>
+    <None Include="Shaders\Projectile.frag">
+      <Filter>Graphics\Shaders</Filter>
+    </None>
+    <None Include="Shaders\Projectile.vs">
+      <Filter>Graphics\Shaders</Filter>
+    </None>
+    <None Include="Shaders\Wall.frag">
+      <Filter>Graphics\Shaders</Filter>
+    </None>
+    <None Include="Shaders\Wall.vs">
+      <Filter>Graphics\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

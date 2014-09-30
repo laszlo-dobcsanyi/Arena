@@ -158,6 +158,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ListProcessable.hpp" />
+    <None Include="Shaders\Background.frag" />
+    <None Include="Shaders\Background.vs" />
+    <None Include="Shaders\Model.frag" />
+    <None Include="Shaders\Model.vs" />
+    <None Include="Shaders\Projectile.frag" />
+    <None Include="Shaders\Projectile.vs" />
+    <None Include="Shaders\Wall.frag" />
+    <None Include="Shaders\Wall.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
