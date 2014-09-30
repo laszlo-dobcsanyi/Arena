@@ -20,7 +20,7 @@ void WallBlock::Finalize()
 		if ((*current)->center.y - (*current)->height < p2.y)	p2.y = (*current)->center.y - (*current)->height;
 	}
 
-	center = Vector2((p2.x - p1.x) / 2., (p1.y - p2.y) / 2);
-	width = center.x - p1.x;
-	height = center.y - p2.y;
+	center = Vector2((p2.x - p1.x) / 2.f, (p1.y - p2.y) / 2.f);
+	width = center.x - p1.x + 32;
+	height = center.y - p2.y + 32;
 }
