@@ -1,4 +1,7 @@
 #include "Game.h"
+
+#include <boost\chrono.hpp>
+
 #include "MainWindow.h"
 
 #include <boost\chrono.hpp>

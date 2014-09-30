@@ -1,15 +1,12 @@
 #ifndef Game_H
 #define Game_H
 
-#include <boost\shared_ptr.hpp>
-
-#include "TreeLockable.hpp"
-#include "Object.h"
+#include "Arena.h"
 
 class Game
 {
 public:
-	TreeLockable< boost::shared_ptr< Object > > objects;
+	Arena arena;
 
 	Game();
 	~Game();

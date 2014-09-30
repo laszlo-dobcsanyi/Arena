@@ -18,26 +18,21 @@ struct Vector2
 enum Collision_Type
 {
 	NONE	= 0,
-	RIGHT	= 1,
-	TOP		= 2,
-	LEFT	= 3,
-	BOTTOM	= 4
+	INSIDE	= 1,
+	RIGHT	= 2,
+	TOP		= 3,
+	LEFT	= 4,
+	BOTTOM	= 5
 };
 
 class Object
 {
 public:
-	boost::shared_ptr< Object > base;
-	Collision_Type base_type;
-
 	float width, height;
-	Vector2 center, updated_center, velocity;
+	Vector2 center, updated_center, velocity;;
 
-	Object(const Vector2& _center, const float& _width, const float& _height) : center(_center), width(_width), height(_height), updated_center(_center), velocity(0., 0.), base(0), base_type(Collision_Type::NONE) { }
+	Object(const Vector2& _center, const float& _width, const float& _height) : center(_center), width(_width), height(_height), updated_center(_center), velocity(0., 0.) { }
 	~Object() {  };
-
-	virtual void Update(const float& _elapsed_time) { updated_center = center + velocity; }
-	virtual void Report() = 0;
 
 	Collision_Type Collide(const Object& _other)
 	{
@@ -57,29 +52,32 @@ public:
 		Vector2 ur_p1(_other.updated_center.x - _other.width, _other.updated_center.y + _other.height);
 		Vector2 ur_p2(_other.updated_center.x + _other.width, _other.updated_center.y - _other.height);
 
+		// case 0:
+		if (my_p1.x <= _other.updated_center.x && _other.updated_center.x <= my_p2.x	&&	my_p2.y <= _other.updated_center.y && _other.updated_center.y <= my_p1.y) return Collision_Type::INSIDE;
+
 		// case 1:
-		if (my_p2.x < _other.updated_center.x && my_p2.y < _other.updated_center.y && _other.updated_center.y < my_p1.y)
+		if (my_p2.x < _other.updated_center.x && my_p2.y <= _other.updated_center.y && _other.updated_center.y <= my_p1.y)
 		{
 			if (ur_p1.x < my_p2.x) return Collision_Type::RIGHT;
 			else return  Collision_Type::NONE;
 		}
 
 		// case 2:
-		if (my_p1.y < _other.updated_center.y && my_p1.x < _other.updated_center.x && _other.updated_center.x < my_p2.x)
+		if (my_p1.y < _other.updated_center.y && my_p1.x <= _other.updated_center.x && _other.updated_center.x <= my_p2.x)
 		{
 			if (ur_p2.y < my_p1.y) return Collision_Type::TOP;
 			else return  Collision_Type::NONE;
 		}
 
 		// case 3:
-		if (_other.updated_center.x < my_p1.x && my_p2.y < _other.updated_center.y && _other.updated_center.y < my_p1.y)
+		if (_other.updated_center.x < my_p1.x && my_p2.y <= _other.updated_center.y && _other.updated_center.y <= my_p1.y)
 		{
 			if (my_p1.x < ur_p2.x) return Collision_Type::LEFT;
 			else return  Collision_Type::NONE;
 		}
 
 		// case 4:
-		if (_other.updated_center.y < my_p2.y && my_p1.x < _other.updated_center.x && _other.updated_center.x < my_p2.x)
+		if (_other.updated_center.y < my_p2.y && my_p1.x <= _other.updated_center.x && _other.updated_center.x <= my_p2.x)
 		{
 			if (my_p2.x < ur_p1.x) return Collision_Type::BOTTOM;
 			else return  Collision_Type::NONE;
@@ -99,7 +97,7 @@ public:
 			return Collision_Type::NONE;
 		}
 
-		// case6:
+		// case 6:
 		if (_other.updated_center.x < my_p1.x && my_p1.y < _other.updated_center.y)
 		{
 			if (my_p1.x < ur_p2.x && my_p1.y < ur_p2.y)
@@ -113,7 +111,7 @@ public:
 			return Collision_Type::NONE;
 		}
 
-		// case7:
+		// case 7:
 		if (_other.updated_center.x < my_p1.x && _other.updated_center.y < my_p2.y)
 		{
 			if (my_p1.x < ur_p2.x && my_p2.y < ur_p1.y)
@@ -127,7 +125,7 @@ public:
 			return Collision_Type::NONE;
 		}
 
-		// case8:
+		// case 8:
 		if ( my_p2.x < _other.updated_center.x && _other.updated_center.y < my_p2.y)
 		{
 			if (ur_p1.x < my_p2.x && my_p2.y < ur_p1.y)
@@ -141,7 +139,6 @@ public:
 			return Collision_Type::NONE;
 		}
 
-		// TODO CENTER?
 		return Collision_Type::NONE;
 	}
 

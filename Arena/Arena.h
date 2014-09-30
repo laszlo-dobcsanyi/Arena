@@ -1,16 +1,25 @@
 #ifndef ARENA_H
 #define ARENA_H
 
-#include "Object.h"
+#include <string>
+#include <forward_list>
 
-class Arena : public Object
+#include <boost\shared_ptr.hpp>
+
+class Hero;
+class WallBlock;
+
+class Arena
 {
 public:
-	Arena() : Object(Vector2(0., 0.), 0., 0.) { }
-	~Arena() { }
+	std::forward_list< boost::shared_ptr< Hero > > heroes;
+	std::forward_list< boost::shared_ptr< WallBlock > > blocks;
 
-	void Update(const float& _elapsed_time) { }
-	void Report() { }
+	Arena(const int& _seed);
+	Arena(const std::string& _file);
+	~Arena();
+
+	void Update(const float& _elapsed_time);
 
 private:
 	Arena(const Arena& _other);
