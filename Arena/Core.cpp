@@ -6,7 +6,7 @@
 
 #include <boost\chrono.hpp>
 
-#define Game_UPDATE_INTERVAL 1./60
+#define GAME_UPDATE_INTERVAL 1./60
 
 int main()
 {
