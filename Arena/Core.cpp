@@ -1,11 +1,8 @@
+#include <boost\chrono.hpp>
+
 #include "Game.h"
-
-#include <boost\chrono.hpp>
-
-#include "MainWindow.h"
 #include "Render.h"
-
-#include <boost\chrono.hpp>
+#include "MainWindow.h"
 
 #define GAME_UPDATE_INTERVAL 1./60
 
