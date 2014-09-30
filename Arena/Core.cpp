@@ -3,6 +3,7 @@
 #include <boost\chrono.hpp>
 
 #include "MainWindow.h"
+#include "Render.h"
 
 #include <boost\chrono.hpp>
 
@@ -10,7 +11,7 @@
 
 int main()
 {
-	MainWindow window;
+	MainWindow mainWindow;
 
 	Game* game = new Game();
 
@@ -28,7 +29,15 @@ int main()
 			game->Update(elapsed_time);
 			elapsed_time = 0.f;
 		}
-	} while (true);
+		
+		//DRAW
+		glfwPollEvents();
 
+		mainWindow.GetRender()->DrawTest();
+
+		glfwSwapBuffers(mainWindow.GetWindow());
+	} while (!glfwWindowShouldClose(mainWindow.GetWindow()));
+
+	mainWindow.DeleteWindow();
 	return 0;
 }

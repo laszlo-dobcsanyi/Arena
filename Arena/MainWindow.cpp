@@ -20,7 +20,7 @@ MainWindow::MainWindow()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Game", nullptr, nullptr);
+	window = glfwCreateWindow(800, 600, "Game", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 
 	glfwSetKeyCallback(window, &InputHandler::KeyCallback);
@@ -31,20 +31,14 @@ MainWindow::MainWindow()
 
 	glViewport(0, 0, 800, 600);
 
-	Render* render = new Render;
+	render = new Render();
 	
 	render->InitTest();
+}
 
-	while (!glfwWindowShouldClose(window))
-	{
-		glfwPollEvents();
-
-		render->DrawTest();
-
-		glfwSwapBuffers(window);
-	}
-
+void MainWindow::DeleteWindow()
+{
 	glfwTerminate();
-	
+
 	delete render;
 }

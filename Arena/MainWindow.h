@@ -8,10 +8,20 @@
 // GLFW
 #include <GLFW/glfw3.h>
 
+class Render;
+
 class MainWindow
 {
 public:
 	MainWindow();
+	
+	GLFWwindow* const GetWindow() { return window; }
+	Render* const GetRender() { return render; }
+	void DeleteWindow();
+
+private:
+	Render* render;
+	GLFWwindow* window;
 };
 
 
