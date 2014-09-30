@@ -141,8 +141,10 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TreeLockable.hpp" />
     <ClInclude Include="Wall.h" />
+    <ClInclude Include="WallBlock.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Arena.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Hero.cpp" />

@@ -10,6 +10,9 @@ class Wall;
 class Hero : public Object
 {
 public:
+	boost::shared_ptr< Wall > base = 0;
+	Collision_Type base_type = Collision_Type::NONE;
+
 	Hero(const Vector2& _center);
 	~Hero();
 
@@ -17,7 +20,7 @@ public:
 	void Report();
 
 	void Collision_Hero(boost::shared_ptr< Hero > _other, const Collision_Type& _type);
-	void Collision_Wall(boost::shared_ptr< Wall > _other, const Collision_Type& _type);
+	void Collision_Wall(boost::shared_ptr< Wall > _wall, const Collision_Type& _type);
 
 private:
 	Hero(const Hero& _other);
