@@ -69,6 +69,22 @@ void Render::DrawTest()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	TestShader.Use();
+
+	glm::mat4 model;
+	glm::mat4 view;
+	glm::mat4 projection;
+	model = glm::scale(model, glm::vec3(0.1f, 0.1f, 1.0f));
+	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -2.0f));
+	projection = glm::perspective(45.0f, 1.0f, 0.1f, 1000.0f);
+
+	GLint modelLoc = glGetUniformLocation(TestShader.ShaderProgram, "model");
+	GLint viewLoc = glGetUniformLocation(TestShader.ShaderProgram, "view");
+	GLint projLoc = glGetUniformLocation(TestShader.ShaderProgram, "projection");
+
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);

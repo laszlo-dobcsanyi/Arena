@@ -4,6 +4,7 @@
 #include <boost\shared_ptr.hpp>
 
 #include "TreeLockable.hpp"
+#include "Object.h"
 
 class Game
 {

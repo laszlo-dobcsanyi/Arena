@@ -1,12 +1,17 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-//GLEW
+// GLEW
 #define GLEW_STATIC
 #include <GL\glew.h>
 
-//GLFW
+// GLFW
 #include <GLFW/glfw3.h>
+
+// GLM
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 //Na ezzel mi a faszt kezdek így
 #include "CoreObjects.hpp"
