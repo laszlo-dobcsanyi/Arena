@@ -21,6 +21,6 @@ void WallBlock::Finalize()
 	}
 
 	center = Vector2((p2.x - p1.x) / 2.f, (p1.y - p2.y) / 2.f);
-	width = center.x - p1.x;
-	height = center.y - p2.y;
+	width = center.x - p1.x + 32;
+	height = center.y - p2.y + 32;
 }
