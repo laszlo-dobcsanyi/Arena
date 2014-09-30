@@ -23,7 +23,7 @@ int main()
 		elapsed_time += difference.count();
 		last_update = now;
 
-		if (Game_UPDATE_INTERVAL < elapsed_time)
+		if (GAME_UPDATE_INTERVAL < elapsed_time)
 		{
 			game->Update(elapsed_time);
 			elapsed_time = 0.f;
