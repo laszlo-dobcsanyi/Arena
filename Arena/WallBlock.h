@@ -16,6 +16,7 @@ public:
 	WallBlock() : Object(Vector2(0., 0.), 0., 0.) { }
 	~WallBlock() { }
 
+	void Add(boost::shared_ptr< Wall > _wall);
 	void Finalize();
 
 private:

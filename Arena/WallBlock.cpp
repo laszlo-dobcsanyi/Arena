@@ -4,6 +4,12 @@
 
 #include "Wall.h"
 
+void WallBlock::Add(boost::shared_ptr< Wall > _wall)
+{
+	walls.push_front(_wall);
+	_wall->block = this;
+}
+
 void WallBlock::Finalize()
 {
 	std::forward_list< boost::shared_ptr< Wall > >::const_iterator current = walls.cbegin();

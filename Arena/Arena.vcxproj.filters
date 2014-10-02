@@ -95,6 +95,9 @@
     <ClCompile Include="WallBlock.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ListProcessable.hpp">

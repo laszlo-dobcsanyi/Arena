@@ -27,10 +27,10 @@ void Wall::Collision_Hero(boost::shared_ptr< Hero > _hero, const Collision_Type&
 {
 	switch (_type)
 	{
-		case Collision_Type::RIGHT:		_hero->updated_center.x = center.x + width	+ _hero->width;		break;
-		case Collision_Type::TOP:		_hero->updated_center.y = center.y + height	+ _hero->height;	break;
-		case Collision_Type::LEFT:		_hero->updated_center.x = center.x - width	- _hero->width;		break;
-		case Collision_Type::BOTTOM:	_hero->updated_center.y = center.y - height	- _hero->height;	break;
+		case Collision_Type::RIGHT:		_hero->updated_center.x = center.x + width + _hero->width;		_hero->velocity.x = 0.;	break;
+		case Collision_Type::TOP:		_hero->updated_center.y = center.y + height + _hero->height;	_hero->velocity.y = 0.; break;
+		case Collision_Type::LEFT:		_hero->updated_center.x = center.x - width - _hero->width;		_hero->velocity.x = 0.;	break;
+		case Collision_Type::BOTTOM:	_hero->updated_center.y = center.y - height - _hero->height;	_hero->velocity.y = 0.; break;
 		default:						std::cout << "# Collision failed!" << std::endl;
 	}
 }

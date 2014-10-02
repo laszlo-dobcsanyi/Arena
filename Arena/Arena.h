@@ -24,5 +24,7 @@ public:
 private:
 	Arena(const Arena& _other);
 	Arena& operator=(const Arena& _other);
+
+	template <class T> void Update_WallBlock(boost::shared_ptr< Hero > _hero, T _block);
 };
 #endif
