@@ -53,15 +53,15 @@ Shader::Shader(const GLchar* _vertexPath, const GLchar* _fragmentPath)
 		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << '\n';
 	}
 
-	this->ShaderProgram = glCreateProgram();
-	glAttachShader(this->ShaderProgram, vertex);
-	glAttachShader(this->ShaderProgram, fragment);
-	glLinkProgram(this->ShaderProgram);
+	this->shaderProgram = glCreateProgram();
+	glAttachShader(this->shaderProgram, vertex);
+	glAttachShader(this->shaderProgram, fragment);
+	glLinkProgram(this->shaderProgram);
 
-	glGetProgramiv(this->ShaderProgram, GL_LINK_STATUS, &success);
+	glGetProgramiv(this->shaderProgram, GL_LINK_STATUS, &success);
 	if (!success)
 	{
-		glGetProgramInfoLog(this->ShaderProgram, 512, NULL, infoLog);
+		glGetProgramInfoLog(this->shaderProgram, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << '\n';
 	}
 

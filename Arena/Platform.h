@@ -9,9 +9,6 @@ class Platform
 public:
 	Platform();
 
-	GLfloat vertices[8];
-	GLuint indices[6];
-
 	float& GetXPos() { return xPos; }
 	float& GetYPos() { return yPos; }
 	float& GetWidth() { return width; }

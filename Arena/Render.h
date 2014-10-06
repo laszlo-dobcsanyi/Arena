@@ -17,6 +17,7 @@
 #include "Model.h"
 #include "Shader.h"
 #include "Platform.h"
+#include "Camera.h"
 
 class Render
 {
@@ -28,6 +29,7 @@ public:
 	void InitTest(); // TEST
 	void DrawTest(); // TEST
 	void AddPlatform(const float& _xPos, const float& _yPos, const float& width, const float& height); // TEST
+	void AddModel(const float& _xPos, const float& _yPos); // TEST
 
 	GLuint& GetVAO() { return VAO; }
 	GLuint& GetVBO() { return VBO; }
@@ -44,16 +46,19 @@ private:
 	GLuint EBO;
 
 	// TEST
-	Shader TestShaderModel;
-	Shader TestShaderPlatform;
-	Model TestModel;
-	std::vector<Platform> TestPlatforms;
-	glm::mat4 TestModelMat4;
-	glm::mat4 TestViewMat4;
-	glm::mat4 TestProjectionMat4;
-	GLint TestModelLoc;
-	GLint TestViewLoc;
-	GLint TestProjLoc;
+	GLfloat vertices[8];
+	GLuint indices[6];
+	Shader shaderModel;
+	Shader shaderPlatform;
+	Model model;
+	std::vector<Platform> platformsVector;
+	std::vector<Model> modelsVector;
+	glm::mat4 modelMatrix;
+	glm::mat4 viewMatrix;
+	glm::mat4 projectionMatrix;
+	GLint modelLoc;
+	GLint viewLoc;
+	GLint projLoc;
 };
 
 #endif // RENDER_H

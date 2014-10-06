@@ -63,6 +63,9 @@
     <ClInclude Include="Platform.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -99,6 +102,9 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Platform.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
