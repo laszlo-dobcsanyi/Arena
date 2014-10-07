@@ -12,6 +12,7 @@ class WallBlock;
 class Arena
 {
 public:
+	boost::shared_ptr< Hero > character;
 	std::forward_list< boost::shared_ptr< Hero > > heroes;
 	std::forward_list< boost::shared_ptr< WallBlock > > blocks;
 
