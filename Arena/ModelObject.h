@@ -1,13 +1,13 @@
-#ifndef PLATFORM_H
-#define PLATFORM_H
+#ifndef MODELOBJECT_H
+#define MODELOBJECT_H
 
-//GLFW
-#include <GLFW/glfw3.h>
+#define HERO_WIDTH			64
+#define HERO_HEIGHT			64
 
-class Platform
+class ModelObject
 {
 public:
-	Platform();
+	ModelObject();
 
 	float& GetXPos() { return xPos; }
 	float& GetYPos() { return yPos; }
@@ -20,8 +20,6 @@ public:
 	void SetHeight(const float& _height) { height = _height; }
 
 private:
-	void Load();
-	void LoadVertices();
 	void LoadTexture();
 
 	float xPos;
@@ -30,4 +28,4 @@ private:
 	float height;
 };
 
-#endif // PLATFORM_H
+#endif // MODELOBJECT_H

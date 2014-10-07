@@ -54,14 +54,14 @@ Shader::Shader(const GLchar* _vertexPath, const GLchar* _fragmentPath)
 	}
 
 	this->shaderProgram = glCreateProgram();
-	glAttachShader(this->shaderProgram, vertex);
-	glAttachShader(this->shaderProgram, fragment);
-	glLinkProgram(this->shaderProgram);
+	glAttachShader(shaderProgram, vertex);
+	glAttachShader(shaderProgram, fragment);
+	glLinkProgram(shaderProgram);
 
-	glGetProgramiv(this->shaderProgram, GL_LINK_STATUS, &success);
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
 	if (!success)
 	{
-		glGetProgramInfoLog(this->shaderProgram, 512, NULL, infoLog);
+		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << '\n';
 	}
 

@@ -14,7 +14,7 @@ public:
 
 	Shader(const GLchar* _vertexPath, const GLchar* _fragmentPath);
 
-	void Use() { glUseProgram(this->shaderProgram); }
+	void Use() { glUseProgram(shaderProgram); }
 };
 
 #endif // SHDADER_H

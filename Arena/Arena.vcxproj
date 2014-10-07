@@ -129,15 +129,13 @@
   <ItemGroup>
     <ClInclude Include="Arena.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="CoreObjects.hpp" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputHandler.hpp" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="ListLockable.hpp" />
-    <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelObject.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="Platform.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
@@ -151,8 +149,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Hero.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />

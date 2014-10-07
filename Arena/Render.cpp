@@ -1,8 +1,11 @@
+#include <boost/foreach.hpp>
+
 #include "Render.h"
+#include "ModelObject.h"
 
 Render::Render() :	shaderModel("Shaders\\Model.vs", "Shaders\\Model.frag"),
 					shaderPlatform("Shaders\\Platform.vs", "Shaders\\Platform.frag"),
-					model()
+					modelMainShape()
 {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -37,41 +40,24 @@ void Render::DrawProjectiles()
 
 }
 
-//TEST
-void Render::InitTest()
+void Render::InitRender()
 {
 	glBindVertexArray(VAO);
 
-	vertices[0] = 0.5f;
-	vertices[1] = 0.5f;
-	vertices[2] = 0.5f;
-	vertices[3] = -0.5f;
-	vertices[4] = -0.5f;
-	vertices[5] = -0.5f;
-	vertices[6] = -0.5f;
-	vertices[7] = 0.5f;
-
-	indices[0] = 0;
-	indices[1] = 1;
-	indices[2] = 3;
-	indices[3] = 1;
-	indices[4] = 2;
-	indices[5] = 3;
-
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(modelMainShape.vertices), modelMainShape.vertices, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(modelMainShape.indices), modelMainShape.indices, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0);
 
-	AddModel(1.0f, 1.0f);
-	AddPlatform(0.0f, 0.0f, 0.5f, 0.5f);
-	AddPlatform(-2.0f, -3.0f, 0.1f, 0.6f);
+	AddHero(1.0f, 1.0f);
+	AddWall(0.0f, 2.0f, 3.0f, 0.5f);
+	AddWall(-2.0f, -3.0f, 0.1f, 0.6f);
 }
 
 void Render::DrawTest()
@@ -96,11 +82,11 @@ void Render::DrawTest()
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
-	for (unsigned int i = 0; i < modelsVector.size(); ++i)
+	BOOST_FOREACH(boost::shared_ptr < ModelObject > hero, heroes)
 	{
 		modelMatrix = glm::mat4();
 
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(modelsVector[i].GetXPos(), modelsVector[i].GetYPos(), -10.0f));
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(hero->GetXPos(), hero->GetYPos(), -10.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -116,11 +102,11 @@ void Render::DrawTest()
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
-	for (unsigned int i = 0; i < platformsVector.size(); ++i)
+	BOOST_FOREACH(boost::shared_ptr < ModelObject > wall, walls)
 	{
 		modelMatrix = glm::mat4();
 
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(platformsVector[i].GetXPos(), platformsVector[i].GetYPos(), -10.0f)) * glm::scale(modelMatrix, glm::vec3(platformsVector[i].GetWidth(), platformsVector[i].GetHeight(), 1.0f));
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(wall->GetXPos(), wall->GetYPos(), -10.0f)) * glm::scale(modelMatrix, glm::vec3(wall->GetWidth(), wall->GetHeight(), 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -129,24 +115,26 @@ void Render::DrawTest()
 	glBindVertexArray(0);
 }
 
-void Render::AddPlatform(const float& _xPos, const float& _yPos, const float& _width, const float& _height)
+void Render::AddHero(const float& _xPos, const float& _yPos)
 {
-	Platform addPlatform;
-	
-	addPlatform.SetXPos(_xPos);
-	addPlatform.SetYPos(_yPos);
-	addPlatform.SetWidth(_width);
-	addPlatform.SetHeight(_height);
+	boost::shared_ptr<ModelObject> addHero(new ModelObject);
 
-	platformsVector.push_back(addPlatform);
+	addHero->SetXPos(_xPos);
+	addHero->SetYPos(_yPos);
+	addHero->SetWidth(HERO_WIDTH);
+	addHero->SetHeight(HERO_HEIGHT);
+
+	heroes.push_front(addHero);
 }
 
-void Render::AddModel(const float& _xPos, const float& _yPos)
+void Render::AddWall(const float& _xPos, const float& _yPos, const float& _width, const float& _height)
 {
-	Model addModel;
+	boost::shared_ptr<ModelObject> addWall(new ModelObject);
+	
+	addWall->SetXPos(_xPos);
+	addWall->SetYPos(_yPos);
+	addWall->SetWidth(_width);
+	addWall->SetHeight(_height);
 
-	addModel.SetXPos(_xPos);
-	addModel.SetYPos(_yPos);
-
-	modelsVector.push_back(addModel);
+	walls.push_front(addWall);
 }
