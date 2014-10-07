@@ -12,34 +12,6 @@ Render::Render() :	shaderModel("Shaders\\Model.vs", "Shaders\\Model.frag"),
 	glGenBuffers(1, &EBO);
 }
 
-void Render::Draw()
-{
-	DrawBackground();
-	DrawWalls();
-	DrawModels();
-	DrawProjectiles();
-}
-
-void Render::DrawBackground()
-{
-
-}
-
-void Render::DrawWalls()
-{
-
-}
-
-void Render::DrawModels()
-{
-
-}
-
-void Render::DrawProjectiles()
-{
-
-}
-
 void Render::InitRender()
 {
 	glBindVertexArray(VAO);
@@ -60,10 +32,10 @@ void Render::InitRender()
 	AddWall(-2.0f, -3.0f, 0.1f, 0.6f);
 }
 
-void Render::DrawTest()
+void Render::Draw()
 {
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	DrawBackground();
+
 	glBindVertexArray(VAO);
 
 	viewMatrix = glm::mat4();
@@ -72,7 +44,22 @@ void Render::DrawTest()
 	//view = glm::lookAt();
 	projectionMatrix = glm::perspective(45.0f, 1.0f, 0.1f, 1000.0f);
 
-	// Draw models
+	DrawHeroes();
+	DrawWalls();
+
+	glBindVertexArray(0);
+	
+	// TODO: DrawProjectiles();
+}
+
+void Render::DrawBackground()
+{
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void Render::DrawHeroes()
+{
 	shaderModel.Use();
 
 	modelLoc = glGetUniformLocation(shaderModel.shaderProgram, "model");
@@ -91,8 +78,10 @@ void Render::DrawTest()
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
+}
 
-	// Draw platforms
+void Render::DrawWalls()
+{
 	shaderPlatform.Use();
 
 	modelLoc = glGetUniformLocation(shaderPlatform.shaderProgram, "model");
@@ -111,8 +100,6 @@ void Render::DrawTest()
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
-
-	glBindVertexArray(0);
 }
 
 void Render::AddHero(const float& _xPos, const float& _yPos)

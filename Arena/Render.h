@@ -53,9 +53,7 @@ public:
 	Render();
 
 	void Draw();
-
 	void InitRender();
-	void DrawTest(); // TEST
 	void AddHero(const float& _xPos, const float& _yPos);
 	void AddWall(const float& _xPos, const float& _yPos, const float& width, const float& height);
 
@@ -65,9 +63,9 @@ public:
 
 private:
 	void DrawBackground();
+	void DrawHeroes();
 	void DrawWalls();
-	void DrawModels();
-	void DrawProjectiles();
+	// TODO: void DrawProjectiles();
 
 	GLuint VAO;
 	GLuint VBO;
