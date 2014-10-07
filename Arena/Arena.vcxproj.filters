@@ -98,6 +98,9 @@
     <ClCompile Include="ModelObject.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ListProcessable.hpp">

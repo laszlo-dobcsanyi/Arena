@@ -150,6 +150,7 @@
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="ModelObject.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
