@@ -32,6 +32,7 @@ struct ModelMainShape
 {
 	GLfloat vertices[8];
 	GLuint indices[6];
+	GLfloat texCoords[8];
 
 	ModelMainShape()
 	{
@@ -50,6 +51,15 @@ struct ModelMainShape
 		indices[3] = 1;
 		indices[4] = 2;
 		indices[5] = 3;
+
+		texCoords[0] = 1.0f;
+		texCoords[1] = 1.0f;
+		texCoords[2] = 1.0f;
+		texCoords[3] = 0.0f;
+		texCoords[4] = 0.0f;
+		texCoords[5] = 0.0f;
+		texCoords[6] = 0.0f;
+		texCoords[7] = 1.0f;
 	}
 };
 

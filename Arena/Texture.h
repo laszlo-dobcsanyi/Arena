@@ -16,9 +16,9 @@
 class Texture
 {
 public:
-	GLuint texture;
-
 	Texture(const GLchar* _texturePath);
+
+	GLuint textureID;
 };
 
 #endif // TEXTURE_H

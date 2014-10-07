@@ -17,8 +17,6 @@ void Camera::UpdateCameraVectors(const float& _xPos, const float& _yPos) // TODO
 
 		centerVec = glm::vec3(xPos, 0.0f, 1.0f);
 		eyeVec = glm::vec3(xPos, 0.0f, 0.0f);
-
-		std::cout << "FINITO!\n";
 	}
 	else
 	{
@@ -26,10 +24,6 @@ void Camera::UpdateCameraVectors(const float& _xPos, const float& _yPos) // TODO
 
 		centerVec = glm::vec3(xPos, yPos, 1.0f);
 		eyeVec = glm::vec3(xPos, yPos, 0.0f);
-
-		std::cout << "X position: " << xPos << '\n';
-		std::cout << "Y position: " << yPos << '\n';
-		std::cout << "-----------\n";
 	}
 }
 

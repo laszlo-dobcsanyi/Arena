@@ -1,9 +1,7 @@
 #include <boost/foreach.hpp>
 
-
 #include "Render.h"
 #include "ModelObject.h"
-
 
 Render::Render() :	shaderModel("Shaders\\Model.vs", "Shaders\\Model.frag"),
 					shaderPlatform("Shaders\\Platform.vs", "Shaders\\Platform.frag"),
@@ -16,16 +14,36 @@ Render::Render() :	shaderModel("Shaders\\Model.vs", "Shaders\\Model.frag"),
 
 void Render::InitRender()
 {
+	//TODO: LoadMainModelShape();
+
 	glBindVertexArray(VAO);
 
+	GLfloat vertices[] = {
+		 1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+		 1.0f, -1.0f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+		-1.0f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
+		-1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f
+	};
+
+	GLuint indices[] = {
+		0, 1, 3,
+		1, 2, 3
+	};
+
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(modelMainShape.vertices), modelMainShape.vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(modelMainShape.indices), modelMainShape.indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+	
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(2);
 
 	glBindVertexArray(0);
 
@@ -76,6 +94,8 @@ void Render::DrawHeroes()
 
 	BOOST_FOREACH(boost::shared_ptr < ModelObject > hero, heroes)
 	{
+		glBindTexture(GL_TEXTURE_2D, hero->GetTextureID());
+
 		modelMatrix = glm::mat4();
 
 		// TEST ON
@@ -102,6 +122,7 @@ void Render::DrawWalls()
 
 	BOOST_FOREACH(boost::shared_ptr < ModelObject > wall, walls)
 	{
+		glBindTexture(GL_TEXTURE_2D, wall->GetTextureID());
 		modelMatrix = glm::mat4();
 
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(wall->GetXPos(), wall->GetYPos(), -19.0f)) * glm::scale(modelMatrix, glm::vec3(wall->GetWidth(), wall->GetHeight(), 1.0f));
@@ -119,6 +140,7 @@ void Render::AddHero(const float& _xPos, const float& _yPos)
 	addHero->SetYPos(_yPos);
 	addHero->SetWidth(HERO_WIDTH);
 	addHero->SetHeight(HERO_HEIGHT);
+	addHero->LoadTexture("Textures\\awesomeface.png");
 
 	heroes.push_front(addHero);
 }
@@ -131,6 +153,7 @@ void Render::AddWall(const float& _xPos, const float& _yPos, const float& _width
 	addWall->SetYPos(_yPos);
 	addWall->SetWidth(_width);
 	addWall->SetHeight(_height);
+	addWall->LoadTexture("Textures\\wall.png");
 
 	walls.push_front(addWall);
 }
