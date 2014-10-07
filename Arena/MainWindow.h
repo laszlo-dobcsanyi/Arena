@@ -9,7 +9,7 @@
 #include <GLFW/glfw3.h>
 
 #define WINDOW_WIDTH		1280
-#define WINDOW_HEIGHT		800
+#define WINDOW_HEIGHT		720
 
 class Render;
 
@@ -25,6 +25,9 @@ public:
 private:
 	Render* render;
 	GLFWwindow* window;
+
+	GLint windowWidth;
+	GLint windowHeight;
 };
 
 

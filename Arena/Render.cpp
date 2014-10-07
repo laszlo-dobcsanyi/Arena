@@ -27,9 +27,9 @@ void Render::InitRender()
 
 	glBindVertexArray(0);
 
-	AddHero(1.0f, 1.0f);
-	AddWall(0.0f, 2.0f, 3.0f, 0.5f);
-	AddWall(-2.0f, -3.0f, 0.1f, 0.6f);
+	AddHero(608.0f, 328.0f);
+	//AddWall(608.0f, 328.0f, 200.0f, 200.0f);
+	//AddWall(-2.0f, -3.0f, 0.1f, 0.6f);
 }
 
 void Render::Draw()
@@ -37,15 +37,12 @@ void Render::Draw()
 	DrawBackground();
 
 	glBindVertexArray(VAO);
-
-	viewMatrix = glm::mat4();
+	
 	projectionMatrix = glm::mat4();
+	projectionMatrix = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, CAMERA_VIEW_MIN_DISTANCE, CAMERA_VIEW_MAX_DISTANCE); // TODO: Get MainWindow width and height! Move this matrix to init function!
 
-	//view = glm::lookAt();
-	projectionMatrix = glm::perspective(45.0f, 1.0f, 0.1f, 1000.0f);
-
-	DrawHeroes();
 	DrawWalls();
+	DrawHeroes();
 
 	glBindVertexArray(0);
 	
@@ -73,7 +70,7 @@ void Render::DrawHeroes()
 	{
 		modelMatrix = glm::mat4();
 
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(hero->GetXPos(), hero->GetYPos(), -10.0f));
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(hero->GetXPos(), hero->GetYPos(), -10.0f)) * glm::scale(modelMatrix, glm::vec3(hero->GetWidth(), hero->GetHeight(), 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -95,7 +92,7 @@ void Render::DrawWalls()
 	{
 		modelMatrix = glm::mat4();
 
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(wall->GetXPos(), wall->GetYPos(), -10.0f)) * glm::scale(modelMatrix, glm::vec3(wall->GetWidth(), wall->GetHeight(), 1.0f));
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(wall->GetXPos(), wall->GetYPos(), -19.0f)) * glm::scale(modelMatrix, glm::vec3(wall->GetWidth(), wall->GetHeight(), 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

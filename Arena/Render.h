@@ -20,6 +20,10 @@
 #include "Shader.h"
 #include "Camera.h"
 
+#define CAMERA_ASPECT_RATIO				16.0f/9.0f
+#define CAMERA_VIEW_MIN_DISTANCE		-100.0f
+#define CAMERA_VIEW_MAX_DISTANCE		1000.0f
+
 class ModelObject;
 
 struct ModelMainShape
@@ -29,14 +33,14 @@ struct ModelMainShape
 
 	ModelMainShape()
 	{
-		vertices[0] = 0.5f;
-		vertices[1] = 0.5f;
-		vertices[2] = 0.5f;
-		vertices[3] = -0.5f;
-		vertices[4] = -0.5f;
-		vertices[5] = -0.5f;
-		vertices[6] = -0.5f;
-		vertices[7] = 0.5f;
+		vertices[0] = 1.0f;
+		vertices[1] = 1.0f;
+		vertices[2] = 1.0f;
+		vertices[3] = -1.0f;
+		vertices[4] = -1.0f;
+		vertices[5] = -1.0f;
+		vertices[6] = -1.0f;
+		vertices[7] = 1.0f;
 
 		indices[0] = 0;
 		indices[1] = 1;
@@ -74,6 +78,7 @@ private:
 	Shader shaderModel;
 	Shader shaderPlatform;
 	ModelMainShape modelMainShape;
+	Camera camera;
 	std::forward_list< boost::shared_ptr< ModelObject > > heroes;
 	std::forward_list< boost::shared_ptr< ModelObject > > walls;
 	glm::mat4 modelMatrix;

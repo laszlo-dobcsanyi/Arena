@@ -82,16 +82,6 @@ public:
 		this->updateCameraVectors();
 	}
 
-	void ProcessMouseScroll(GLfloat yoffset)
-	{
-		if (this->Zoom >= 1.0f && this->Zoom <= 45.0f)
-			this->Zoom -= yoffset;
-		if (this->Zoom <= 1.0f)
-			this->Zoom = 1.0f;
-		if (this->Zoom >= 45.0f)
-			this->Zoom = 45.0f;
-	}
-
 private:
 	void updateCameraVectors()
 	{
@@ -104,5 +94,25 @@ private:
 		this->Up = glm::normalize(glm::cross(this->Front, this->Right));
 	}
 };*/
+
+class Camera
+{
+public:
+	Camera(){}
+
+private:
+	void UpdateCameraVectors() {}
+
+	GLfloat fieldOfView;
+	glm::vec3 position;
+	glm::vec3 direction;
+
+	// TEST
+	glm::vec3 Position;
+	glm::vec3 Front;
+	glm::vec3 Up;
+	glm::vec3 Right;
+	glm::vec3 WorldUp;
+};
 
 #endif // CAMERA_H

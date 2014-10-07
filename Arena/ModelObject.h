@@ -1,8 +1,8 @@
 #ifndef MODELOBJECT_H
 #define MODELOBJECT_H
 
-#define HERO_WIDTH			64
-#define HERO_HEIGHT			64
+#define HERO_WIDTH			32.0f
+#define HERO_HEIGHT			32.0f
 
 class ModelObject
 {
