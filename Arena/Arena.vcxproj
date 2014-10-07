@@ -128,13 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Arena.h" />
-    <ClInclude Include="CoreObjects.hpp" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputHandler.hpp" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="ListLockable.hpp" />
-    <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelObject.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Shader.h" />
@@ -145,11 +145,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Arena.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Hero.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -165,8 +165,8 @@
     <None Include="Shaders\Model.vs" />
     <None Include="Shaders\Projectile.frag" />
     <None Include="Shaders\Projectile.vs" />
-    <None Include="Shaders\Wall.frag" />
-    <None Include="Shaders\Wall.vs" />
+    <None Include="Shaders\Platform.frag" />
+    <None Include="Shaders\Platform.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

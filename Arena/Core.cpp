@@ -30,7 +30,7 @@ int main()
 		//DRAW
 		glfwPollEvents();
 
-		mainWindow.GetRender()->DrawTest();
+		mainWindow.GetRender()->Draw();
 
 		glfwSwapBuffers(mainWindow.GetWindow());
 	} while (!glfwWindowShouldClose(mainWindow.GetWindow()));

@@ -1,12 +1,5 @@
 #include <iostream>
 
-//GLEW
-#define GLEW_STATIC
-#include <GL\glew.h>
-
-//GLFW
-#include <GLFW/glfw3.h>
-
 #include "MainWindow.h"
 #include "Render.h"
 #include "InputHandler.hpp"
@@ -20,7 +13,7 @@ MainWindow::MainWindow()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	window = glfwCreateWindow(800, 600, "Game", nullptr, nullptr);
+	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Game", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 
 	glfwSetKeyCallback(window, &InputHandler::KeyCallback);
@@ -29,11 +22,11 @@ MainWindow::MainWindow()
 	glewExperimental = GL_TRUE;
 	glewInit();
 
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	render = new Render();
 	
-	render->InitTest();
+	render->InitRender();
 }
 
 void MainWindow::DeleteWindow()

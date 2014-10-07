@@ -48,17 +48,17 @@
     <ClInclude Include="Render.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="CoreObjects.hpp">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="WallBlock.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelObject.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -83,9 +83,6 @@
     <ClCompile Include="Render.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -95,8 +92,11 @@
     <ClCompile Include="WallBlock.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Game</Filter>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelObject.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,10 +121,10 @@
     <None Include="Shaders\Projectile.vs">
       <Filter>Graphics\Shaders</Filter>
     </None>
-    <None Include="Shaders\Wall.frag">
+    <None Include="Shaders\Platform.frag">
       <Filter>Graphics\Shaders</Filter>
     </None>
-    <None Include="Shaders\Wall.vs">
+    <None Include="Shaders\Platform.vs">
       <Filter>Graphics\Shaders</Filter>
     </None>
   </ItemGroup>

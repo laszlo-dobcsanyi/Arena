@@ -8,6 +8,9 @@
 // GLFW
 #include <GLFW/glfw3.h>
 
+#define WINDOW_WIDTH		1280
+#define WINDOW_HEIGHT		800
+
 class Render;
 
 class MainWindow
