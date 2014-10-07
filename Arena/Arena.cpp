@@ -7,6 +7,7 @@
 #include "WallBlock.h"
 
 Arena::Arena(const int& _seed)
+: character(0)
 {
 
 }
@@ -18,6 +19,7 @@ Arena::Arena(const std::string& _file)
 	block0->Add(boost::shared_ptr< Wall >(new Wall(0., 640., 32., 32.)));
 	block0->Finalize();
 	
+	character = boost::shared_ptr< Hero >(new Vector2(320., 640.));
 	boost::shared_ptr< Hero > hero0 = boost::shared_ptr< Hero >(new Hero(Vector2(320., 320.)));
 
 	//
