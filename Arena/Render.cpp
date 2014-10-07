@@ -1,7 +1,9 @@
 #include <boost/foreach.hpp>
 
+
 #include "Render.h"
 #include "ModelObject.h"
+
 
 Render::Render() :	shaderModel("Shaders\\Model.vs", "Shaders\\Model.frag"),
 					shaderPlatform("Shaders\\Platform.vs", "Shaders\\Platform.frag"),
@@ -27,18 +29,24 @@ void Render::InitRender()
 
 	glBindVertexArray(0);
 
-	AddHero(608.0f, 328.0f);
-	//AddWall(608.0f, 328.0f, 200.0f, 200.0f);
-	//AddWall(-2.0f, -3.0f, 0.1f, 0.6f);
+	AddHero(500.0f, 500.0f);
+	AddWall(0.0f, 0.0f, 1280.0f, 100.0f);
 }
 
 void Render::Draw()
 {
+	glBindVertexArray(VAO);
+
 	DrawBackground();
 
-	glBindVertexArray(VAO);
-	
 	projectionMatrix = glm::mat4();
+
+	//TEST ON
+	boost::shared_ptr<ModelObject> firstHero = heroes.front();
+	camera.UpdateCameraVectors(firstHero->GetXPos(), firstHero->GetYPos());
+	//TEST OFF
+	
+	viewMatrix = glm::lookAt(camera.GetCenterVec(), camera.GetEyeVec(), camera.GetUpVec());
 	projectionMatrix = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, CAMERA_VIEW_MIN_DISTANCE, CAMERA_VIEW_MAX_DISTANCE); // TODO: Get MainWindow width and height! Move this matrix to init function!
 
 	DrawWalls();
@@ -69,6 +77,10 @@ void Render::DrawHeroes()
 	BOOST_FOREACH(boost::shared_ptr < ModelObject > hero, heroes)
 	{
 		modelMatrix = glm::mat4();
+
+		// TEST ON
+		hero->SetYPos(hero->GetYPos() - 1);
+		// TEST OFF
 
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(hero->GetXPos(), hero->GetYPos(), -10.0f)) * glm::scale(modelMatrix, glm::vec3(hero->GetWidth(), hero->GetHeight(), 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));

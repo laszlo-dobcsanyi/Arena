@@ -19,10 +19,10 @@ public:
 	// GLFW MouseButtonCallback
 	static void MouseButtonCallback(GLFWwindow* _window, int _key, int _action, int _mode)
 	{
-		if (_key == GLFW_MOUSE_BUTTON_1 && _action == GLFW_PRESS)
+		/*if (_key == GLFW_MOUSE_BUTTON_1 && _action == GLFW_PRESS)
 		{
 			glfwSetWindowShouldClose(_window, GL_TRUE);
-		}
+		}*/
 	}
 
 private:
