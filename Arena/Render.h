@@ -28,39 +28,10 @@ class ModelObject;
 class Camera;
 class Shader;
 
-struct ModelMainShape
+struct ModelShape
 {
-	GLfloat vertices[8];
+	GLfloat vertices[28];
 	GLuint indices[6];
-	GLfloat texCoords[8];
-
-	ModelMainShape()
-	{
-		vertices[0] = 1.0f;
-		vertices[1] = 1.0f;
-		vertices[2] = 1.0f;
-		vertices[3] = -1.0f;
-		vertices[4] = -1.0f;
-		vertices[5] = -1.0f;
-		vertices[6] = -1.0f;
-		vertices[7] = 1.0f;
-
-		indices[0] = 0;
-		indices[1] = 1;
-		indices[2] = 3;
-		indices[3] = 1;
-		indices[4] = 2;
-		indices[5] = 3;
-
-		texCoords[0] = 1.0f;
-		texCoords[1] = 1.0f;
-		texCoords[2] = 1.0f;
-		texCoords[3] = 0.0f;
-		texCoords[4] = 0.0f;
-		texCoords[5] = 0.0f;
-		texCoords[6] = 0.0f;
-		texCoords[7] = 1.0f;
-	}
 };
 
 class Render
@@ -69,7 +40,7 @@ public:
 	Render();
 
 	void Draw();
-	void InitRender();
+	void InitModelShape(const boost::shared_ptr< ModelObject > _modelObject);
 	void AddHero(const float& _xPos, const float& _yPos);
 	void AddWall(const float& _xPos, const float& _yPos, const float& width, const float& height);
 
@@ -89,7 +60,7 @@ private:
 
 	Shader shaderModel;
 	Shader shaderPlatform;
-	ModelMainShape modelMainShape;
+	ModelShape modelShape;
 	Camera camera;
 	std::forward_list< boost::shared_ptr< ModelObject > > heroes;
 	std::forward_list< boost::shared_ptr< ModelObject > > walls;

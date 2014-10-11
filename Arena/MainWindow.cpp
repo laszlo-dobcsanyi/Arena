@@ -28,8 +28,6 @@ MainWindow::MainWindow()
 	glViewport(0, 0, windowWidth, windowHeight);
 
 	render = new Render();
-	
-	render->InitRender();
 }
 
 void MainWindow::DeleteWindow()

@@ -5,50 +5,14 @@
 
 Render::Render() :	shaderModel("Shaders\\Model.vs", "Shaders\\Model.frag"),
 					shaderPlatform("Shaders\\Platform.vs", "Shaders\\Platform.frag"),
-					modelMainShape()
+					camera()
 {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
-}
-
-void Render::InitRender()
-{
-	//TODO: LoadMainModelShape();
-
-	glBindVertexArray(VAO);
-
-	GLfloat vertices[] = {
-		 1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
-		 1.0f, -1.0f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
-		-1.0f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
-		-1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f
-	};
-
-	GLuint indices[] = {
-		0, 1, 3,
-		1, 2, 3
-	};
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)0);
-	glEnableVertexAttribArray(0);
-
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(1);
-	
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(2);
-
-	glBindVertexArray(0);
 
 	AddHero(500.0f, 500.0f);
-	AddWall(0.0f, 0.0f, 1280.0f, 100.0f);
+	// AddWall(0.0f, 0.0f, 1280.0f, 100.0f);
 }
 
 void Render::Draw()
@@ -59,10 +23,10 @@ void Render::Draw()
 
 	projectionMatrix = glm::mat4();
 
-	//TEST ON
+	// TEST ON
 	boost::shared_ptr<ModelObject> firstHero = heroes.front();
 	camera.UpdateCameraVectors(firstHero->GetXPos(), firstHero->GetYPos());
-	//TEST OFF
+	// TEST OFF
 	
 	viewMatrix = glm::lookAt(camera.GetCenterVec(), camera.GetEyeVec(), camera.GetUpVec());
 	projectionMatrix = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, CAMERA_VIEW_MIN_DISTANCE, CAMERA_VIEW_MAX_DISTANCE); // TODO: Get MainWindow width and height! Move this matrix to init function!
@@ -79,6 +43,30 @@ void Render::DrawBackground()
 {
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void Render::DrawWalls()
+{
+	shaderPlatform.Use();
+
+	modelLoc = glGetUniformLocation(shaderPlatform.shaderProgram, "model");
+	viewLoc = glGetUniformLocation(shaderPlatform.shaderProgram, "view");
+	projLoc = glGetUniformLocation(shaderPlatform.shaderProgram, "projection");
+
+	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+
+	BOOST_FOREACH(boost::shared_ptr < ModelObject > wall, walls)
+	{
+		glBindTexture(GL_TEXTURE_2D, wall->GetTextureID());
+		modelMatrix = glm::mat4();
+
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(wall->GetXPos(), wall->GetYPos(), -19.0f)) * glm::scale(modelMatrix, glm::vec3(wall->GetWidth(), wall->GetHeight(), 1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+
+		InitModelShape(wall);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	}
 }
 
 void Render::DrawHeroes()
@@ -102,34 +90,97 @@ void Render::DrawHeroes()
 		hero->SetYPos(hero->GetYPos() - 1);
 		// TEST OFF
 
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(hero->GetXPos(), hero->GetYPos(), -10.0f)) * glm::scale(modelMatrix, glm::vec3(hero->GetWidth(), hero->GetHeight(), 1.0f));
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(hero->GetXPos(), hero->GetYPos(), -10.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
+		InitModelShape(hero);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
 }
 
-void Render::DrawWalls()
+void Render::InitModelShape(const boost::shared_ptr< ModelObject > _modelObject)
 {
-	shaderPlatform.Use();
+	// TOP RIGHT:
+	// Position Coords:
+	modelShape.vertices[ 0] =  1.0f;
+	modelShape.vertices[ 1] =  1.0f;
 
-	modelLoc = glGetUniformLocation(shaderPlatform.shaderProgram, "model");
-	viewLoc = glGetUniformLocation(shaderPlatform.shaderProgram, "view");
-	projLoc = glGetUniformLocation(shaderPlatform.shaderProgram, "projection");
+	// Colors:
+	modelShape.vertices[ 2] =  1.0f;
+	modelShape.vertices[ 3] =  0.0f;
+	modelShape.vertices[ 4] =  0.0f;
 
-	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
-	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+	// Texture Coords:
+	modelShape.vertices[ 5] =  1.0f;
+	modelShape.vertices[ 6] =  1.0f;
+	// ----------------------------
 
-	BOOST_FOREACH(boost::shared_ptr < ModelObject > wall, walls)
-	{
-		glBindTexture(GL_TEXTURE_2D, wall->GetTextureID());
-		modelMatrix = glm::mat4();
+	// BOTTOM RIGHT:
+	// Position Coords:
+	modelShape.vertices[ 7] =  1.0f;
+	modelShape.vertices[ 8] = -1.0f;
 
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(wall->GetXPos(), wall->GetYPos(), -19.0f)) * glm::scale(modelMatrix, glm::vec3(wall->GetWidth(), wall->GetHeight(), 1.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+	// Colors:
+	modelShape.vertices[ 9] =  0.0f;
+	modelShape.vertices[10] =  1.0f;
+	modelShape.vertices[11] =  0.0f;
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	}
+	// Texture Coords:
+	modelShape.vertices[12] =  1.0f;
+	modelShape.vertices[13] =  0.0f;
+	// ----------------------------
+
+	// BOTTOM LEFT:
+	// Position Coords:
+	modelShape.vertices[14] = -1.0f;
+	modelShape.vertices[15] = -1.0f;
+
+	// Colors:
+	modelShape.vertices[16] =  0.0f;
+	modelShape.vertices[17] =  0.0f;
+	modelShape.vertices[18] =  1.0f;
+
+	// Texture Coords:
+	modelShape.vertices[19] =  0.0f;
+	modelShape.vertices[20] =  0.0f;
+	// ----------------------------
+
+	// TOP LEFT:
+	// Position Coords:
+	modelShape.vertices[21] = -1.0f;
+	modelShape.vertices[22] =  1.0f;
+
+	// Colors:
+	modelShape.vertices[23] =  1.0f;
+	modelShape.vertices[24] =  1.0f;
+	modelShape.vertices[25] =  0.0f;
+
+	// Texture Coords:
+	modelShape.vertices[26] =  0.0f;
+	modelShape.vertices[27] =  1.0f;
+	// ----------------------------
+
+	modelShape.indices[0] = 0;
+	modelShape.indices[1] = 1;
+	modelShape.indices[2] = 3;
+	modelShape.indices[3] = 1;
+	modelShape.indices[4] = 2;
+	modelShape.indices[5] = 3;
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(modelShape.vertices), modelShape.vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(modelShape.indices), modelShape.indices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(2);
 }
 
 void Render::AddHero(const float& _xPos, const float& _yPos)

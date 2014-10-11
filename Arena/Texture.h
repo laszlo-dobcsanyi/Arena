@@ -19,6 +19,8 @@ public:
 	Texture(const GLchar* _texturePath);
 
 	GLuint textureID;
+	int width;
+	int height;
 };
 
 #endif // TEXTURE_H
