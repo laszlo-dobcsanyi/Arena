@@ -5,7 +5,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#define WINDOW_CAMERA_BOTTOM_LIMIT		328.0f // TODO: NOT CONST!
+#include "MainWindow.h"
+#include "ModelObject.h"
+
+#define WINDOW_CAMERA_BOTTOM_LIMIT		(MainWindow::GetWindowHeight() - HERO_HEIGHT) / 2.0f
 
 class Camera
 {

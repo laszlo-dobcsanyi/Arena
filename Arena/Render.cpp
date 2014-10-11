@@ -2,17 +2,20 @@
 
 #include "Render.h"
 #include "ModelObject.h"
+#include "MainWindow.h"
+#include "Shader.h"
+#include "Camera.h"
 
-Render::Render() :	shaderModel("Shaders\\Model.vs", "Shaders\\Model.frag"),
-					shaderPlatform("Shaders\\Platform.vs", "Shaders\\Platform.frag"),
-					camera()
+Render::Render() :	shaderModel(new Shader("Shaders\\Model.vs", "Shaders\\Model.frag")),
+					shaderPlatform(new Shader("Shaders\\Platform.vs", "Shaders\\Platform.frag")),
+					camera(new Camera)
 {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
 
 	projectionMatrix = glm::mat4();
-	projectionMatrix = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, CAMERA_VIEW_MIN_DISTANCE, CAMERA_VIEW_MAX_DISTANCE);
+	projectionMatrix = glm::ortho(0.0f, (float)MainWindow::GetWindowWidth(), 0.0f, (float)MainWindow::GetWindowHeight(), CAMERA_VIEW_MIN_DISTANCE, CAMERA_VIEW_MAX_DISTANCE);
 
 	AddHero(500.0f, 500.0f);
 	AddWall(0.0f, 0.0f, 1280.0f, 100.0f);
@@ -26,10 +29,10 @@ void Render::Draw()
 
 	// TEST ON
 	boost::shared_ptr<ModelObject> firstHero = heroes.front();
-	camera.UpdateCameraVectors(firstHero->GetXPos(), firstHero->GetYPos());
+	camera->UpdateCameraVectors(firstHero->GetXPos(), firstHero->GetYPos());
 	// TEST OFF
 	
-	viewMatrix = glm::lookAt(camera.GetCenterVec(), camera.GetEyeVec(), camera.GetUpVec());
+	viewMatrix = glm::lookAt(camera->GetCenterVec(), camera->GetEyeVec(), camera->GetUpVec());
 
 	DrawWalls();
 	DrawHeroes();
@@ -47,11 +50,11 @@ void Render::DrawBackground()
 
 void Render::DrawWalls()
 {
-	shaderPlatform.Use();
+	shaderPlatform->Use();
 
-	modelLoc = glGetUniformLocation(shaderPlatform.shaderProgram, "model");
-	viewLoc = glGetUniformLocation(shaderPlatform.shaderProgram, "view");
-	projLoc = glGetUniformLocation(shaderPlatform.shaderProgram, "projection");
+	modelLoc = glGetUniformLocation(shaderPlatform->shaderProgram, "model");
+	viewLoc = glGetUniformLocation(shaderPlatform->shaderProgram, "view");
+	projLoc = glGetUniformLocation(shaderPlatform->shaderProgram, "projection");
 
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
@@ -71,11 +74,11 @@ void Render::DrawWalls()
 
 void Render::DrawHeroes()
 {
-	shaderModel.Use();
+	shaderModel->Use();
 
-	modelLoc = glGetUniformLocation(shaderModel.shaderProgram, "model");
-	viewLoc = glGetUniformLocation(shaderModel.shaderProgram, "view");
-	projLoc = glGetUniformLocation(shaderModel.shaderProgram, "projection");
+	modelLoc = glGetUniformLocation(shaderModel->shaderProgram, "model");
+	viewLoc = glGetUniformLocation(shaderModel->shaderProgram, "view");
+	projLoc = glGetUniformLocation(shaderModel->shaderProgram, "projection");
 
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));

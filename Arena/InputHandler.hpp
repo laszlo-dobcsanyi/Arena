@@ -1,6 +1,7 @@
 #ifndef INPUTHANDLER_HPP
 #define INPUTHANDLER_HPP
 
+// GLFW
 #include <GLFW/glfw3.h>
 
 class InputHandler

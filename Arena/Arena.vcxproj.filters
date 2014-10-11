@@ -33,9 +33,6 @@
     <ClInclude Include="Game.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="MainWindow.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -60,6 +57,9 @@
     <ClInclude Include="ModelObject.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="MainWindow.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -73,9 +73,6 @@
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
-      <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Graphics</Filter>
@@ -100,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindom.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

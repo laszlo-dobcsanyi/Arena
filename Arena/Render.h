@@ -17,9 +17,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Shader.h"
-#include "Camera.h"
-
 #define CAMERA_ASPECT_RATIO				16.0f/9.0f
 #define CAMERA_VIEW_MIN_DISTANCE		-100.0f
 #define CAMERA_VIEW_MAX_DISTANCE		1000.0f
@@ -58,10 +55,10 @@ private:
 	GLuint VBO;
 	GLuint EBO;
 
-	Shader shaderModel;
-	Shader shaderPlatform;
+	Shader* shaderModel;
+	Shader* shaderPlatform;
+	Camera* camera;
 	ModelShape modelShape;
-	Camera camera;
 	std::forward_list< boost::shared_ptr< ModelObject > > heroes;
 	std::forward_list< boost::shared_ptr< ModelObject > > walls;
 	glm::mat4 modelMatrix;

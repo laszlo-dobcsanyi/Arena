@@ -149,13 +149,13 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Hero.cpp" />
+    <ClCompile Include="MainWindom.cpp" />
     <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Wall.cpp" />
-    <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="WallBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
