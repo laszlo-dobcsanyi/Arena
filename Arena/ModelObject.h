@@ -17,6 +17,8 @@ public:
 	float& GetWidth() { return width; }
 	float& GetHeight() { return height; }
 	GLuint& GetTextureID() { return texture->textureID; }
+	int& GetTextureWidth() { return texture->width; }
+	int& GetTextureHeight() { return texture->height; }
 
 	void SetXPos(const float& _xPos) { xPos = _xPos; }
 	void SetYPos(const float& _yPos) { yPos = _yPos; }

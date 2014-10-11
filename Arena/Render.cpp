@@ -11,8 +11,11 @@ Render::Render() :	shaderModel("Shaders\\Model.vs", "Shaders\\Model.frag"),
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
 
+	projectionMatrix = glm::mat4();
+	projectionMatrix = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, CAMERA_VIEW_MIN_DISTANCE, CAMERA_VIEW_MAX_DISTANCE);
+
 	AddHero(500.0f, 500.0f);
-	// AddWall(0.0f, 0.0f, 1280.0f, 100.0f);
+	AddWall(0.0f, 0.0f, 1280.0f, 100.0f);
 }
 
 void Render::Draw()
@@ -21,15 +24,12 @@ void Render::Draw()
 
 	DrawBackground();
 
-	projectionMatrix = glm::mat4();
-
 	// TEST ON
 	boost::shared_ptr<ModelObject> firstHero = heroes.front();
 	camera.UpdateCameraVectors(firstHero->GetXPos(), firstHero->GetYPos());
 	// TEST OFF
 	
 	viewMatrix = glm::lookAt(camera.GetCenterVec(), camera.GetEyeVec(), camera.GetUpVec());
-	projectionMatrix = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, CAMERA_VIEW_MIN_DISTANCE, CAMERA_VIEW_MAX_DISTANCE); // TODO: Get MainWindow width and height! Move this matrix to init function!
 
 	DrawWalls();
 	DrawHeroes();
@@ -61,7 +61,7 @@ void Render::DrawWalls()
 		glBindTexture(GL_TEXTURE_2D, wall->GetTextureID());
 		modelMatrix = glm::mat4();
 
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(wall->GetXPos(), wall->GetYPos(), -19.0f)) * glm::scale(modelMatrix, glm::vec3(wall->GetWidth(), wall->GetHeight(), 1.0f));
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(wall->GetXPos(), wall->GetYPos(), -10.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
 		InitModelShape(wall);
@@ -100,10 +100,15 @@ void Render::DrawHeroes()
 
 void Render::InitModelShape(const boost::shared_ptr< ModelObject > _modelObject)
 {
+	float shapeWidth = (float)(_modelObject->GetWidth());
+	float shapeHeight = (float)(_modelObject->GetHeight());
+	float textureWidthRatio = (float)(shapeWidth * 2 / _modelObject->GetTextureWidth());
+	float textureHeightRatio = (float)(shapeHeight * 2 / _modelObject->GetTextureHeight());
+
 	// TOP RIGHT:
 	// Position Coords:
-	modelShape.vertices[ 0] =  1.0f;
-	modelShape.vertices[ 1] =  1.0f;
+	modelShape.vertices[ 0] =  shapeWidth;
+	modelShape.vertices[ 1] =  shapeHeight;
 
 	// Colors:
 	modelShape.vertices[ 2] =  1.0f;
@@ -111,14 +116,14 @@ void Render::InitModelShape(const boost::shared_ptr< ModelObject > _modelObject)
 	modelShape.vertices[ 4] =  0.0f;
 
 	// Texture Coords:
-	modelShape.vertices[ 5] =  1.0f;
-	modelShape.vertices[ 6] =  1.0f;
+	modelShape.vertices[ 5] =  textureWidthRatio;
+	modelShape.vertices[ 6] =  textureHeightRatio;
 	// ----------------------------
 
 	// BOTTOM RIGHT:
 	// Position Coords:
-	modelShape.vertices[ 7] =  1.0f;
-	modelShape.vertices[ 8] = -1.0f;
+	modelShape.vertices[ 7] =  shapeWidth;
+	modelShape.vertices[ 8] = -shapeHeight;
 
 	// Colors:
 	modelShape.vertices[ 9] =  0.0f;
@@ -126,14 +131,14 @@ void Render::InitModelShape(const boost::shared_ptr< ModelObject > _modelObject)
 	modelShape.vertices[11] =  0.0f;
 
 	// Texture Coords:
-	modelShape.vertices[12] =  1.0f;
+	modelShape.vertices[12] =  textureWidthRatio;
 	modelShape.vertices[13] =  0.0f;
 	// ----------------------------
 
 	// BOTTOM LEFT:
 	// Position Coords:
-	modelShape.vertices[14] = -1.0f;
-	modelShape.vertices[15] = -1.0f;
+	modelShape.vertices[14] = -shapeWidth;
+	modelShape.vertices[15] = -shapeHeight;
 
 	// Colors:
 	modelShape.vertices[16] =  0.0f;
@@ -147,8 +152,8 @@ void Render::InitModelShape(const boost::shared_ptr< ModelObject > _modelObject)
 
 	// TOP LEFT:
 	// Position Coords:
-	modelShape.vertices[21] = -1.0f;
-	modelShape.vertices[22] =  1.0f;
+	modelShape.vertices[21] = -shapeWidth;
+	modelShape.vertices[22] =  shapeHeight;
 
 	// Colors:
 	modelShape.vertices[23] =  1.0f;
@@ -157,7 +162,7 @@ void Render::InitModelShape(const boost::shared_ptr< ModelObject > _modelObject)
 
 	// Texture Coords:
 	modelShape.vertices[26] =  0.0f;
-	modelShape.vertices[27] =  1.0f;
+	modelShape.vertices[27] =  textureHeightRatio;
 	// ----------------------------
 
 	modelShape.indices[0] = 0;

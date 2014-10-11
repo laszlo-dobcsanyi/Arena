@@ -6,7 +6,6 @@
 class InputHandler
 {
 public:
-
 	// GLFW KeyCallback
 	static void KeyCallback(GLFWwindow* _window, int _key, int _scancode, int _action, int _mode)
 	{

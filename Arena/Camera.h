@@ -19,8 +19,6 @@ public:
 	glm::vec3& GetUpVec() { return upVec; }
 
 private:
-
-
 	glm::vec3 centerVec;
 	glm::vec3 eyeVec;
 	glm::vec3 upVec;
