@@ -35,6 +35,6 @@ int main()
 		glfwSwapBuffers(mainWindow->GetWindow());
 	} while (!glfwWindowShouldClose(mainWindow->GetWindow()));
 
-	//MainWindow::DeleteWindow();
+	mainWindow->DeleteWindow();
 	return 0;
 }

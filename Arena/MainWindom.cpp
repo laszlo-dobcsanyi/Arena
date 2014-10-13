@@ -1,5 +1,5 @@
 #include "Render.h"
-#include "InputHandler.hpp"
+#include "InputHandler.h"
 #include "Shader.h"
 #include "MainWindow.h"
 
@@ -23,8 +23,8 @@ MainWindow::MainWindow()
 	window = glfwCreateWindow(windowWidth, windowHeight, "Game", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 
-	glfwSetKeyCallback(window, &InputHandler::KeyCallback);
-	glfwSetMouseButtonCallback(window, &InputHandler::MouseButtonCallback);
+	glfwSetKeyCallback(window, &InputHandler::GameKeyCallback);
+	glfwSetMouseButtonCallback(window, &InputHandler::GameMouseButtonCallback);
 
 	glewExperimental = GL_TRUE;
 	glewInit();

@@ -13,18 +13,23 @@
 class Camera
 {
 public:
-	Camera();
+	static void UpdateCameraVectors(const float& _xPos, const float& _yPos);
 
-	void UpdateCameraVectors(const float& _xPos, const float& _yPos);
-
-	glm::vec3& GetCenterVec() { return centerVec; }
-	glm::vec3& GetEyeVec() { return eyeVec; }
-	glm::vec3& GetUpVec() { return upVec; }
+	static Camera* GetCamera();
+	static glm::vec3& GetCenterVec() { return centerVec; }
+	static glm::vec3& GetEyeVec() { return eyeVec; }
+	static glm::vec3& GetUpVec() { return upVec; }
 
 private:
-	glm::vec3 centerVec;
-	glm::vec3 eyeVec;
-	glm::vec3 upVec;
+	Camera() {}
+
+	Camera(Camera const&);
+	void operator=(Camera const&);
+
+	static Camera* camera;
+	static glm::vec3 centerVec;
+	static glm::vec3 eyeVec;
+	static glm::vec3 upVec;
 };
 
 #endif // CAMERA_H

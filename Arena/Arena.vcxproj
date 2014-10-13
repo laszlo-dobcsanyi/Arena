@@ -130,7 +130,7 @@
     <ClInclude Include="Arena.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="InputHandler.hpp" />
+    <ClInclude Include="InputHandler.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="ListLockable.hpp" />
@@ -149,6 +149,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Hero.cpp" />
+    <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="MainWindom.cpp" />
     <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="Object.cpp" />

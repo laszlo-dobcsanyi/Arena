@@ -8,7 +8,7 @@
 
 Render::Render() :	shaderModel(new Shader("Shaders\\Model.vs", "Shaders\\Model.frag")),
 					shaderPlatform(new Shader("Shaders\\Platform.vs", "Shaders\\Platform.frag")),
-					camera(new Camera)
+					camera(Camera::GetCamera())
 {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -18,7 +18,7 @@ Render::Render() :	shaderModel(new Shader("Shaders\\Model.vs", "Shaders\\Model.f
 	projectionMatrix = glm::ortho(0.0f, (float)MainWindow::GetWindowWidth(), 0.0f, (float)MainWindow::GetWindowHeight(), CAMERA_VIEW_MIN_DISTANCE, CAMERA_VIEW_MAX_DISTANCE);
 
 	AddHero(500.0f, 500.0f);
-	AddWall(0.0f, 0.0f, 1280.0f, 100.0f);
+	AddWall(516.0f, 25.0f, 640.0f, 20.0f);
 }
 
 void Render::Draw()
