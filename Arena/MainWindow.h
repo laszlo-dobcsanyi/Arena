@@ -3,32 +3,39 @@
 
 // GLEW
 #define GLEW_STATIC
-#include <GL\glew.h>
+#include <GL/glew.h>
 
 // GLFW
 #include <GLFW/glfw3.h>
 
-#define WINDOW_WIDTH		1280
-#define WINDOW_HEIGHT		720
+#define OPENGL_MAJOR_VERSION	3
+#define OPENGL_MINOR_VERSION	3
+#define WINDOW_WIDTH			1280
+#define WINDOW_HEIGHT			720
 
 class Render;
 
 class MainWindow
 {
 public:
-	MainWindow();
-	
-	GLFWwindow* const GetWindow() { return window; }
-	Render* const GetRender() { return render; }
-	void DeleteWindow();
+	static MainWindow* GetMainWindow();
+	static Render* GetRender() { return render; }
+	static GLFWwindow* GetWindow() { return window; }
+	static GLint& GetWindowWidth() { return windowWidth; }
+	static GLint& GetWindowHeight() { return windowHeight; }
+	static void MainWindow::DeleteWindow();
 
 private:
-	Render* render;
-	GLFWwindow* window;
+	MainWindow();
 
-	GLint windowWidth;
-	GLint windowHeight;
+	MainWindow(MainWindow const&);
+	void operator=(MainWindow const&);
+
+	static MainWindow* mainWindow;
+	static Render* render;
+	static GLFWwindow* window;
+	static GLint windowWidth;
+	static GLint windowHeight;
 };
-
 
 #endif // MAINWINDOW_H

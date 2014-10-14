@@ -33,17 +33,11 @@
     <ClInclude Include="Game.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="MainWindow.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Arena.h">
       <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="InputHandler.hpp">
-      <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Render.h">
       <Filter>Graphics</Filter>
@@ -57,14 +51,11 @@
     <ClInclude Include="ModelObject.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Static_Object_BSP.h">
-      <Filter>Game</Filter>
+    <ClInclude Include="MainWindow.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Object_BSP.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="ListSeparatable.hpp">
-      <Filter>Core</Filter>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -79,9 +70,6 @@
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
-      <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Graphics</Filter>
@@ -104,11 +92,11 @@
     <ClCompile Include="Object.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Static_Object_BSP.cpp">
-      <Filter>Game</Filter>
+    <ClCompile Include="MainWindom.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Object_BSP.cpp">
-      <Filter>Game</Filter>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,9 +107,6 @@
       <Filter>Graphics\Shaders</Filter>
     </None>
     <None Include="Shaders\Background.vs">
-      <Filter>Graphics\Shaders</Filter>
-    </None>
-    <None Include="Shaders\Model.frag">
       <Filter>Graphics\Shaders</Filter>
     </None>
     <None Include="Shaders\Model.vs">
@@ -137,6 +122,9 @@
       <Filter>Graphics\Shaders</Filter>
     </None>
     <None Include="Shaders\Platform.vs">
+      <Filter>Graphics\Shaders</Filter>
+    </None>
+    <None Include="Shaders\Model.frag">
       <Filter>Graphics\Shaders</Filter>
     </None>
   </ItemGroup>

@@ -7,7 +7,7 @@
 
 // GLEW
 #define GLEW_STATIC
-#include <GL\glew.h>
+#include <GL/glew.h>
 
 // GLFW
 #include <GLFW/glfw3.h>
@@ -17,38 +17,18 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Shader.h"
-#include "Camera.h"
-
 #define CAMERA_ASPECT_RATIO				16.0f/9.0f
 #define CAMERA_VIEW_MIN_DISTANCE		-100.0f
 #define CAMERA_VIEW_MAX_DISTANCE		1000.0f
 
 class ModelObject;
+class Camera;
+class Shader;
 
-struct ModelMainShape
+struct ModelShape
 {
-	GLfloat vertices[8];
+	GLfloat vertices[28];
 	GLuint indices[6];
-
-	ModelMainShape()
-	{
-		vertices[0] = 1.0f;
-		vertices[1] = 1.0f;
-		vertices[2] = 1.0f;
-		vertices[3] = -1.0f;
-		vertices[4] = -1.0f;
-		vertices[5] = -1.0f;
-		vertices[6] = -1.0f;
-		vertices[7] = 1.0f;
-
-		indices[0] = 0;
-		indices[1] = 1;
-		indices[2] = 3;
-		indices[3] = 1;
-		indices[4] = 2;
-		indices[5] = 3;
-	}
 };
 
 class Render
@@ -57,7 +37,7 @@ public:
 	Render();
 
 	void Draw();
-	void InitRender();
+	void InitModelShape(const boost::shared_ptr< ModelObject > _modelObject);
 	void AddHero(const float& _xPos, const float& _yPos);
 	void AddWall(const float& _xPos, const float& _yPos, const float& width, const float& height);
 
@@ -75,10 +55,10 @@ private:
 	GLuint VBO;
 	GLuint EBO;
 
-	Shader shaderModel;
-	Shader shaderPlatform;
-	ModelMainShape modelMainShape;
-	Camera camera;
+	Shader* shaderModel;
+	Shader* shaderPlatform;
+	Camera* camera;
+	ModelShape modelShape;
 	std::forward_list< boost::shared_ptr< ModelObject > > heroes;
 	std::forward_list< boost::shared_ptr< ModelObject > > walls;
 	glm::mat4 modelMatrix;

@@ -1,11 +1,8 @@
 #include "ModelObject.h"
 
-ModelObject::ModelObject()
-{
-	LoadTexture();
-}
+ModelObject::ModelObject() {}
 
-void ModelObject::LoadTexture()
+void ModelObject::LoadTexture(const GLchar* _texturePath)
 {
-	// TODO: Load texture!
+	texture = new Texture(_texturePath);
 }

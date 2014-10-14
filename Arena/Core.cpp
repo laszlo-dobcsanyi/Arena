@@ -54,6 +54,8 @@ int main()
 
 	Game* game = new Game();
 
+	MainWindow* mainWindow = MainWindow::GetMainWindow();
+
 	float elapsed_time = 0.;
 	boost::chrono::steady_clock::time_point last_update = boost::chrono::steady_clock::now();
 	do
@@ -72,11 +74,11 @@ int main()
 		//DRAW
 		glfwPollEvents();
 
-		mainWindow.GetRender()->Draw();
+		mainWindow->GetRender()->Draw();
 
-		glfwSwapBuffers(mainWindow.GetWindow());
-	} while (!glfwWindowShouldClose(mainWindow.GetWindow()));
+		glfwSwapBuffers(mainWindow->GetWindow());
+	} while (!glfwWindowShouldClose(mainWindow->GetWindow()));
 
-	mainWindow.DeleteWindow();
+	mainWindow->DeleteWindow();
 	return 0;
 }
