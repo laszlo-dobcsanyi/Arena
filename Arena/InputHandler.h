@@ -4,8 +4,6 @@
 // GLFW
 #include <GLFW/glfw3.h>
 
-#include "Arena.h"
-
 #define KEY_ARRAY_MAX_SIZE		4
 #define KEY_UP					0
 #define KEY_LEFT				1
