@@ -11,12 +11,14 @@
 
 Render::Render() :	shaderModel(new Shader("Shaders\\Model.vs", "Shaders\\Model.frag")),
 					shaderPlatform(new Shader("Shaders\\Platform.vs", "Shaders\\Platform.frag")),
-					game(Game::Get()),
+					
 					camera(Camera::GetCamera())
 {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
+
+	game = Game::Get();
 
 	projectionMatrix = glm::mat4();
 	projectionMatrix = glm::ortho(0.0f, (float)MainWindow::GetWindowWidth(), 0.0f, (float)MainWindow::GetWindowHeight(), CAMERA_VIEW_MIN_DISTANCE, CAMERA_VIEW_MAX_DISTANCE);

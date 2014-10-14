@@ -15,18 +15,18 @@ Arena::Arena(const int& _seed)
 
 Arena::Arena(const std::string& _file)
 {
-	character = boost::shared_ptr< Hero >(new Hero(Vector2(5., 4.9f)));
+	character = boost::shared_ptr< Hero >(new Hero(Vector2(5., 4.9f), "Textures\\awesomeface.png"));
 
 	//
 
-	heroes.data.Add(boost::shared_ptr< Hero >(new Hero(Vector2(320., 320.))));
+	heroes.data.Add(boost::shared_ptr< Hero >(new Hero(Vector2(320., 320.),"Textures\\awesomeface.png")));
 
 	//
 
-	walls.Add(boost::shared_ptr< Wall >(new Wall(Vector2(3.5, 2.5), 3.5, 2.5)));
-	walls.Add(boost::shared_ptr< Wall >(new Wall(Vector2(6.0, 5.5), 3.0, 2.5)));
-	walls.Add(boost::shared_ptr< Wall >(new Wall(Vector2(3.0, 9.5), 3.0, 2.5)));
-	walls.Add(boost::shared_ptr< Wall >(new Wall(Vector2(9.5, 12.5), 2.5, 2.5)));
+	walls.Add(boost::shared_ptr< Wall >(new Wall(Vector2(3.5, 2.5), 3.5, 2.5, "Textures\\wall.png")));
+	walls.Add(boost::shared_ptr< Wall >(new Wall(Vector2(6.0, 5.5), 3.0, 2.5, "Textures\\wall.png")));
+	walls.Add(boost::shared_ptr< Wall >(new Wall(Vector2(3.0, 9.5), 3.0, 2.5, "Textures\\wall.png")));
+	walls.Add(boost::shared_ptr< Wall >(new Wall(Vector2(9.5, 12.5), 2.5, 2.5, "Textures\\wall.png")));
 }
 
 Arena::~Arena()
