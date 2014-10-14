@@ -26,6 +26,10 @@ Arena::Arena(const std::string& _file)
 	walls.Add(boost::shared_ptr< Wall >(new Wall(Vector2(6.0, 5.5), 3.0, 2.5, "Textures\\wall.png")));
 	walls.Add(boost::shared_ptr< Wall >(new Wall(Vector2(3.0, 9.5), 3.0, 2.5, "Textures\\wall.png")));
 	walls.Add(boost::shared_ptr< Wall >(new Wall(Vector2(9.5, 12.5), 2.5, 2.5, "Textures\\wall.png")));
+
+	walls.Process_Adding();
+
+	//collision_tree = new BSP_Tree(walls.data.list);
 }
 
 Arena::~Arena()
