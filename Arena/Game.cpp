@@ -8,7 +8,7 @@ Game * Game::game = 0;
 
 ///
 Game::Game(const Game_Type::Type &_type)
-	: arena(new Arena(12))
+	: arena(new Arena("level1.lvl"))
 {
 
 }
