@@ -22,9 +22,11 @@ float float_rng(float min, float max)
 
 int main()
 {
+	MainWindow* mainWindow = MainWindow::GetMainWindow();
+
 	Game *game = Game::Create(Game_Type::LOCAL);
 
-	MainWindow* mainWindow = MainWindow::GetMainWindow();
+	mainWindow->GetRender()->InitGameRender();
 
 	float elapsed_time = 0.;
 	boost::chrono::steady_clock::time_point last_update = boost::chrono::steady_clock::now();

@@ -36,6 +36,7 @@ class Render
 {
 public:
 	Render();
+	void InitGameRender();
 
 	void Draw();
 	void InitModelShape(const boost::shared_ptr< Object > _modelObject);
