@@ -63,6 +63,9 @@
     <ClInclude Include="Static_Object_BSP.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="ListSeparatable.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">

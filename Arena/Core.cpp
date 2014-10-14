@@ -22,34 +22,6 @@ float float_rng(float min, float max)
 
 int main()
 {
-	/*int tries = 30000;
-	int hit_count = 1000;
-	int objects_count = 64;
-
-	float width = 1280.;
-	float height = 900.;
-
-	//
-
-	while (tries--)
-	{
-		std::cout << "Generating Objects.." << std::endl;
-		std::forward_list< boost::shared_ptr< Object > > objects;
-		for (int i = 0; i < objects_count; ++i)
-		{
-			objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(float_rng(0., width), float_rng(0., height)), float_rng(16., 640.), float_rng(16., 256.))));
-		}
-
-		//std::forward_list< boost::shared_ptr< Object > > objects;
-		//objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(3.5, 2.5), 3.5, 2.5)));
-		//objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(8.0, 7.0), 3.0, 2.0)));
-		//objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(13.0, 7.0), 2.0, 5.0)));
-		//objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(3.0, 13.0), 2.0, 2.0)));
-
-		std::cout << "Generating BSP Tree.." << std::endl;
-		BSP_Tree tree(objects);
-	}*/
-
 	Game *game = Game::Create(Game_Type::LOCAL);
 
 	MainWindow* mainWindow = MainWindow::GetMainWindow();
@@ -80,3 +52,34 @@ int main()
 	mainWindow->DeleteWindow();
 	return 0;
 }
+
+/*int tries = 30000;
+int hit_count = 1000;
+int objects_count = 4;
+
+float width = 128.;
+float height = 128.;
+
+//
+
+while (tries--)
+{
+std::cout << "Generating Objects.." << std::endl;
+std::forward_list< boost::shared_ptr< Object > > objects;
+for (int i = 0; i < objects_count; ++i)
+{
+for (int j = 0; j < objects_count; ++j)
+{
+objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(j * width + width / 2., i * height + height / 2.), float_rng(1., width / 2.), float_rng(1., height / 2.))));
+}
+}
+
+//std::forward_list< boost::shared_ptr< Object > > objects;
+//objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(3.5, 2.5), 3.5, 2.5)));
+//objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(8.0, 7.0), 3.0, 2.0)));
+//objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(13.0, 7.0), 2.0, 5.0)));
+//objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(3.0, 13.0), 2.0, 2.0)));
+
+std::cout << "Generating BSP Tree.." << std::endl;
+BSP_Tree tree(objects);
+}*/

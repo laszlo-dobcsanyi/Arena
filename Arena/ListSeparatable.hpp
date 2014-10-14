@@ -87,49 +87,59 @@ public:
 		{
 			if ((*_separator) > current->member)
 			{
-				// We need to separate this element
-				if (current->prev)
+				if ((*_separator) < current->member)
 				{
-					// This is not the first element
-					if (current->next)
-					{
-						// This is an intermediate element
-						current->prev->next = current->next;
-						current->next->prev = current->prev;
-					}
-					else
-					{
-						// This is the last element
-						current->prev->next = 0;
-						last = current->prev;
-					}
+					// This element is in both lists, so copy to the other
+					lesser->Insert_Last(current->member);
+					current = current->next;
 				}
 				else
 				{
-					// This is the first element
-					if (current->next)
+					// We need to separate this element
+					if (current->prev)
 					{
-						// This is not the last element
-						current->next->prev = 0;
-						first = current->next;
+						// This is not the first element
+						if (current->next)
+						{
+							// This is an intermediate element
+							current->prev->next = current->next;
+							current->next->prev = current->prev;
+						}
+						else
+						{
+							// This is the last element
+							current->prev->next = 0;
+							last = current->prev;
+						}
 					}
 					else
 					{
-						// This is the only element in the list
-						first = 0;
-						last = 0;
+						// This is the first element
+						if (current->next)
+						{
+							// This is not the last element
+							current->next->prev = 0;
+							first = current->next;
+						}
+						else
+						{
+							// This is the only element in the list
+							first = 0;
+							last = 0;
+						}
 					}
-				}
 
-				// Remove from this list
-				SLL_Node< T > * current_copy = current;
-				current = current->next;
-				lesser->Insert_Last(current_copy);
-				count--;
+					// Remove from this list
+					SLL_Node< T > * current_copy = current;
+					current = current->next;
+					lesser->Insert_Last(current_copy);
+					count--;
+				}
 			}
 			else
 			{
-				if ((*_separator) < current->member)
+				// This element is fine in this list; Nothing to do
+				/*if ((*_separator) < current->member)
 				{
 					// This element is fine in this list; Nothing to do
 				}
@@ -137,7 +147,7 @@ public:
 				{
 					// Copy this value to the other list
 					lesser->Insert_Last(current->member);
-				}
+				}*/
 
 				current = current->next;
 			}
