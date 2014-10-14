@@ -9,8 +9,8 @@
 #include "Hero.h"
 #include "Wall.h"
 
-Render::Render() :	shaderModel(new Shader("Shaders\\Model.vs", "Shaders\\Model.frag")),
-					shaderPlatform(new Shader("Shaders\\Platform.vs", "Shaders\\Platform.frag")),
+Render::Render() :	shaderWall(new Shader("Shaders\\Wall.vs", "Shaders\\Wall.frag")), 
+					shaderHero(new Shader("Shaders\\Hero.vs", "Shaders\\Hero.frag")),				
 					camera(Camera::GetCamera())
 {
 	glGenVertexArrays(1, &VAO);
@@ -49,11 +49,11 @@ void Render::DrawBackground()
 
 void Render::DrawWalls()
 {
-	shaderPlatform->Use();
+	shaderWall->Use();
 
-	modelLoc = glGetUniformLocation(shaderPlatform->shaderProgram, "model");
-	viewLoc = glGetUniformLocation(shaderPlatform->shaderProgram, "view");
-	projLoc = glGetUniformLocation(shaderPlatform->shaderProgram, "projection");
+	modelLoc = glGetUniformLocation(shaderWall->shaderProgram, "model");
+	viewLoc = glGetUniformLocation(shaderWall->shaderProgram, "view");
+	projLoc = glGetUniformLocation(shaderWall->shaderProgram, "projection");
 
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
@@ -73,11 +73,11 @@ void Render::DrawWalls()
 
 void Render::DrawHeroes()
 {
-	shaderModel->Use();
+	shaderHero->Use();
 
-	modelLoc = glGetUniformLocation(shaderModel->shaderProgram, "model");
-	viewLoc = glGetUniformLocation(shaderModel->shaderProgram, "view");
-	projLoc = glGetUniformLocation(shaderModel->shaderProgram, "projection");
+	modelLoc = glGetUniformLocation(shaderHero->shaderProgram, "model");
+	viewLoc = glGetUniformLocation(shaderHero->shaderProgram, "view");
+	projLoc = glGetUniformLocation(shaderHero->shaderProgram, "projection");
 
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
@@ -192,29 +192,3 @@ void Render::InitModelShape(const boost::shared_ptr< Object > _modelObject)
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(2);
 }
-
-/*void Render::AddHero(const float& _xPos, const float& _yPos)
-{
-	boost::shared_ptr<ModelObject> addHero(new ModelObject);
-
-	addHero->SetXPos(_xPos);
-	addHero->SetYPos(_yPos);
-	addHero->SetWidth(HERO_WIDTH);
-	addHero->SetHeight(HERO_HEIGHT);
-	addHero->LoadTexture("Textures\\awesomeface.png");
-
-	heroes.push_front(addHero);
-}
-
-void Render::AddWall(const float& _xPos, const float& _yPos, const float& _width, const float& _height)
-{
-	boost::shared_ptr<ModelObject> addWall(new ModelObject);
-	
-	addWall->SetXPos(_xPos);
-	addWall->SetYPos(_yPos);
-	addWall->SetWidth(_width);
-	addWall->SetHeight(_height);
-	addWall->LoadTexture("Textures\\wall.png");
-
-	walls.push_front(addWall);
-}*/
