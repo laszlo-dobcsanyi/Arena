@@ -151,7 +151,7 @@
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="InputHandler.cpp" />
-    <ClCompile Include="MainWindom.cpp" />
+    <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Object_BSP.cpp" />
@@ -160,7 +160,6 @@
     <ClCompile Include="Static_Object_BSP.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Wall.cpp" />
-    <ClCompile Include="MainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ListProcessable.hpp" />
