@@ -14,7 +14,7 @@ Arena::Arena(const int& _seed)
 
 Arena::Arena(const std::string& _file)
 {
-	character = boost::shared_ptr< Hero >(new Hero(Vector2(5., 4.9f), "Textures\\awesomeface.png"));
+	character = boost::shared_ptr< Hero >(new Hero(Vector2(500., 400.), "Textures\\awesomeface.png"));
 
 	//
 

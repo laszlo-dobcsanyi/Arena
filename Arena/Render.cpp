@@ -5,9 +5,9 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Arena.h"
-#include "Object.h"
 #include "Game.h"
 #include "Hero.h"
+#include "Wall.h"
 
 Render::Render() :	shaderModel(new Shader("Shaders\\Model.vs", "Shaders\\Model.frag")),
 					shaderPlatform(new Shader("Shaders\\Platform.vs", "Shaders\\Platform.frag")),
@@ -58,17 +58,17 @@ void Render::DrawWalls()
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
-	//BOOST_FOREACH(boost::shared_ptr < Object > wall, walls)
-	//{
-	//	glBindTexture(GL_TEXTURE_2D, wall->GetTextureID());
-	//	modelMatrix = glm::mat4();
+	BOOST_FOREACH(boost::shared_ptr < Wall > wall, game->arena->walls.data.list)
+	{
+		glBindTexture(GL_TEXTURE_2D, wall->texture->textureID);
+		modelMatrix = glm::mat4();
 
-	//	modelMatrix = glm::translate(modelMatrix, glm::vec3(wall->GetXPos(), wall->GetYPos(), -10.0f));
-	//	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(wall->center.x, wall->center.y, -10.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
-	//	InitModelShape(wall);
-	//	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	//}
+		InitModelShape(wall);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	}
 }
 
 void Render::DrawHeroes()
@@ -82,30 +82,33 @@ void Render::DrawHeroes()
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
-	/*BOOST_FOREACH(boost::shared_ptr < Object > hero, heroes)
+	BOOST_FOREACH(boost::shared_ptr < Hero > hero, game->arena->heroes.data.list)
 	{
-		glBindTexture(GL_TEXTURE_2D, hero->GetTextureID());
-
+		glBindTexture(GL_TEXTURE_2D, hero->texture->textureID);
 		modelMatrix = glm::mat4();
 
-		// TEST ON
-		hero->SetYPos(hero->GetYPos() - 1);
-		// TEST OFF
-
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(hero->GetXPos(), hero->GetYPos(), -10.0f));
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(hero->center.x, hero->center.y, -10.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
 		InitModelShape(hero);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	}*/
+	}
+
+	modelMatrix = glm::mat4();
+
+	modelMatrix = glm::translate(modelMatrix, glm::vec3(game->arena->character->center.x, game->arena->character->center.y, -10.0f));
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+
+	InitModelShape(game->arena->character);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
 void Render::InitModelShape(const boost::shared_ptr< Object > _modelObject)
 {
-	/*float shapeWidth = (float)(_modelObject->GetWidth());
-	float shapeHeight = (float)(_modelObject->GetHeight());
-	float textureWidthRatio = (float)(shapeWidth * 2 / _modelObject->GetTextureWidth());
-	float textureHeightRatio = (float)(shapeHeight * 2 / _modelObject->GetTextureHeight());
+	float shapeWidth = (float)(_modelObject->width);
+	float shapeHeight = (float)(_modelObject->height);
+	float textureWidthRatio = (float)(shapeWidth * 2 / _modelObject->texture->width);
+	float textureHeightRatio = (float)(shapeHeight * 2 / _modelObject->texture->height);
 
 	// TOP RIGHT:
 	// Position Coords:
@@ -172,7 +175,7 @@ void Render::InitModelShape(const boost::shared_ptr< Object > _modelObject)
 	modelShape.indices[2] = 3;
 	modelShape.indices[3] = 1;
 	modelShape.indices[4] = 2;
-	modelShape.indices[5] = 3;*/
+	modelShape.indices[5] = 3;
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(modelShape.vertices), modelShape.vertices, GL_STATIC_DRAW);
