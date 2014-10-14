@@ -15,8 +15,8 @@ Arena::Arena(const int& _seed)
 
 Arena::Arena(const std::string& _file)
 {
-	character = boost::shared_ptr< Hero >(new Hero(Vector2(5., 4.9)));
-	boost::shared_ptr< Hero > hero0 = boost::shared_ptr< Hero >(new Hero(Vector2(320., 320.)));
+	character = boost::shared_ptr< Hero >(new Hero(Vector2(5., 4.9), "Textures\\awesomeface.png"));
+	boost::shared_ptr< Hero > hero0 = boost::shared_ptr< Hero >(new Hero(Vector2(320., 320.), "Textures\\awesomeface.png"));
 
 	//
 
@@ -32,10 +32,10 @@ Arena::Arena(const std::string& _file)
 	// case8: 640. + 128., 0. - 128.
 
 	std::forward_list< boost::shared_ptr< Object > > objects;
-	objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(3.5, 2.5), 3.5, 2.5)));
-	objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(6.0, 5.5), 3.0, 2.5)));
-	objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(3.0, 9.5), 3.0, 2.5)));
-	objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(9.5, 12.5), 2.5, 2.5)));
+	objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(3.5, 2.5), 3.5, 2.5, "Textures\\wall.png")));
+	objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(6.0, 5.5), 3.0, 2.5, "Textures\\wall.png")));
+	objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(3.0, 9.5), 3.0, 2.5, "Textures\\wall.png")));
+	objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(9.5, 12.5), 2.5, 2.5, "Textures\\wall.png")));
 }
 
 Arena::~Arena()

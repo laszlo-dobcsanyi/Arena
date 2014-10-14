@@ -3,6 +3,8 @@
 
 #include <boost\shared_ptr.hpp>
 
+#include "Texture.h"
+
 struct Vector2
 {
 	float x, y;
@@ -29,9 +31,10 @@ class Object
 {
 public:
 	float width, height;
+	Texture* texture;
 	Vector2 center, updated_center, velocity;;
 
-	Object(const Vector2& _center, const float& _width, const float& _height) : center(_center), width(_width), height(_height), updated_center(_center), velocity(0., 0.) { }
+	Object(const Vector2& _center, const float& _width, const float& _height, const GLchar* _texturePath) : center(_center), width(_width), height(_height), updated_center(_center), velocity(0., 0.), texture(new Texture(_texturePath)) { }
 	~Object() {  };
 
 	Collision_Type Collide(const Object& _other);

@@ -1,13 +1,17 @@
 #include <boost/foreach.hpp>
 
 #include "Render.h"
-#include "ModelObject.h"
 #include "MainWindow.h"
 #include "Shader.h"
 #include "Camera.h"
+#include "Arena.h"
+#include "Object.h"
+#include "Game.h"
+#include "Hero.h"
 
 Render::Render() :	shaderModel(new Shader("Shaders\\Model.vs", "Shaders\\Model.frag")),
 					shaderPlatform(new Shader("Shaders\\Platform.vs", "Shaders\\Platform.frag")),
+					game(Game::Get()),
 					camera(Camera::GetCamera())
 {
 	glGenVertexArrays(1, &VAO);
@@ -16,9 +20,6 @@ Render::Render() :	shaderModel(new Shader("Shaders\\Model.vs", "Shaders\\Model.f
 
 	projectionMatrix = glm::mat4();
 	projectionMatrix = glm::ortho(0.0f, (float)MainWindow::GetWindowWidth(), 0.0f, (float)MainWindow::GetWindowHeight(), CAMERA_VIEW_MIN_DISTANCE, CAMERA_VIEW_MAX_DISTANCE);
-
-	AddHero(500.0f, 500.0f);
-	AddWall(516.0f, 25.0f, 640.0f, 20.0f);
 }
 
 void Render::Draw()
@@ -27,10 +28,7 @@ void Render::Draw()
 
 	DrawBackground();
 
-	// TEST ON
-	boost::shared_ptr<ModelObject> firstHero = heroes.front();
-	camera->UpdateCameraVectors(firstHero->GetXPos(), firstHero->GetYPos());
-	// TEST OFF
+	camera->UpdateCameraVectors(game->arena->character->center.x, game->arena->character->center.y);
 	
 	viewMatrix = glm::lookAt(camera->GetCenterVec(), camera->GetEyeVec(), camera->GetUpVec());
 
@@ -59,17 +57,17 @@ void Render::DrawWalls()
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
-	BOOST_FOREACH(boost::shared_ptr < ModelObject > wall, walls)
-	{
-		glBindTexture(GL_TEXTURE_2D, wall->GetTextureID());
-		modelMatrix = glm::mat4();
+	//BOOST_FOREACH(boost::shared_ptr < Object > wall, walls)
+	//{
+	//	glBindTexture(GL_TEXTURE_2D, wall->GetTextureID());
+	//	modelMatrix = glm::mat4();
 
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(wall->GetXPos(), wall->GetYPos(), -10.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+	//	modelMatrix = glm::translate(modelMatrix, glm::vec3(wall->GetXPos(), wall->GetYPos(), -10.0f));
+	//	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
-		InitModelShape(wall);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	}
+	//	InitModelShape(wall);
+	//	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	//}
 }
 
 void Render::DrawHeroes()
@@ -83,7 +81,7 @@ void Render::DrawHeroes()
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
-	BOOST_FOREACH(boost::shared_ptr < ModelObject > hero, heroes)
+	/*BOOST_FOREACH(boost::shared_ptr < Object > hero, heroes)
 	{
 		glBindTexture(GL_TEXTURE_2D, hero->GetTextureID());
 
@@ -98,12 +96,12 @@ void Render::DrawHeroes()
 
 		InitModelShape(hero);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	}
+	}*/
 }
 
-void Render::InitModelShape(const boost::shared_ptr< ModelObject > _modelObject)
+void Render::InitModelShape(const boost::shared_ptr< Object > _modelObject)
 {
-	float shapeWidth = (float)(_modelObject->GetWidth());
+	/*float shapeWidth = (float)(_modelObject->GetWidth());
 	float shapeHeight = (float)(_modelObject->GetHeight());
 	float textureWidthRatio = (float)(shapeWidth * 2 / _modelObject->GetTextureWidth());
 	float textureHeightRatio = (float)(shapeHeight * 2 / _modelObject->GetTextureHeight());
@@ -173,7 +171,7 @@ void Render::InitModelShape(const boost::shared_ptr< ModelObject > _modelObject)
 	modelShape.indices[2] = 3;
 	modelShape.indices[3] = 1;
 	modelShape.indices[4] = 2;
-	modelShape.indices[5] = 3;
+	modelShape.indices[5] = 3;*/
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(modelShape.vertices), modelShape.vertices, GL_STATIC_DRAW);
@@ -191,7 +189,7 @@ void Render::InitModelShape(const boost::shared_ptr< ModelObject > _modelObject)
 	glEnableVertexAttribArray(2);
 }
 
-void Render::AddHero(const float& _xPos, const float& _yPos)
+/*void Render::AddHero(const float& _xPos, const float& _yPos)
 {
 	boost::shared_ptr<ModelObject> addHero(new ModelObject);
 
@@ -215,4 +213,4 @@ void Render::AddWall(const float& _xPos, const float& _yPos, const float& _width
 	addWall->LoadTexture("Textures\\wall.png");
 
 	walls.push_front(addWall);
-}
+}*/

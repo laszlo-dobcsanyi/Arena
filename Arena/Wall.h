@@ -17,8 +17,8 @@ public:
 	WallBlock* block = 0;
 	std::forward_list< boost::shared_ptr< Hero > > heroes;
 
-	Wall(const Vector2& _p1, const Vector2& _p2);
-	Wall(const float& _x1, const float& _y1, const float& _x2, const float& _y2);
+	Wall(const Vector2& _p1, const Vector2& _p2, const GLchar* _texturePath);
+	Wall(const float& _x1, const float& _y1, const float& _x2, const float& _y2, const GLchar* _texturePath);
 	~Wall();
 
 	void Collision_Hero(boost::shared_ptr< Hero > _hero, const Collision_Type& _type);

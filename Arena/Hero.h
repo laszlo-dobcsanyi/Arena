@@ -13,7 +13,7 @@ public:
 	boost::shared_ptr< Wall > base = 0;
 	Collision_Type base_type = Collision_Type::NONE;
 
-	Hero(const Vector2& _center);
+	Hero(const Vector2& _center, const GLchar* _texturePath);
 	~Hero();
 
 	void Update(const float& _elapsed_time);

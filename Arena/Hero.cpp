@@ -5,8 +5,8 @@
 #include "Wall.h"
 
 /// Constructor/Destructor
-Hero::Hero(const Vector2& _center)
-	: Object(_center, 32, 32)
+Hero::Hero(const Vector2& _center, const GLchar* _texturePath)
+	: Object(_center, 32, 32, _texturePath)
 {
 
 }

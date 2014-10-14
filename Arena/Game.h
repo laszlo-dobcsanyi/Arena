@@ -24,6 +24,7 @@ public:
 	Arena *arena = 0;
 
 	static Game * Create(const Game_Type::Type &_type) { assert(!game); game = new Game(_type); return game; }
+	static Game * Get() { assert(game); return game; }
 	static void Destroy() { delete game; game = 0; }
 
 	void Update(const float& _elapsed_time);
