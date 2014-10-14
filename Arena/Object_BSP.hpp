@@ -28,6 +28,8 @@ public:
 	float value;
 	Partition::Partition_Enum type;
 
+	///
+
 	BSP_Separator(const Partition::Partition_Enum &_type, const float &_value) : type(_type), value(_value) { }
 	BSP_Separator(SLL< T > *_sll, const Vector2 &_p1, const Vector2& _p2)
 	{
@@ -84,6 +86,8 @@ public:
 	}
 	virtual ~BSP_Separator() { }
 
+	///
+
 	bool operator<(T _object)
 	{
 		return type == Partition::HORIZONTAL ?
@@ -98,6 +102,11 @@ public:
 			:
 			_object->center.x - _object->width < value || _object->center.x + _object->width < value;
 	}
+
+	///
+
+	bool operator<(const Vector2 _point) { return type == Partition::HORIZONTAL ? value < _point.y : value < _point.x; }
+	bool operator>(const Vector2 _point) { return type == Partition::HORIZONTAL ? _point.y < value : _point.x < value; }
 
 private:
 	BSP_Separator(const BSP_Separator &_other);
@@ -195,7 +204,6 @@ class BSP_Tree
 public:
 	BSP_Node< T > *root = 0;
 
-	//BSP_Tree(BSP_Node *_root) : root(_root) { }
 	BSP_Tree(SLL< T > *_objects)
 	{
 		assert(_objects);
@@ -212,12 +220,33 @@ public:
 			if (p1.y < current->member->center.y + current->member->height) p1.y = current->member->center.y + current->member->height;
 			if (p2.x < current->member->center.x + current->member->width) p2.x = current->member->center.x + current->member->width;
 			if (current->member->center.y - current->member->height < p2.y) p2.y = current->member->center.y - current->member->height;
+
+			current = current->next;
 		}
 
 		// Create the BSP Tree
 		root = new BSP_Node< T >(_objects, p1, p2);
 	}
 	virtual ~BSP_Tree() { }
+
+	T Collision(const Vector2 &_point)
+	{
+		BSP_Node< T > *current = root;
+		while (current)
+		{
+			if (current->separator)
+			{
+				if (*(current->separator) < _point) current = current->right;
+				else current = current->left;
+			}
+			else
+			{
+				assert(current->object);
+				return current->object;
+			}
+		}
+		return 0;
+	}
 
 private:
 	BSP_Tree(const BSP_Tree &_other);

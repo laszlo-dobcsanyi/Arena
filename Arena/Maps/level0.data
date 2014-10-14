@@ -1,1 +1,4 @@
-0.0	0.0	640.0	64.0	wall.png
+0.0	64.0	1024.0	0.0	Textures\\wall.png
+0.0	768.0	64.0	64.0	Textures\\wall.png
+64.0	768.0	1024.0	704.0	Textures\\wall.png
+960.0	704.0	1024.0	64.0	Textures\\wall.png
