@@ -141,7 +141,6 @@
     <ClInclude Include="Render.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="TreeLockable.hpp" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
