@@ -124,7 +124,7 @@ BSP_Node::BSP_Node(SLL< boost::shared_ptr< Object > > *_sll, const Vector2 &_p1,
 
 ///
 
-BSP_Tree::BSP_Tree(const std::forward_list< boost::shared_ptr< Object > > &_list)
+BSP_Tree::BSP_Tree(std::list< boost::shared_ptr< Object > > &_list)
 {
 	// Create Separatable list
 	SLL< boost::shared_ptr< Object > > *objects = new SLL< boost::shared_ptr< Object > >(_list);

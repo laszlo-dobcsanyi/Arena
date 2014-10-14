@@ -8,7 +8,6 @@
 #include "Wall.h"
 
 Arena::Arena(const int& _seed)
-: character(0)
 {
 
 }
@@ -60,31 +59,6 @@ void Arena::Update(const float& _elapsed_time)
 
 		hero->center = hero->updated_center;
 		//hero->Report();
-	}*/
-}
-
-template <class T> void Arena::Update_WallBlock(boost::shared_ptr< Hero > _hero, T _block)
-{
-	/*BOOST_FOREACH(boost::shared_ptr< Wall > wall, _block->walls)
-	{
-		Collision_Type wall_collision = wall->Collide(*_hero);
-		if (wall_collision != Collision_Type::NONE)
-		{
-			wall->Collision_Hero(_hero, wall_collision);
-			_hero->Collision_Wall(wall, wall_collision);
-		}
-
-		BOOST_FOREACH(boost::shared_ptr< Hero > connected, wall->heroes)
-		{
-			Collision_Type hero_collision = connected->Collide(*_hero);
-			if (hero_collision != Collision_Type::NONE)
-			{
-				_hero->Collision_Hero(connected, hero_collision);
-				connected->Collision_Hero(_hero, hero_collision);
-			}
-
-			// TODO Objects like item/stance collision
-		}
 	}*/
 }
 

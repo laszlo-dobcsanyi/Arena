@@ -1,7 +1,7 @@
 #ifndef LIST_SEPARATABLE_HPP
 #define LIST_SEPARATABLE_HPP
 
-#include <forward_list>
+#include <list>
 
 #include <boost\foreach.hpp>
 
@@ -33,7 +33,7 @@ public:
 	SLL_Node< T > *last = 0;
 
 	SLL< T >() { }
-	SLL< T >(const std::forward_list< T > &_list) { BOOST_FOREACH(T current, _list) { Insert_Last(current); } }
+	SLL< T >(const std::list< T > &_list) { BOOST_FOREACH(T current, _list) { Insert_Last(current); } }
 	virtual ~SLL() { }
 
 	SLL_Node< T > * Insert_Last(const T& _member)
