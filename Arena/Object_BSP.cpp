@@ -5,8 +5,8 @@
 BSP_Separator::BSP_Separator(SLL< boost::shared_ptr< Object > > *_sll, const Vector2 &_p1, const Vector2& _p2)
 {
 	// Create the two possible geometrically optimal separation
-	int vertical_flag = 0;		float vertical_optimum = (_p1.x + _p2.x) / 2.;		float best_vertical_cut = _p1.x;	float best_vertical_distance = abs(vertical_optimum - best_vertical_cut);
-	int horizontal_flag = 0;	float horizontal_optimum = (_p1.y + _p2.y) / 2.;	float best_horizontal_cut = _p2.y;	float best_horizontal_distance = abs(horizontal_optimum - best_horizontal_cut);
+	int vertical_flag = 0;		float vertical_optimum = (_p1.x + _p2.x) / 2.f;		float best_vertical_cut = _p1.x;	float best_vertical_distance = abs(vertical_optimum - best_vertical_cut);
+	int horizontal_flag = 0;	float horizontal_optimum = (_p1.y + _p2.y) / 2.f;	float best_horizontal_cut = _p2.y;	float best_horizontal_distance = abs(horizontal_optimum - best_horizontal_cut);
 
 	// Calculate the object flag for both separation
 	SLL_Node< boost::shared_ptr< Object > > *current;
@@ -26,7 +26,7 @@ BSP_Separator::BSP_Separator(SLL< boost::shared_ptr< Object > > *_sll, const Vec
 	}
 
 	BSP_Separator vertical = BSP_Separator(Partition::VERTICAL, best_vertical_cut);
-	BSP_Separator horizontal = BSP_Separator(Partition::HORIZONTAL, best_horizontal_cut;
+	BSP_Separator horizontal = BSP_Separator(Partition::HORIZONTAL, best_horizontal_cut);
 
 	current = _sll->first;
 	while (current)

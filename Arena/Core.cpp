@@ -50,8 +50,6 @@ int main()
 		BSP_Tree tree(objects);
 	}*/
 
-	MainWindow mainWindow;
-
 	Game* game = new Game();
 
 	MainWindow* mainWindow = MainWindow::GetMainWindow();
