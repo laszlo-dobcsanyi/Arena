@@ -54,11 +54,11 @@
     <ClInclude Include="InputHandler.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Object_BSP.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="ListSeparatable.hpp">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Object_BSP.hpp">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -100,9 +100,6 @@
     </ClCompile>
     <ClCompile Include="MainWindow.cpp">
       <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Object_BSP.cpp">
-      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

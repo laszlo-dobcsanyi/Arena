@@ -32,9 +32,9 @@ class Object
 public:
 	float width, height;
 	Texture* texture;
-	Vector2 center, updated_center, velocity;;
+	Vector2 center, updated_center, velocity, force;
 
-	Object(const Vector2& _center, const float& _width, const float& _height, const GLchar* _texturePath) : center(_center), width(_width), height(_height), updated_center(_center), velocity(0., 0.), texture(new Texture(_texturePath)) { }
+	Object(const Vector2& _center, const float& _width, const float& _height, const GLchar* _texturePath) : center(_center), width(_width), height(_height), updated_center(_center), velocity(0., 0.), force(0., -2.5), texture(new Texture(_texturePath)) { }
 	~Object() {  };
 
 	Collision_Type Collide(const Object& _other);

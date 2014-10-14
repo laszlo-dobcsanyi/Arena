@@ -5,7 +5,7 @@
 
 #include <boost\shared_ptr.hpp>
 
-#include "Object_BSP.h"
+#include "Object_BSP.hpp"
 #include "ListProcessable.hpp"
 
 class Wall;
@@ -18,16 +18,18 @@ public:
 	ListProcessable< boost::shared_ptr< Wall > > walls;
 	ListProcessable< boost::shared_ptr< Hero > > heroes;
 
-	BSP_Tree *collision_tree = 0;
+	BSP_Tree< boost::shared_ptr< Wall > > *collision_tree = 0;
 
-	Arena(const int& _seed);
-	Arena(const std::string& _file);
+	Arena(const int &_seed);
+	Arena(const std::string &_file);
 	~Arena();
 
-	void Update(const float& _elapsed_time);
+	void Update(const float &_elapsed_time);
 
 private:
-	Arena(const Arena& _other);
-	Arena& operator=(const Arena& _other);
+	Arena(const Arena &_other);
+	Arena& operator=(const Arena &_other);
+
+	void Update_Hero(boost::shared_ptr< Hero > _hero, const float &_elapsed_time);
 };
 #endif

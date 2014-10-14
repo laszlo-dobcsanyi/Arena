@@ -22,7 +22,7 @@ void Hero::Update(const float& _elapsed_time)
 {
 	switch (base_type)
 	{
-		// Free fall
+		/*// Free fall
 		case Collision_Type::NONE:
 			velocity = velocity + (Vector2(-2., -1.) * _elapsed_time);
 			break;
@@ -41,6 +41,10 @@ void Hero::Update(const float& _elapsed_time)
 
 		case Collision_Type::BOTTOM:
 			velocity = velocity + (Vector2(0., -1.) * _elapsed_time);
+			break;*/
+
+		default:
+			velocity = velocity + (force * _elapsed_time);
 			break;
 	}
 
@@ -71,7 +75,7 @@ void Hero::Collision_Wall(boost::shared_ptr< Wall > _wall, const Collision_Type&
 	}
 	else
 	{
-		if (base_type != Collision_Type::BOTTOM)
+		//if (base_type != Collision_Type::BOTTOM)
 		{
 			base = _wall;
 			base_type = _type;

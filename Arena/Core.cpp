@@ -4,21 +4,12 @@
 #include "Render.h"
 #include "MainWindow.h"
 
-#include <boost\random.hpp>
 #include <boost\foreach.hpp>
 
 #include "Hero.h"
-#include "Object_BSP.h"
+#include "Object_BSP.hpp"
 
 #define GAME_UPDATE_INTERVAL 1./60
-
-boost::mt19937 rng;
-float float_rng(float min, float max)
-{
-	boost::uniform_real<float> u(min, max);
-	boost::variate_generator<boost::mt19937&, boost::uniform_real<float> > gen(rng, u);
-	return gen();
-}
 
 int main()
 {
@@ -55,7 +46,20 @@ int main()
 	return 0;
 }
 
-/*int tries = 30000;
+/*
+#include <boost\random.hpp>
+
+boost::mt19937 rng;
+float float_rng(float min, float max)
+{
+boost::uniform_real<float> u(min, max);
+boost::variate_generator<boost::mt19937&, boost::uniform_real<float> > gen(rng, u);
+return gen();
+}
+
+//
+
+int tries = 30000;
 int hit_count = 1000;
 int objects_count = 4;
 
