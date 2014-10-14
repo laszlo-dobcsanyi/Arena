@@ -50,7 +50,7 @@ int main()
 		BSP_Tree tree(objects);
 	}*/
 
-	Game* game = new Game();
+	Game *game = Game::Create(Game_Type::LOCAL);
 
 	MainWindow* mainWindow = MainWindow::GetMainWindow();
 

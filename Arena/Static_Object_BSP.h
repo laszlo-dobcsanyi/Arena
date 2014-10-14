@@ -13,7 +13,7 @@
 struct Partition
 {
 public:
-	enum Partition_Type
+	enum Partition_Enum
 	{
 		VERTICAL,
 		HORIZONTAL
@@ -27,9 +27,9 @@ class BSP_Separator
 {
 public:
 	float value;
-	Partition::Partition_Type partition;
+	Partition::Partition_Enum partition;
 
-	BSP_Separator(const Partition::Partition_Type &_partition, const float &_value) : partition(_partition), value(_value) { }
+	BSP_Separator(const Partition::Partition_Enum &_partition, const float &_value) : partition(_partition), value(_value) { }
 	virtual ~BSP_Separator() { }
 
 	bool operator<(const Vector2 &_point) { return (partition == Partition::VERTICAL ? _point.x < value : _point.y < value); }
@@ -86,8 +86,8 @@ private:
 		BSP_Line & operator=(const BSP_Line &_other);
 	};
 
-	std::set< BSP_Line > * Separate_Objects(const Partition::Partition_Type &_partition, const std::forward_list< boost::shared_ptr< Object > > &_objects);
-	BSP_Node * Split(const Partition::Partition_Type &_partition, std::set< BSP_Line >::const_iterator _start, std::set< BSP_Line >::const_iterator _end);
+	std::set< BSP_Line > * Separate_Objects(const Partition::Partition_Enum &_partition, const std::forward_list< boost::shared_ptr< Object > > &_objects);
+	BSP_Node * Split(const Partition::Partition_Enum &_partition, std::set< BSP_Line >::const_iterator _start, std::set< BSP_Line >::const_iterator _end);
 
 	BSP_Tree(const BSP_Tree &_other);
 	BSP_Tree& operator=(const BSP_Tree &_other);

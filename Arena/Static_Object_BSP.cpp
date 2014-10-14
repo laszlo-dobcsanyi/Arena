@@ -16,7 +16,7 @@ BSP_Tree::~BSP_Tree()
 
 //
 
-std::set< BSP_Tree::BSP_Line > * BSP_Tree::Separate_Objects(const Partition::Partition_Type &_partition, const std::forward_list< boost::shared_ptr< Object > > &_objects)
+std::set< BSP_Tree::BSP_Line > * BSP_Tree::Separate_Objects(const Partition::Partition_Enum &_partition, const std::forward_list< boost::shared_ptr< Object > > &_objects)
 {
 	// Split vertically/horizontally into a sorted set
 	std::set< BSP_Line > *lines = new std::set< BSP_Line >();
@@ -50,7 +50,7 @@ std::set< BSP_Tree::BSP_Line > * BSP_Tree::Separate_Objects(const Partition::Par
 	return lines;
 }
 
-BSP_Node * BSP_Tree::Split(const Partition::Partition_Type &_partition, std::set< BSP_Line >::const_iterator _start, std::set< BSP_Line >::const_iterator _end)
+BSP_Node * BSP_Tree::Split(const Partition::Partition_Enum &_partition, std::set< BSP_Line >::const_iterator _start, std::set< BSP_Line >::const_iterator _end)
 {
 	// Check if this is the bottom of the partition
 	if (_start == --_end)

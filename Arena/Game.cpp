@@ -4,7 +4,11 @@
 #include "Wall.h"
 #include "Arena.h"
 
-Game::Game() : arena("tmp.map")
+Game * Game::game = 0;
+
+///
+Game::Game(const Game_Type::Type &_type)
+	: arena(new Arena(12))
 {
 
 }
@@ -14,9 +18,8 @@ Game::~Game()
 
 }
 
-//
-
+///
 void Game::Update(const float& _elapsed_time)
 {
-	arena.Update(_elapsed_time);
+	arena->Update(_elapsed_time);
 }

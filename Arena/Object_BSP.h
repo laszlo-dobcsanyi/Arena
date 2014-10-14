@@ -11,7 +11,7 @@
 struct Partition
 {
 public:
-	enum Partition_Type
+	enum Partition_Enum
 	{
 		VERTICAL,
 		HORIZONTAL
@@ -25,7 +25,7 @@ class BSP_Separator
 {
 public:
 	float value;
-	Partition::Partition_Type type;
+	Partition::Partition_Enum type;
 
 	BSP_Separator(SLL< boost::shared_ptr< Object > > *_sll, const Vector2 &_p1, const Vector2& _p2);
 	virtual ~BSP_Separator() { }
@@ -47,7 +47,7 @@ public:
 
 private:
 	BSP_Separator(const BSP_Separator &_other);
-	BSP_Separator(const Partition::Partition_Type &_type, const float &_value) : type(_type), value(_value) { }
+	BSP_Separator(const Partition::Partition_Enum &_type, const float &_value) : type(_type), value(_value) { }
 	BSP_Separator & operator=(const BSP_Separator &_other);
 };
 
