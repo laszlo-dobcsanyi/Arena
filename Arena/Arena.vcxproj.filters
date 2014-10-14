@@ -51,14 +51,20 @@
     <ClInclude Include="Texture.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="WallBlock.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="ModelObject.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Static_Object_BSP.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Object_BSP.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="ListSeparatable.hpp">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -89,9 +95,6 @@
     <ClCompile Include="Arena.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="WallBlock.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -99,6 +102,12 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Static_Object_BSP.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Object_BSP.cpp">
       <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>

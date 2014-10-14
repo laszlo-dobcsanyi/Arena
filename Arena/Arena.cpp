@@ -1,10 +1,11 @@
 #include "Arena.h"
 
+#include <iostream>
+
 #include <boost\foreach.hpp>
 
 #include "Hero.h"
 #include "Wall.h"
-#include "WallBlock.h"
 
 Arena::Arena(const int& _seed)
 : character(0)
@@ -14,17 +15,10 @@ Arena::Arena(const int& _seed)
 
 Arena::Arena(const std::string& _file)
 {
-	boost::shared_ptr< WallBlock > block0 = boost::shared_ptr< WallBlock >(new WallBlock());
-	block0->Add(boost::shared_ptr< Wall >(new Wall(0., 32., 640., 0.)));
-	block0->Add(boost::shared_ptr< Wall >(new Wall(0., 640., 32., 32.)));
-	block0->Finalize();
-	
-	character = boost::shared_ptr< Hero >(new Hero(Vector2(320., 640.)));
+	character = boost::shared_ptr< Hero >(new Hero(Vector2(5., 4.9)));
 	boost::shared_ptr< Hero > hero0 = boost::shared_ptr< Hero >(new Hero(Vector2(320., 320.)));
 
 	//
-	
-	blocks.push_front(block0);
 
 	heroes.push_front(hero0);
 
@@ -37,6 +31,11 @@ Arena::Arena(const std::string& _file)
 	// case7: 0. - 128., 0. - 128.
 	// case8: 640. + 128., 0. - 128.
 
+	std::forward_list< boost::shared_ptr< Object > > objects;
+	objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(3.5, 2.5), 3.5, 2.5)));
+	objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(6.0, 5.5), 3.0, 2.5)));
+	objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(3.0, 9.5), 3.0, 2.5)));
+	objects.push_front(boost::shared_ptr< Object >(new Object(Vector2(9.5, 12.5), 2.5, 2.5)));
 }
 
 Arena::~Arena()
@@ -48,7 +47,7 @@ Arena::~Arena()
 
 void Arena::Update(const float& _elapsed_time)
 {
-	BOOST_FOREACH(boost::shared_ptr< Hero > hero, heroes)
+	/*BOOST_FOREACH(boost::shared_ptr< Hero > hero, heroes)
 	{
 		hero->Update(_elapsed_time);
 
@@ -70,12 +69,12 @@ void Arena::Update(const float& _elapsed_time)
 
 		hero->center = hero->updated_center;
 		//hero->Report();
-	}
+	}*/
 }
 
 template <class T> void Arena::Update_WallBlock(boost::shared_ptr< Hero > _hero, T _block)
 {
-	BOOST_FOREACH(boost::shared_ptr< Wall > wall, _block->walls)
+	/*BOOST_FOREACH(boost::shared_ptr< Wall > wall, _block->walls)
 	{
 		Collision_Type wall_collision = wall->Collide(*_hero);
 		if (wall_collision != Collision_Type::NONE)
@@ -95,6 +94,6 @@ template <class T> void Arena::Update_WallBlock(boost::shared_ptr< Hero > _hero,
 
 			// TODO Objects like item/stance collision
 		}
-	}
+	}*/
 }
 

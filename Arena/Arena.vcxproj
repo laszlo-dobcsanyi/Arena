@@ -131,17 +131,19 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputHandler.hpp" />
+    <ClInclude Include="ListSeparatable.hpp" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="ListLockable.hpp" />
     <ClInclude Include="ModelObject.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Object_BSP.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Static_Object_BSP.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TreeLockable.hpp" />
     <ClInclude Include="Wall.h" />
-    <ClInclude Include="WallBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Arena.cpp" />
@@ -151,12 +153,13 @@
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Object_BSP.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Static_Object_BSP.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="MainWindow.cpp" />
-    <ClCompile Include="WallBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ListProcessable.hpp" />

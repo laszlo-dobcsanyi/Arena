@@ -7,14 +7,12 @@
 #include <boost\shared_ptr.hpp>
 
 class Hero;
-class WallBlock;
 
 class Arena
 {
 public:
 	boost::shared_ptr< Hero > character;
 	std::forward_list< boost::shared_ptr< Hero > > heroes;
-	std::forward_list< boost::shared_ptr< WallBlock > > blocks;
 
 	Arena(const int& _seed);
 	Arena(const std::string& _file);
