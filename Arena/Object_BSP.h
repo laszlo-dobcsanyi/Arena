@@ -1,7 +1,7 @@
 #ifndef OBJECT_BSP_H
 #define OBJECT_BSP_H
 
-#include <forward_list>
+#include <list>
 
 #include <boost\shared_ptr.hpp>
 
@@ -72,7 +72,8 @@ class BSP_Tree
 public:
 	BSP_Node *root = 0;
 
-	BSP_Tree(const std::forward_list< boost::shared_ptr< Object > > &_list);
+	//BSP_Tree(BSP_Node *_root) : root(_root) { }
+	BSP_Tree(std::list< boost::shared_ptr< Object > > &_list);
 	virtual ~BSP_Tree() { }
 
 private:
