@@ -10,8 +10,15 @@ Wall::Wall(const Vector2& _p1, const Vector2& _p2, const GLchar* _texturePath)
 
 }
 
-Wall::Wall(const float& _x1, const float& _y1, const float& _x2, const float& _y2, const GLchar* _texturePath)
-	: Object(Vector2((_x1 + _x2) / 2, (_y1 + _y2) / 2), (_x2 - _x1) / 2, (_y1 - _y2) / 2, _texturePath)
+Wall::Wall(const Vector2 &_center, const float &_width, const float &_height)
+	: Object(_center, _width, _height)
+{
+
+}
+
+
+Wall::Wall(const float& _x1, const float& _y1, const float& _x2, const float& _y2)
+	: Object(Vector2((_x1 + _x2) / 2, (_y1 + _y2) / 2), (_x2 - _x1) / 2, (_y1 - _y2) / 2)
 {
 
 }

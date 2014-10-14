@@ -2,17 +2,20 @@
 #define ARENA_H
 
 #include <string>
-#include <forward_list>
 
 #include <boost\shared_ptr.hpp>
 
+#include "ListProcessable.hpp"
+
+class Wall;
 class Hero;
 
 class Arena
 {
 public:
 	boost::shared_ptr< Hero > character;
-	std::forward_list< boost::shared_ptr< Hero > > heroes;
+	ListProcessable< boost::shared_ptr< Wall > > walls;
+	ListProcessable< boost::shared_ptr< Hero > > heroes;
 
 	Arena(const int& _seed);
 	Arena(const std::string& _file);
