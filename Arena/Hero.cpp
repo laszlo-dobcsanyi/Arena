@@ -27,36 +27,46 @@ void Hero::Update(const float& _elapsed_time)
 
 void Hero::Move(const uint8_t &_state)
 {
+	const float speed = 12.f;
 	switch (base_type)
 	{
 		// Free fall
 		case Collision_Type::NONE:
-		velocity = Vector2(0., -2.);
-		if (!(movement & Hero_Movement::RIGHT) && _state & Hero_Movement::RIGHT)	{ velocity.x += +2.; movement |= Hero_Movement::RIGHT; }
-		if (!(movement & Hero_Movement::LEFT) && _state & Hero_Movement::LEFT)		{ velocity.x += -2.; movement |= Hero_Movement::LEFT; }
+		force = Vector2(0., -speed / 8.);
+		if (!(movement & Hero_Movement::RIGHT) && _state & Hero_Movement::RIGHT)	{ velocity.x += +speed; movement |= Hero_Movement::RIGHT; }
+		if (movement & Hero_Movement::RIGHT && !(_state & Hero_Movement::RIGHT))	{ velocity.x += -speed; movement &= ~Hero_Movement::RIGHT; }
+		if (!(movement & Hero_Movement::LEFT) && _state & Hero_Movement::LEFT)		{ velocity.x += -speed; movement |= Hero_Movement::LEFT; }
+		if (movement & Hero_Movement::LEFT && !(_state & Hero_Movement::LEFT))		{ velocity.x += +speed; movement &= ~Hero_Movement::LEFT; }
 		break;
 
 		case Collision_Type::RIGHT:
-		velocity = Vector2(0., -2.);
-
-		if (!(movement & Hero_Movement::UP) && _state & Hero_Movement::UP)			{ velocity.y += -0.5; movement |= Hero_Movement::UP; }
-		if (!(movement & Hero_Movement::DOWN) && _state & Hero_Movement::DOWN)		{ velocity.y += +0.5; movement |= Hero_Movement::DOWN; }
+		force = Vector2(0., -speed);
+		if (!(movement & Hero_Movement::UP) && _state & Hero_Movement::UP)			{ velocity.y += -speed / 4.; movement |= Hero_Movement::UP; }
+		if (movement & Hero_Movement::UP && !(_state & Hero_Movement::UP))			{ velocity.y += +speed / 4.; movement &= ~Hero_Movement::UP; }
+		if (!(movement & Hero_Movement::DOWN) && _state & Hero_Movement::DOWN)		{ velocity.y += +speed / 4.; movement |= Hero_Movement::DOWN; }
+		if (movement & Hero_Movement::DOWN && !(_state & Hero_Movement::DOWN))		{ velocity.y += -speed / 4.; movement &= ~Hero_Movement::DOWN; }
 		break;
 
 		case Collision_Type::TOP:
-		velocity = Vector2(0., 0.);
-		if (!(movement & Hero_Movement::RIGHT) && _state & Hero_Movement::RIGHT)	{ velocity.x += +2.; movement |= Hero_Movement::RIGHT; }
-		if (!(movement & Hero_Movement::LEFT) && _state & Hero_Movement::LEFT)		{ velocity.x += -2.; movement |= Hero_Movement::LEFT; }
+		force = Vector2(0., 0.);
+		if (!(movement & Hero_Movement::RIGHT) && _state & Hero_Movement::RIGHT)	{ velocity.x += +speed; movement |= Hero_Movement::RIGHT; }
+		if (movement & Hero_Movement::RIGHT && !(_state & Hero_Movement::RIGHT))	{ velocity.x += -speed; movement &= ~Hero_Movement::RIGHT; }
+		if (!(movement & Hero_Movement::LEFT) && _state & Hero_Movement::LEFT)		{ velocity.x += -speed; movement |= Hero_Movement::LEFT; }
+		if (movement & Hero_Movement::LEFT && !(_state & Hero_Movement::LEFT))		{ velocity.x += +speed; movement &= ~Hero_Movement::LEFT; }
+		if (!(movement & Hero_Movement::JUMP) && _state & Hero_Movement::JUMP)		{ velocity.y += -2*speed; movement |= Hero_Movement::LEFT; }
+		if (movement & Hero_Movement::JUMP && !(_state & Hero_Movement::JUMP))		{ velocity.y += +2*speed; movement &= ~Hero_Movement::LEFT; }
 		break;
 
 		case Collision_Type::LEFT:
-		velocity = Vector2(0., -2.);
-		if (!(movement & Hero_Movement::UP) && _state & Hero_Movement::UP)			{ velocity.y += -0.5; movement |= Hero_Movement::UP; }
-		if (!(movement & Hero_Movement::DOWN) && _state & Hero_Movement::DOWN)		{ velocity.y += +0.5; movement |= Hero_Movement::DOWN; }
+		force = Vector2(0., -speed);
+		if (!(movement & Hero_Movement::UP) && _state & Hero_Movement::UP)			{ velocity.y += -speed / 4.; movement |= Hero_Movement::UP; }
+		if (movement & Hero_Movement::UP && !(_state & Hero_Movement::UP))			{ velocity.y += +speed / 4.; movement &= ~Hero_Movement::UP; }
+		if (!(movement & Hero_Movement::DOWN) && _state & Hero_Movement::DOWN)		{ velocity.y += +speed / 4.; movement |= Hero_Movement::DOWN; }
+		if (movement & Hero_Movement::DOWN && !(_state & Hero_Movement::DOWN))		{ velocity.y += -speed / 4.; movement &= ~Hero_Movement::DOWN; }
 		break;
 
 		case Collision_Type::BOTTOM:
-		velocity = Vector2(0., -2.);
+		force = Vector2(0., -speed);
 		break;
 	}
 }
