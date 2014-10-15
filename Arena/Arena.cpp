@@ -5,13 +5,25 @@
 #include <iostream>
 #include <assert.h>
 
+#include <boost\random.hpp>
 #include <boost\foreach.hpp>
 
 #include "Hero.h"
 #include "Wall.h"
 
+
+boost::mt19937 rng;
+float float_rng(float min, float max)
+{
+	boost::uniform_real<float> u(min, max);
+	boost::variate_generator<boost::mt19937&, boost::uniform_real<float> > gen(rng, u);
+	return gen();
+}
+
+
 Arena::Arena(const int &_seed)
 {
+	character = boost::shared_ptr< Hero >(new Hero(Vector2(500., 400.), "Textures\\awesomeface.png"));
 
 }
 

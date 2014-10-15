@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#include <boost\random.hpp>
-
 #include "Hero.h"
 
 Wall::Wall(const Vector2& _p1, const Vector2& _p2, const GLchar* _texturePath)
@@ -20,7 +18,7 @@ Wall::Wall(const Vector2 &_center, const float &_width, const float &_height, co
 
 
 Wall::Wall(const float& _x1, const float& _y1, const float& _x2, const float& _y2, const GLchar* _texturePath)
-	: Object(Vector2((_x1 + _x2) / 2., (_y1 + _y2) / 2.), (_x2 - _x1) / 2., (_y1 - _y2) / 2., _texturePath)
+	: Object(Vector2((_x1 + _x2) / 2.f, (_y1 + _y2) / 2.f), (_x2 - _x1) / 2.f, (_y1 - _y2) / 2.f, _texturePath)
 {
 
 }
@@ -32,14 +30,6 @@ Wall::~Wall()
 
 ///
 
-boost::mt19937 rng;
-float float_rng(float min, float max)
-{
-	boost::uniform_real<float> u(min, max);
-	boost::variate_generator<boost::mt19937&, boost::uniform_real<float> > gen(rng, u);
-	return gen();
-}
-
 void Wall::Collision_Hero(boost::shared_ptr< Hero > _hero, const Collision_Type& _type)
 {
 	switch (_type)
@@ -50,6 +40,4 @@ void Wall::Collision_Hero(boost::shared_ptr< Hero > _hero, const Collision_Type&
 		case Collision_Type::BOTTOM:	_hero->updated_center.y = center.y - height - _hero->height;	_hero->velocity.y = 0.; break;
 		//default:						std::cout << "# Collision failed!" << std::endl;
 	}
-
-	//_hero->force = Vector2(float_rng(-25., 25.), float_rng(-25., 25.));
 }
