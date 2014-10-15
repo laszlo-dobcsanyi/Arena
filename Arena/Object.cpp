@@ -45,7 +45,7 @@ Collision_Type Object::Collide(const Object& _other)
 	// case 4:
 	if (_other.updated_center.y < my_p2.y && my_p1.x <= _other.updated_center.x && _other.updated_center.x <= my_p2.x)
 	{
-		if (my_p2.x < ur_p1.x) return Collision_Type::BOTTOM;
+		if (my_p2.y < ur_p1.y) return Collision_Type::BOTTOM;
 		else return  Collision_Type::NONE;
 	}
 
