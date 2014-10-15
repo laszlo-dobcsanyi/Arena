@@ -53,8 +53,8 @@ void Hero::Move(const uint8_t &_state)
 		if (movement & Hero_Movement::RIGHT && !(_state & Hero_Movement::RIGHT))	{ velocity.x += -speed; movement &= ~Hero_Movement::RIGHT; }
 		if (!(movement & Hero_Movement::LEFT) && _state & Hero_Movement::LEFT)		{ velocity.x += -speed; movement |= Hero_Movement::LEFT; }
 		if (movement & Hero_Movement::LEFT && !(_state & Hero_Movement::LEFT))		{ velocity.x += +speed; movement &= ~Hero_Movement::LEFT; }
-		if (!(movement & Hero_Movement::JUMP) && _state & Hero_Movement::JUMP)		{ velocity.y += -2*speed; movement |= Hero_Movement::LEFT; }
-		if (movement & Hero_Movement::JUMP && !(_state & Hero_Movement::JUMP))		{ velocity.y += +2*speed; movement &= ~Hero_Movement::LEFT; }
+		if (!(movement & Hero_Movement::JUMP) && _state & Hero_Movement::JUMP)		{ velocity.y += +2*speed; movement |= Hero_Movement::JUMP; }
+		if (movement & Hero_Movement::JUMP && !(_state & Hero_Movement::JUMP))		{ velocity.y += -2*speed; movement &= ~Hero_Movement::JUMP; }
 		break;
 
 		case Collision_Type::LEFT:
