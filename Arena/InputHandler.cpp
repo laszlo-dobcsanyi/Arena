@@ -44,6 +44,11 @@ void InputHandler::GameKeyCallback(GLFWwindow* _window, int _key, int _scancode,
 			keys[KEY_RIGHT] = (_action == GLFW_PRESS ? true : (_action == GLFW_RELEASE ? false : keys[KEY_RIGHT]));
 			break;
 		}
+		case GLFW_KEY_SPACE:
+		{
+			keys[KEY_JUMP] = (_action == GLFW_PRESS ? true : (_action == GLFW_RELEASE ? false : keys[KEY_JUMP]));
+			break;
+		}
 	}
 
 	if (_key == GLFW_KEY_ESCAPE && _action == GLFW_PRESS)
@@ -70,6 +75,7 @@ void InputHandler::GameMovement()
 	movement |= Hero_Movement::DOWN * keys[KEY_DOWN];
 	movement |= Hero_Movement::LEFT * keys[KEY_LEFT];
 	movement |= Hero_Movement::UP * keys[KEY_UP];
+	movement |= Hero_Movement::JUMP * keys[KEY_JUMP];
 	
 	Game::Get()->arena->character->Move(movement);
 }
