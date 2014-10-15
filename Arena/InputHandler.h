@@ -23,7 +23,7 @@ public:
 	static void MenuMouseButtonCallback(GLFWwindow* _window, int _key, int _action, int _mode);
 	static void GameKeyCallback(GLFWwindow* _window, int _key, int _scancode, int _action, int _mode);
 	static void GameMouseButtonCallback(GLFWwindow* _window, int _key, int _action, int _mode);
-	static uint8_t GameMovement();
+	static void GameMovement();
 
 private:
 	InputHandler() {}

@@ -1,7 +1,9 @@
 #include <cstdint>
 
 #include "Hero.h"
+#include "Game.h"
 #include "InputHandler.h"
+#include "Arena.h"
 
 bool InputHandler::keys[KEY_ARRAY_MAX_SIZE];
 
@@ -60,11 +62,14 @@ void InputHandler::GameMouseButtonCallback(GLFWwindow* _window, int _key, int _a
 	}*/
 }
 
-uint8_t InputHandler::GameMovement()
+void InputHandler::GameMovement()
 {
 	uint8_t movement = 0x0000000;
 
-	std::cout << (int)movement << '\n';
+	movement |= Hero_Movement::RIGHT * keys[KEY_RIGHT];
+	movement |= Hero_Movement::DOWN * keys[KEY_DOWN];
+	movement |= Hero_Movement::LEFT * keys[KEY_LEFT];
+	movement |= Hero_Movement::UP * keys[KEY_UP];
 	
-	return movement;
+	Game::Get()->arena->character->Move(movement);
 }
