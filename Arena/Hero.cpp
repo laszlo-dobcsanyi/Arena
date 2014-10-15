@@ -6,7 +6,8 @@
 
 /// Constructor/Destructor
 Hero::Hero(const Vector2& _center, const GLchar* _texturePath)
-	: Object(_center, 32, 32, _texturePath)
+	: Object(_center, 32, 32, _texturePath),
+	  movement(0)
 {
 
 }
@@ -20,36 +21,46 @@ Hero::~Hero()
 
 void Hero::Update(const float& _elapsed_time)
 {
-	switch (base_type)
-	{
-		/*// Free fall
-		case Collision_Type::NONE:
-			velocity = velocity + (Vector2(-2., -1.) * _elapsed_time);
-			break;
-
-		case Collision_Type::RIGHT:
-			velocity = velocity + (Vector2(0., -1.) * _elapsed_time * 0.5);
-			break;
-
-		case Collision_Type::TOP:
-			velocity = Vector2(0., 0.);
-			break;
-
-		case Collision_Type::LEFT:
-			velocity = velocity + (Vector2(0., -1.) * _elapsed_time * 0.5);
-			break;
-
-		case Collision_Type::BOTTOM:
-			velocity = velocity + (Vector2(0., -1.) * _elapsed_time);
-			break;*/
-
-		default:
-			velocity = velocity + (force * _elapsed_time);
-			break;
-	}
-
+	velocity = velocity + (force * _elapsed_time);
 	updated_center = center + velocity;
 }
+
+void Hero::Move(const uint8_t &_state)
+{
+	switch (base_type)
+	{
+		// Free fall
+		case Collision_Type::NONE:
+		velocity = Vector2(0., -2.);
+		if (!(movement & Hero_Movement::RIGHT) && _state & Hero_Movement::RIGHT)	{ velocity.x += +2.; movement |= Hero_Movement::RIGHT; }
+		if (!(movement & Hero_Movement::LEFT) && _state & Hero_Movement::LEFT)		{ velocity.x += -2.; movement |= Hero_Movement::LEFT; }
+		break;
+
+		case Collision_Type::RIGHT:
+		velocity = Vector2(0., -2.);
+
+		if (!(movement & Hero_Movement::UP) && _state & Hero_Movement::UP)			{ velocity.y += -0.5; movement |= Hero_Movement::UP; }
+		if (!(movement & Hero_Movement::DOWN) && _state & Hero_Movement::DOWN)		{ velocity.y += +0.5; movement |= Hero_Movement::DOWN; }
+		break;
+
+		case Collision_Type::TOP:
+		velocity = Vector2(0., 0.);
+		if (!(movement & Hero_Movement::RIGHT) && _state & Hero_Movement::RIGHT)	{ velocity.x += +2.; movement |= Hero_Movement::RIGHT; }
+		if (!(movement & Hero_Movement::LEFT) && _state & Hero_Movement::LEFT)		{ velocity.x += -2.; movement |= Hero_Movement::LEFT; }
+		break;
+
+		case Collision_Type::LEFT:
+		velocity = Vector2(0., -2.);
+		if (!(movement & Hero_Movement::UP) && _state & Hero_Movement::UP)			{ velocity.y += -0.5; movement |= Hero_Movement::UP; }
+		if (!(movement & Hero_Movement::DOWN) && _state & Hero_Movement::DOWN)		{ velocity.y += +0.5; movement |= Hero_Movement::DOWN; }
+		break;
+
+		case Collision_Type::BOTTOM:
+		velocity = Vector2(0., -2.);
+		break;
+	}
+}
+
 
 void Hero::Report()
 {
