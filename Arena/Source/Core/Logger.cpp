@@ -16,7 +16,7 @@ static const WORD colors[] = { 0x0F, 0x0C, 0x04, 0x04, 0x0A, 0x02, 0x02, 0x0B, 0
 */
 
 int Logger::mask = 0xFFFFFFFF;
-int Logger::object = 0xFFFFFFFF & (~LogObject::bsp_tree);
+int Logger::object = 0xFFFFFFFF & (~LogObject::bsp_tree) & (~LogObject::wall) & (~LogObject::hero);
 HANDLE Logger::console = GetStdHandle(STD_OUTPUT_HANDLE);
 
 typedef unsigned int unsigned_int;

@@ -13,13 +13,58 @@
 #include "Source\Game\Hero.h"
 #include "Source\Game\Wall.h"
 
+boost::mt19937 rng(42u);
+float float_rng(float min, float max)
+{
+	boost::uniform_real<float> u(min, max);
+	boost::variate_generator<boost::mt19937&, boost::uniform_real<float> > gen(rng, u);
+	return gen();
+}
+
 Arena::Arena(const int &_seed)
 {
 	#ifdef LOGGING
 	Logger::Write(LogMask::constructor, LogObject::arena, "+> Creating Generated Arena with seed " + boost::lexical_cast< std::string >(_seed) + "..");
 	#endif
 
-	character = boost::shared_ptr< Hero >(new Hero(Vector2(500., 400.), "Textures\\awesomeface.png"));
+	const float block = 128.;
+	const unsigned int size = 16;
+
+	character = boost::shared_ptr< Hero >(new Hero(Vector2(block + 32.f, block + 32.f), "Textures\\awesomeface.png"));
+
+	for (int i = 0; i < 64; ++i)
+	{
+		heroes.data.Add(boost::shared_ptr< Hero >(new Hero(Vector2(float_rng(block + 32.f, (size - 1) * block -32.f), block + 32.f), "Textures\\awesomeface.png")));
+	}
+
+	#ifdef LOGGING
+	Logger::Write(LogMask::message, LogObject::arena, "\t:> Arena: Generating walls..");
+	#endif
+
+	SLL< boost::shared_ptr< Wall > > *wall_segment = new SLL< boost::shared_ptr< Wall > >();
+
+	boost::shared_ptr< Wall > wall0 = boost::shared_ptr< Wall >(new Wall(Vector2(0., block), Vector2(size * block, 0.), "Textures\\wall.png"));	
+	walls.data.Add(wall0);	wall_segment->Insert_Last(wall0);
+	boost::shared_ptr< Wall > wall1 = boost::shared_ptr< Wall >(new Wall(Vector2(0., size * block), Vector2(block, block), "Textures\\wall.png"));
+	walls.data.Add(wall1);	wall_segment->Insert_Last(wall1);
+	boost::shared_ptr< Wall > wall2 = boost::shared_ptr< Wall >(new Wall(Vector2((size - 1) * block, size * block), Vector2(size * block, block), "Textures\\wall.png"));
+	walls.data.Add(wall2);	wall_segment->Insert_Last(wall2);
+
+	for (unsigned int outer = 2; outer < size - 1; outer += 2)
+	{
+		for (unsigned int inner = 1; inner < size - 1; inner += 2)
+		{
+			float x1 = float_rng(inner * block, (inner + 0.5f) * block), y1 = float_rng((outer + 0.5f) * block, (outer + 1.f) * block);
+			boost::shared_ptr< Wall > wall = boost::shared_ptr< Wall >(new Wall(Vector2(x1, y1), Vector2(float_rng(x1 + 64.f, (inner + 1) * block), float_rng(outer * block, y1 - 64.f)), "Textures\\wall.png"));
+			walls.data.Add(wall);	wall_segment->Insert_Last(wall);
+		}
+	}
+
+	#ifdef LOGGING
+	Logger::Write(LogMask::message, LogObject::arena, "\t:> Arena: Creating BSP Tree..");
+	#endif
+
+	collision_tree = new BSP_Tree< boost::shared_ptr< Wall > >(wall_segment);
 }
 
 Arena::Arena(const std::string &_file)

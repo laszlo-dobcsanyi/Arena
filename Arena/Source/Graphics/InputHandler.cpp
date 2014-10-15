@@ -78,4 +78,8 @@ void InputHandler::GameMovement()
 	movement |= Hero_Movement::JUMP * keys[KEY_JUMP];
 	
 	Game::Get()->arena->character->Move(movement);
+	BOOST_FOREACH(boost::shared_ptr< Hero > hero, Game::Get()->arena->heroes.data.list)
+	{
+		hero->Move(movement);
+	}
 }

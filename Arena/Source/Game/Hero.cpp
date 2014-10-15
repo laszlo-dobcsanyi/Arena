@@ -36,6 +36,10 @@ void Hero::Update(const float& _elapsed_time)
 		if (!(movement & Hero_Movement::LEFT) && velocity.x < 0.f) velocity.x = -1.f < velocity.x ? 0.f : velocity.x * 0.95f;
 	}
 
+	const float max_speed = 64.f;
+	if (max_speed < abs(velocity.x)) velocity.x = velocity.x < 0.f ? -max_speed : max_speed;
+	if (max_speed < abs(velocity.y)) velocity.y = velocity.y < 0.f ? -max_speed : max_speed;
+
 	velocity = velocity + (force * _elapsed_time);
 	updated_center = center + velocity;
 }
