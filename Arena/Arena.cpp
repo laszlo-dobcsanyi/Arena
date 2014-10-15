@@ -115,6 +115,17 @@ void Arena::Update_Hero(boost::shared_ptr< Hero > _hero, const float &_elapsed_t
 			}
 		}
 	}
+
+	if (_hero->base)
+	{
+		Collision_Type collision = _hero->base->Attachment(*_hero);
+		if (collision != _hero->base_type)
+		{
+			_hero->base_type = collision;
+			_hero->Move(_hero->movement);
+			if (collision == Collision_Type::NONE) _hero->base = 0;
+		}
+	}
 	_hero->center = _hero->updated_center;
 }
 

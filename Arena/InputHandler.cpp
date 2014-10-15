@@ -56,7 +56,7 @@ void InputHandler::GameKeyCallback(GLFWwindow* _window, int _key, int _scancode,
 		glfwSetWindowShouldClose(_window, GL_TRUE);
 	}
 
-	GameMovement();
+	if (_action == GLFW_PRESS || _action == GLFW_RELEASE) GameMovement();
 }
 
 void InputHandler::GameMouseButtonCallback(GLFWwindow* _window, int _key, int _action, int _mode)

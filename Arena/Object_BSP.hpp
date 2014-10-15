@@ -66,11 +66,7 @@ public:
 			current = current->next;
 		}
 
-		if (best_horizontal_distance == std::numeric_limits<float>::infinity() && best_vertical_distance == std::numeric_limits<float>::infinity())
-		{
-			std::cout << "XXX\n";
-		}
-		//assert(!(best_horizontal_distance == std::numeric_limits<float>::infinity() && best_vertical_distance == std::numeric_limits<float>::infinity()));
+		assert(!(best_horizontal_distance == std::numeric_limits<float>::infinity() && best_vertical_distance == std::numeric_limits<float>::infinity()));
 
 		// Select best separation
 		if ((best_horizontal_distance < best_vertical_distance && best_horizontal_cut != std::numeric_limits<float>::infinity()) || (best_vertical_cut == std::numeric_limits<float>::infinity()))
@@ -130,7 +126,7 @@ public:
 	{
 		if (_sll->count == 1)
 		{
-			std::cout << ">Only Object [" << _sll->first->member->center.x << ":" << _sll->first->member->center.y << "] bounded!" << std::endl;
+			//std::cout << ">Only Object [" << _sll->first->member->center.x << ":" << _sll->first->member->center.y << "] bounded!" << std::endl;
 			BSP_Node *current = this;
 			current->object = _sll->first->member;
 
