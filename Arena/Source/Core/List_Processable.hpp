@@ -1,9 +1,9 @@
-#ifndef LIST_PROCESSABLE_HPP
-#define LIST_PROCESSABLE_HPP
+#ifndef CORE_LIST_PROCESSABLE_HPP
+#define CORE_LIST_PROCESSABLE_HPP
 
 #include <boost\foreach.hpp>
 
-#include "ListLockable.hpp"
+#include "Source\Core\List_Lockable.hpp"
 
 template<class T> class ListProcessable_Callback
 {

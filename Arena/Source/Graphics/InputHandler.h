@@ -1,5 +1,5 @@
-#ifndef INPUTHANDLER_HPP
-#define INPUTHANDLER_HPP
+#ifndef GRAPHICS_INPUTHANDLER_H
+#define GRAPHICS_INPUTHANDLER_H
 
 #include <cstdint>
 

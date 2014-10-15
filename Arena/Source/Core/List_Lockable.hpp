@@ -1,5 +1,5 @@
-#ifndef LIST_LOCKABLE_HPP
-#define LIST_LOCKABLE_HPP
+#ifndef CORE_LIST_LOCKABLE_HPP
+#define CORE_LIST_LOCKABLE_HPP
 
 #include <list>
 

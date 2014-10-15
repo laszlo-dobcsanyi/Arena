@@ -1,5 +1,5 @@
-#ifndef Game_H
-#define Game_H
+#ifndef GAME_GAME_H
+#define GAME_GAME_H
 
 #include <assert.h>
 

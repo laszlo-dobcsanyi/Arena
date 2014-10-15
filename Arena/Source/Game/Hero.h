@@ -1,11 +1,11 @@
-#ifndef HERO_H
-#define HERO_H
-
-#include "Object.h"
+#ifndef GAME_HERO_H
+#define GAME_HERO_H
 
 #include <cstdint>
 
 #include <boost\shared_ptr.hpp>
+
+#include "Source\Game\Object.h"
 
 struct Hero_Movement
 {
@@ -37,7 +37,6 @@ public:
 	uint8_t movement;
 	void Move(const uint8_t &_state);
 	void Update(const float& _elapsed_time);
-	void Report();
 
 	void Collision_Hero(boost::shared_ptr< Hero > _other, const Collision_Type& _type);
 	void Collision_Wall(boost::shared_ptr< Wall > _wall, const Collision_Type& _type);

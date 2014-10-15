@@ -1,12 +1,14 @@
-#ifndef OBJECT_BSP_H
-#define OBJECT_BSP_H
+#ifndef CORE_BSP_TREE_H
+#define CORE_BSP_TREE_H
 
 #include <list>
 
 #include <boost\shared_ptr.hpp>
+#include <boost\lexical_cast.hpp>
 
-#include "Object.h"
-#include "ListSeparatable.hpp"
+#include "Source\Macro"
+#include "Source\Game\Object.h"
+#include "Source\Core\List_Separatable.hpp"
 
 struct Partition
 {
@@ -74,14 +76,18 @@ public:
 			type = Partition::HORIZONTAL;
 			value = best_horizontal_cut;
 
-			//std::cout << "\t>Horizontal Separator: y < " << value << " < y" << std::endl;
+			#ifdef LOGGING
+			Logger::Write(LogMask::message, LogObject::bsp_tree, "\t> - Horizontal Separator: y < " + boost::lexical_cast< std::string >(value) + " < y");
+			#endif
 		}
 		else
 		{
 			type = Partition::VERTICAL;
 			value = best_vertical_cut;
 
-			//std::cout << "\t>Vertical Separator: x < " << value << " < x" << std::endl;
+			#ifdef LOGGING
+			Logger::Write(LogMask::message, LogObject::bsp_tree, "\t> | Vertical Separator: x < " + boost::lexical_cast< std::string >(value)+" < x");
+			#endif
 		}
 	}
 	virtual ~BSP_Separator() { }
@@ -126,7 +132,11 @@ public:
 	{
 		if (_sll->count == 1)
 		{
-			//std::cout << ">Only Object [" << _sll->first->member->center.x << ":" << _sll->first->member->center.y << "] bounded!" << std::endl;
+			#ifdef LOGGING
+			Logger::Write(LogMask::message, LogObject::bsp_tree, "\t\t> Only Object: y < " + boost::lexical_cast< std::string >(_sll->first->member->center.x) + ":" +
+				boost::lexical_cast< std::string >(_sll->first->member->center.y) + " bounded!");
+			#endif
+
 			BSP_Node *current = this;
 			current->object = _sll->first->member;
 
@@ -165,7 +175,10 @@ public:
 		}
 		else
 		{
-			//std::cout << ">Working on [" << _p1.x << ":" << _p1.y << "] x [" << _p2.x << ":" << _p2.y << "]" << std::endl;
+			#ifdef LOGGING
+			Logger::Write(LogMask::message, LogObject::bsp_tree, "> Working on [" + boost::lexical_cast<std::string>(_p1.x) + ":" + boost::lexical_cast<std::string>(_p1.y) + "] x [" +
+				boost::lexical_cast<std::string>(_p2.x) + ":" + boost::lexical_cast<std::string>(_p2.y) + "]");
+			#endif
 
 			// Create optimal separation
 			separator = new BSP_Separator< T >(_sll, _p1, _p2);
@@ -173,22 +186,13 @@ public:
 			// Separate list
 			SLL< T > *lesser = _sll->Separate< BSP_Separator< T > >(separator);
 
-			//std::cout << "\t>Lesser: " << lesser->count << "\tOriginal: " << _sll->count << std::endl;
+			#ifdef LOGGING
+			Logger::Write(LogMask::message, LogObject::bsp_tree, "\t> Lesser: " + boost::lexical_cast<std::string>(lesser->count) + "\tOriginal: " + boost::lexical_cast<std::string>(_sll->count));
+			#endif
 
 			// Recursive calls
 			if (lesser->count != 0)	left = new BSP_Node(lesser, separator->type == Partition::HORIZONTAL ? Vector2(_p1.x, separator->value) : _p1, separator->type == Partition::HORIZONTAL ? _p2 : Vector2(separator->value, _p2.y));
 			if (_sll->count != 0)	right = new BSP_Node(_sll, separator->type == Partition::HORIZONTAL ? _p1 : Vector2(separator->value, _p1.y), separator->type == Partition::HORIZONTAL ? Vector2(_p2.x, separator->value) : _p2);
-
-			/*if (separator->type == Partition::HORIZONTAL)
-			{
-			if (lesser->count != 0)	left = new BSP_Node(lesser, Vector2(_p1.x, separator->value), _p2);
-			if (_sll->count != 0)	right = new BSP_Node(_sll, _p1, Vector2(_p2.x, separator->value));
-			}
-			else
-			{
-			if (lesser->count != 0)	left = new BSP_Node(lesser, _p1, Vector2(separator->value, _p2.y));
-			if (_sll->count != 0)	right = new BSP_Node(_sll, Vector2(separator->value, _p1.y), _p2);
-			}*/
 		}
 	}
 	virtual ~BSP_Node() { }

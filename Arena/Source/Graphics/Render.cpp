@@ -1,13 +1,14 @@
-#include <boost/foreach.hpp>
+#include <boost\foreach.hpp>
 
-#include "Render.h"
-#include "MainWindow.h"
-#include "Shader.h"
-#include "Camera.h"
-#include "Arena.h"
-#include "Game.h"
-#include "Hero.h"
-#include "Wall.h"
+#include "Source\Game\Arena.h"
+#include "Source\Game\Game.h"
+#include "Source\Game\Hero.h"
+#include "Source\Game\Wall.h"
+#include "Source\Graphics\Render.h"
+#include "Source\Graphics\MainWindow.h"
+#include "Source\Graphics\Shader.h"
+#include "Source\Graphics\Camera.h"
+#include "Source\Graphics\Texture.h"
 
 Render::Render() :	shaderWall(new Shader("Shaders\\Wall.vs", "Shaders\\Wall.frag")), 
 					shaderHero(new Shader("Shaders\\Hero.vs", "Shaders\\Hero.frag")),				

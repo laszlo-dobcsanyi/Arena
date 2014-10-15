@@ -1,5 +1,5 @@
-#ifndef RENDER_H
-#define RENDER_H
+#ifndef GRAPHICS_RENDER_H
+#define GRAPHICS_RENDER_H
 
 #include <forward_list>
 

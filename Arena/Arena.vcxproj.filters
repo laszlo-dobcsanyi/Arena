@@ -15,91 +15,97 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Hero.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="ListLockable.hpp">
+    <ClInclude Include="Source\Core\BSP_Tree.hpp">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
+    <ClInclude Include="Source\Game\Arena.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="Source\Game\Game.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Arena.h">
+    <ClInclude Include="Source\Game\Hero.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Render.h">
+    <ClInclude Include="Source\Game\Object.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Wall.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\Camera.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
+    <ClInclude Include="Source\Graphics\InputHandler.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="Source\Graphics\MainWindow.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="MainWindow.h">
+    <ClInclude Include="Source\Graphics\Render.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="InputHandler.h">
+    <ClInclude Include="Source\Graphics\Shader.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="ListSeparatable.hpp">
+    <ClInclude Include="Source\Graphics\Texture.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\List_Lockable.hpp">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Object_BSP.hpp">
-      <Filter>Game</Filter>
+    <ClInclude Include="Source\Core\List_Processable.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\List_Separatable.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\Logger.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core.cpp">
+    <ClCompile Include="Source\Core\Core.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Hero.cpp">
+    <ClCompile Include="Source\Game\Arena.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Wall.cpp">
+    <ClCompile Include="Source\Game\Game.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="Source\Game\Hero.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Render.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Arena.cpp">
+    <ClCompile Include="Source\Game\Object.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
+    <ClCompile Include="Source\Game\Wall.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="InputHandler.cpp">
+    <ClCompile Include="Source\Graphics\Camera.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
+    <ClCompile Include="Source\Graphics\InputHandler.cpp">
       <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\MainWindow.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\Render.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\Shader.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\Texture.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Logger.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ListProcessable.hpp">
-      <Filter>Core</Filter>
-    </None>
     <None Include="Shaders\Background.frag">
       <Filter>Graphics\Shaders</Filter>
     </None>
@@ -124,5 +130,6 @@
     <None Include="Shaders\Wall.vs">
       <Filter>Graphics\Shaders</Filter>
     </None>
+    <None Include="Source\Macro" />
   </ItemGroup>
 </Project>

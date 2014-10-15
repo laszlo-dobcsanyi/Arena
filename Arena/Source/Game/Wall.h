@@ -1,22 +1,17 @@
-#ifndef WALL_H
-#define WALL_H
+#ifndef GAME_WALL_H
+#define GAME_WALL_H
 
 #include <forward_list>
 
 #include <boost\shared_ptr.hpp>
 
-#include "Object.h"
-
-class WallBlock;
+#include "Source\Game\Object.h"
 
 class Hero;
 
 class Wall : public Object
 {
 public:
-	WallBlock* block = 0;
-	std::forward_list< boost::shared_ptr< Hero > > heroes;
-
 	Wall(const Vector2 &_p1, const Vector2 &_p2, const GLchar* _texturePath);
 	Wall(const Vector2 &_center, const float &_width, const float &_height, const GLchar* _texturePath);
 	Wall(const float &_x1, const float &_y1, const float &_x2, const float &_y2, const GLchar* _texturePath);

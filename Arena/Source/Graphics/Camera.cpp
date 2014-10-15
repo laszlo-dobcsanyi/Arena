@@ -1,4 +1,4 @@
-#include "Camera.h"
+#include "Source\Graphics\Camera.h"
 
 Camera* Camera::camera;
 glm::vec3 Camera::centerVec = glm::vec3(0.0f, 0.0f, 2.0f);

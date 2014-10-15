@@ -1,11 +1,11 @@
-#ifndef CAMERA_H
-#define CAMERA_H
+#ifndef GRAPHICS_CAMERA_H
+#define GRAPHICS_CAMERA_H
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "MainWindow.h"
+#include "Source\Graphics\MainWindow.h"
 
 #define WINDOW_CAMERA_BOTTOM_LIMIT		(MainWindow::GetWindowHeight() - 32.0f) / 2.0f
 

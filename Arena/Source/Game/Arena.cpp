@@ -1,4 +1,4 @@
-#include "Arena.h"
+#include "Source\Game\Arena.h"
 
 #include <string>
 #include <fstream>
@@ -7,31 +7,28 @@
 
 #include <boost\random.hpp>
 #include <boost\foreach.hpp>
+#include <boost\lexical_cast.hpp>
 
-#include "Hero.h"
-#include "Wall.h"
-
-
-boost::mt19937 rng;
-float float_rng(float min, float max)
-{
-	boost::uniform_real<float> u(min, max);
-	boost::variate_generator<boost::mt19937&, boost::uniform_real<float> > gen(rng, u);
-	return gen();
-}
-
+#include "Source\Macro"
+#include "Source\Game\Hero.h"
+#include "Source\Game\Wall.h"
 
 Arena::Arena(const int &_seed)
 {
-	character = boost::shared_ptr< Hero >(new Hero(Vector2(500., 400.), "Textures\\awesomeface.png"));
+	#ifdef LOGGING
+	Logger::Write(LogMask::constructor, LogObject::arena, "+> Creating Generated Arena with seed " + boost::lexical_cast< std::string >(_seed) + "..");
+	#endif
 
+	character = boost::shared_ptr< Hero >(new Hero(Vector2(500., 400.), "Textures\\awesomeface.png"));
 }
 
 Arena::Arena(const std::string &_file)
 {
-	character = boost::shared_ptr< Hero >(new Hero(Vector2(600., 400.), "Textures\\awesomeface.png"));
+	#ifdef LOGGING
+	Logger::Write(LogMask::constructor, LogObject::arena, "+> Creating Constructed Arena from " + _file + "..");
+	#endif
 
-	//
+	character = boost::shared_ptr< Hero >(new Hero(Vector2(600., 400.), "Textures\\awesomeface.png"));
 
 	for (int i = 0; i < 0; ++i)
 	{
@@ -40,12 +37,15 @@ Arena::Arena(const std::string &_file)
 
 	//
 
+	#ifdef LOGGING
+	Logger::Write(LogMask::message, LogObject::arena, "\t:> Arena: Loading data..");
+	#endif
+
 	SLL< boost::shared_ptr< Wall > > *wall_segment = new SLL< boost::shared_ptr< Wall > >();
 
 	std::ifstream data(_file); assert(data.is_open());
 	while (data.good())
 	{
-	
 		float x1, y1, x2, y2;	data >> x1 >> y1 >> x2 >> y2;
 		std::string texture;	data >> texture;
 		boost::shared_ptr< Wall > wall = boost::shared_ptr< Wall >(new Wall(Vector2(x1, y1), Vector2(x2, y2), texture.c_str()));
@@ -55,12 +55,18 @@ Arena::Arena(const std::string &_file)
 	}
 	data.close();
 
+	#ifdef LOGGING
+	Logger::Write(LogMask::message, LogObject::arena, "\t:> Arena: Creating BSP Tree..");
+	#endif
+
 	collision_tree = new BSP_Tree< boost::shared_ptr< Wall > >(wall_segment);
 }
 
 Arena::~Arena()
 {
-
+	#ifdef LOGGING
+	Logger::Write(LogMask::destructor, LogObject::arena, "<- Destroying Arena..");
+	#endif
 }
 
 ///

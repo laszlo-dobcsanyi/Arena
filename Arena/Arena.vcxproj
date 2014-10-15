@@ -66,7 +66,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\Git\Arena\OpenGL includes;F:\Git\Arena\OpenGL includes;F:\Programming\Boost\boost_1_56_0;D:\boost_1_56_0;$(IncludePath)</IncludePath>
+    <IncludePath>D:\boost_1_56_0;D:\Git\Arena\Arena\;D:\Git\Arena\OpenGL includes;F:\Git\Arena\Arena;F:\Git\Arena\OpenGL includes;F:\Programming\Boost\boost_1_56_0;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Git\Arena\OpenGL libs;F:\Git\Arena\OpenGL libs;F:\Programming\Boost\boost_1_56_0\stage\lib;D:\boost_1_56_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -127,37 +127,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Arena.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="InputHandler.h" />
-    <ClInclude Include="ListSeparatable.hpp" />
-    <ClInclude Include="MainWindow.h" />
-    <ClInclude Include="Hero.h" />
-    <ClInclude Include="ListLockable.hpp" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="Object_BSP.hpp" />
-    <ClInclude Include="Render.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Wall.h" />
+    <ClInclude Include="Source\Core\BSP_Tree.hpp" />
+    <ClInclude Include="Source\Core\List_Lockable.hpp" />
+    <ClInclude Include="Source\Core\List_Processable.hpp" />
+    <ClInclude Include="Source\Core\List_Separatable.hpp" />
+    <ClInclude Include="Source\Core\Logger.h" />
+    <ClInclude Include="Source\Game\Arena.h" />
+    <ClInclude Include="Source\Game\Game.h" />
+    <ClInclude Include="Source\Game\Hero.h" />
+    <ClInclude Include="Source\Game\Object.h" />
+    <ClInclude Include="Source\Game\Wall.h" />
+    <ClInclude Include="Source\Graphics\Camera.h" />
+    <ClInclude Include="Source\Graphics\InputHandler.h" />
+    <ClInclude Include="Source\Graphics\MainWindow.h" />
+    <ClInclude Include="Source\Graphics\Render.h" />
+    <ClInclude Include="Source\Graphics\Shader.h" />
+    <ClInclude Include="Source\Graphics\Texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Arena.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Core.cpp" />
-    <ClCompile Include="Hero.cpp" />
-    <ClCompile Include="InputHandler.cpp" />
-    <ClCompile Include="MainWindow.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Render.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="Source\Core\Core.cpp" />
+    <ClCompile Include="Source\Core\Logger.cpp" />
+    <ClCompile Include="Source\Game\Arena.cpp" />
+    <ClCompile Include="Source\Game\Game.cpp" />
+    <ClCompile Include="Source\Game\Hero.cpp" />
+    <ClCompile Include="Source\Game\Object.cpp" />
+    <ClCompile Include="Source\Game\Wall.cpp" />
+    <ClCompile Include="Source\Graphics\Camera.cpp" />
+    <ClCompile Include="Source\Graphics\InputHandler.cpp" />
+    <ClCompile Include="Source\Graphics\MainWindow.cpp" />
+    <ClCompile Include="Source\Graphics\Render.cpp" />
+    <ClCompile Include="Source\Graphics\Shader.cpp" />
+    <ClCompile Include="Source\Graphics\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ListProcessable.hpp" />
     <None Include="Shaders\Background.frag" />
     <None Include="Shaders\Background.vs" />
     <None Include="Shaders\Hero.frag" />
@@ -166,6 +168,7 @@
     <None Include="Shaders\Projectile.vs" />
     <None Include="Shaders\Wall.frag" />
     <None Include="Shaders\Wall.vs" />
+    <None Include="Source\Macro" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

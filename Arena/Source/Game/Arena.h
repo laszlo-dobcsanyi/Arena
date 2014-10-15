@@ -1,12 +1,12 @@
-#ifndef ARENA_H
-#define ARENA_H
+#ifndef GAME_ARENA_H
+#define GAME_ARENA_H
 
 #include <string>
 
 #include <boost\shared_ptr.hpp>
 
-#include "Object_BSP.hpp"
-#include "ListProcessable.hpp"
+#include "Source\Core\BSP_Tree.hpp"
+#include "Source\Core\List_Processable.hpp"
 
 class Wall;
 class Hero;

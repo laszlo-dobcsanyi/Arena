@@ -1,4 +1,12 @@
-#include "Object.h"
+#include "Source\Game\Object.h"
+
+#include "Source\Graphics\Texture.h"
+
+Object::Object(const Vector2& _center, const float& _width, const float& _height, const GLchar* _texturePath)
+	: center(_center), width(_width), height(_height), updated_center(_center), velocity(0., 0.), force(0., 0.), texture(new Texture(_texturePath))
+{
+
+}
 
 Collision_Type Object::Collide(const Object& _other)
 {

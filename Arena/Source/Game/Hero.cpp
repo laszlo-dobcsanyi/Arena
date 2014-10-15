@@ -1,20 +1,29 @@
-#include "Hero.h"
+#include "Source\Game\Hero.h"
 
 #include <iostream>
 
-#include "Wall.h"
+#include "Source\Macro"
+#include "Source\Game\Wall.h"
 
 /// Constructor/Destructor
 Hero::Hero(const Vector2& _center, const GLchar* _texturePath)
 	: Object(_center, 32, 32, _texturePath),
 	  movement(0)
 {
+	#ifdef LOGGING
+	Logger::Write(LogMask::constructor, LogObject::hero, "\t+> Creating Hero..");
+	Logger::counter_heroes++;
+	#endif
 
+	Move(0);
 }
 
 Hero::~Hero()
 {
-
+	#ifdef LOGGING
+	Logger::Write(LogMask::destructor, LogObject::hero, "\t<- Destroying Hero..");
+	Logger::counter_heroes--;
+	#endif
 }
 
 ///
@@ -75,12 +84,6 @@ void Hero::Move(const uint8_t &_state)
 	if (movement & Hero_Movement::JUMP && !(_state & Hero_Movement::JUMP))		{ movement &= ~Hero_Movement::JUMP; }
 }
 
-
-void Hero::Report()
-{
-	std::cout << "Hero C [" << center.x << ":" << center.y << "] V [" << velocity.x << ":" << velocity.y << "]" << std::endl;
-}
-
 ///
 
 void Hero::Collision_Hero(boost::shared_ptr< Hero > _other, const Collision_Type& _type)
@@ -100,7 +103,7 @@ void Hero::Collision_Wall(boost::shared_ptr< Wall > _wall, const Collision_Type&
 	}
 	else
 	{
-		//if (base_type != Collision_Type::BOTTOM)
+		if (base_type != Collision_Type::BOTTOM)
 		{
 			base = _wall;
 			base_type = _type;

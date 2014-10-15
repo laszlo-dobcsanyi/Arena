@@ -1,7 +1,7 @@
-#include "Render.h"
-#include "InputHandler.h"
-#include "Shader.h"
-#include "MainWindow.h"
+#include "Source\Graphics\Render.h"
+#include "Source\Graphics\InputHandler.h"
+#include "Source\Graphics\Shader.h"
+#include "Source\Graphics\MainWindow.h"
 
 MainWindow* MainWindow::mainWindow;
 Render* MainWindow::render;

@@ -1,9 +1,10 @@
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef GAME_OBJECT_H
+#define GAME_OBJECT_H
 
 #include <boost\shared_ptr.hpp>
 
-#include "Texture.h"
+class Texture;
+typedef char GLchar;
 
 struct Vector2
 {
@@ -34,7 +35,7 @@ public:
 	Texture* texture;
 	Vector2 center, updated_center, velocity, force;
 
-	Object(const Vector2& _center, const float& _width, const float& _height, const GLchar* _texturePath) : center(_center), width(_width), height(_height), updated_center(_center), velocity(0., 0.), force(0., 0.), texture(new Texture(_texturePath)) { }
+	Object(const Vector2& _center, const float& _width, const float& _height, const GLchar* _texturePath);
 	~Object() {  };
 
 	Collision_Type Collide(const Object& _other);
