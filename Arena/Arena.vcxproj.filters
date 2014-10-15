@@ -112,22 +112,22 @@
     <None Include="Shaders\Background.vs">
       <Filter>Graphics\Shaders</Filter>
     </None>
-    <None Include="Shaders\Model.vs">
-      <Filter>Graphics\Shaders</Filter>
-    </None>
     <None Include="Shaders\Projectile.frag">
       <Filter>Graphics\Shaders</Filter>
     </None>
     <None Include="Shaders\Projectile.vs">
       <Filter>Graphics\Shaders</Filter>
     </None>
-    <None Include="Shaders\Platform.frag">
+    <None Include="Shaders\Hero.frag">
       <Filter>Graphics\Shaders</Filter>
     </None>
-    <None Include="Shaders\Platform.vs">
+    <None Include="Shaders\Hero.vs">
       <Filter>Graphics\Shaders</Filter>
     </None>
-    <None Include="Shaders\Model.frag">
+    <None Include="Shaders\Wall.frag">
+      <Filter>Graphics\Shaders</Filter>
+    </None>
+    <None Include="Shaders\Wall.vs">
       <Filter>Graphics\Shaders</Filter>
     </None>
   </ItemGroup>

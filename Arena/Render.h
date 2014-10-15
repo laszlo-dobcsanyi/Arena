@@ -40,8 +40,6 @@ public:
 
 	void Draw();
 	void InitModelShape(const boost::shared_ptr< Object > _modelObject);
-	void AddHero(const float& _xPos, const float& _yPos);
-	void AddWall(const float& _xPos, const float& _yPos, const float& width, const float& height);
 
 	GLuint& GetVAO() { return VAO; }
 	GLuint& GetVBO() { return VBO; }
@@ -58,8 +56,8 @@ private:
 	GLuint EBO;
 
 	Game* game;
-	Shader* shaderModel;
-	Shader* shaderPlatform;
+	Shader* shaderWall;
+	Shader* shaderHero;
 	Camera* camera;
 	ModelShape modelShape;
 	glm::mat4 modelMatrix;
