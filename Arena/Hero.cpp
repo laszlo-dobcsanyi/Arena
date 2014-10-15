@@ -46,7 +46,7 @@ void Hero::Move(const uint8_t &_state)
 		force = Vector2(0., -speed);
 		if (!(movement & Hero_Movement::UP) && _state & Hero_Movement::UP)			{ force.y += +speed / 2.f; movement |= Hero_Movement::UP; }
 		if (!(movement & Hero_Movement::DOWN) && _state & Hero_Movement::DOWN)		{ force.y += -speed / 2.f; movement |= Hero_Movement::DOWN; }
-		if (!(movement & Hero_Movement::JUMP) && _state & Hero_Movement::JUMP)		{ if (velocity.y <= 0.f) { force = force + Vector2(+speed * 16, +speed * 32); movement |= Hero_Movement::JUMP; } }
+		if (!(movement & Hero_Movement::JUMP) && _state & Hero_Movement::JUMP)		{ if (velocity.y <= 0.f) { force = force + Vector2(+speed * 24, +speed * 32); movement |= Hero_Movement::JUMP; } }
 		break;
 
 		case Collision_Type::TOP:
@@ -60,7 +60,7 @@ void Hero::Move(const uint8_t &_state)
 		force = Vector2(0., -speed);
 		if (!(movement & Hero_Movement::UP) && _state & Hero_Movement::UP)			{ force.y += +speed / 2.f; movement |= Hero_Movement::UP; }
 		if (!(movement & Hero_Movement::DOWN) && _state & Hero_Movement::DOWN)		{ force.y += -speed / 2.f; movement |= Hero_Movement::DOWN; }
-		if (!(movement & Hero_Movement::JUMP) && _state & Hero_Movement::JUMP)		{ if (velocity.y <= 0.f) { force = force + Vector2(-speed * 16, +speed * 32); movement |= Hero_Movement::JUMP; } }
+		if (!(movement & Hero_Movement::JUMP) && _state & Hero_Movement::JUMP)		{ if (velocity.y <= 0.f) { force = force + Vector2(-speed * 24, +speed * 32); movement |= Hero_Movement::JUMP; } }
 		break;
 
 		case Collision_Type::BOTTOM:

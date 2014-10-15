@@ -104,7 +104,7 @@ void Arena::Update_Hero(boost::shared_ptr< Hero > _hero, const float &_elapsed_t
 	int offsets[4][2] = { { -1, -1 }, { -1, +1 }, { +1, -1 }, { +1, +1 } };
 	for (unsigned int stage = 0; stage < 4; ++stage)
 	{
-		boost::shared_ptr< Wall > wall = collision_tree->Collision(Vector2(_hero->updated_center.x + offsets[stage][0] * _hero->width, _hero->updated_center.y + offsets[stage][1] * _hero->height));
+		boost::shared_ptr< Wall > wall = collision_tree->Collision(Vector2(_hero->updated_center.x + offsets[stage][0] * (_hero->width + 1.f), _hero->updated_center.y + offsets[stage][1] * (_hero->height + 1.f)));
 		if (wall)
 		{
 			Collision_Type collision = wall->Collide(*_hero);
