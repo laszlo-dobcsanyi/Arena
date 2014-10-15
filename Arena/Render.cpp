@@ -94,6 +94,7 @@ void Render::DrawHeroes()
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
 
+	glBindTexture(GL_TEXTURE_2D, game->arena->character->texture->textureID);
 	modelMatrix = glm::mat4();
 
 	modelMatrix = glm::translate(modelMatrix, glm::vec3(game->arena->character->center.x, game->arena->character->center.y, -10.0f));
