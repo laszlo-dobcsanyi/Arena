@@ -21,7 +21,10 @@ Arena::Arena(const std::string &_file)
 
 	//
 
-	heroes.data.Add(boost::shared_ptr< Hero >(new Hero(Vector2(320., 320.),"Textures\\awesomeface.png")));
+	for (int i = 0; i < 0; ++i)
+	{
+		heroes.data.Add(boost::shared_ptr< Hero >(new Hero(Vector2(800., 320.),"Textures\\awesomeface.png")));
+	}
 
 	//
 
@@ -35,12 +38,11 @@ Arena::Arena(const std::string &_file)
 		std::string texture;	data >> texture;
 		boost::shared_ptr< Wall > wall = boost::shared_ptr< Wall >(new Wall(Vector2(x1, y1), Vector2(x2, y2), texture.c_str()));
 
-		walls.Add(wall);
+		walls.data.Add(wall);
 		wall_segment->Insert_Last(wall);
 	}
 	data.close();
 
-	walls.Process_Adding();
 	collision_tree = new BSP_Tree< boost::shared_ptr< Wall > >(wall_segment);
 }
 

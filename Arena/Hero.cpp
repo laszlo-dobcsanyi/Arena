@@ -82,5 +82,5 @@ void Hero::Collision_Wall(boost::shared_ptr< Wall > _wall, const Collision_Type&
 		}
 	}
 
-	std::cout << "Hero COLLISION: " << _type << " : C [" << updated_center.x << ":" << updated_center.y << "] V [" << velocity.x << ":" << velocity.y << "]" << std::endl;
+	//std::cout << "Hero COLLISION: " << _type << " : C [" << updated_center.x << ":" << updated_center.y << "] V [" << velocity.x << ":" << velocity.y << "]" << std::endl;
 }

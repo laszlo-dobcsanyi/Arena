@@ -9,8 +9,8 @@
 #include "Hero.h"
 #include "Object_BSP.hpp"
 
-#define GAME_UPDATE_INTERVAL 1./60
-
+#define UPDATE_INTERVAL 1./30
+#define RENDER_INTERVAL 1./30
 int main()
 {
 	MainWindow* mainWindow = MainWindow::GetMainWindow();
@@ -19,27 +19,37 @@ int main()
 
 	mainWindow->GetRender()->InitGameRender();
 
-	float elapsed_time = 0.;
-	boost::chrono::steady_clock::time_point last_update = boost::chrono::steady_clock::now();
+	float elapsed_update_time = 0.;
+	float elapsed_render_time = 0.;
+	boost::chrono::steady_clock::time_point last_time = boost::chrono::steady_clock::now();
 	do
 	{
+		// Calculate elapsed time
 		boost::chrono::steady_clock::time_point now = boost::chrono::steady_clock::now();
-		boost::chrono::duration<float> difference = now - last_update;
-		elapsed_time += difference.count();
-		last_update = now;
+		boost::chrono::duration<float> difference = now - last_time;
+		elapsed_update_time += difference.count();
+		elapsed_render_time += difference.count();
+		last_time = now;
 
-		if (GAME_UPDATE_INTERVAL < elapsed_time)
+		// Update
+		if (UPDATE_INTERVAL < elapsed_update_time)
 		{
-			game->Update(elapsed_time);
-			elapsed_time = 0.f;
+			game->Update(elapsed_update_time);
+
+			elapsed_update_time = 0.f;
 		}
 		
-		//DRAW
-		glfwPollEvents();
+		// Render
+		if (RENDER_INTERVAL < elapsed_render_time)
+		{
+			glfwPollEvents();
 
-		mainWindow->GetRender()->Draw();
+			mainWindow->GetRender()->Draw();
 
-		glfwSwapBuffers(mainWindow->GetWindow());
+			glfwSwapBuffers(mainWindow->GetWindow());
+
+			elapsed_render_time = 0.f;
+		}
 	} while (!glfwWindowShouldClose(mainWindow->GetWindow()));
 
 	mainWindow->DeleteWindow();
