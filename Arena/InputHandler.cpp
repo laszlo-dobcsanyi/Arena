@@ -1,3 +1,6 @@
+#include <cstdint>
+
+#include "Hero.h"
 #include "InputHandler.h"
 
 bool InputHandler::keys[KEY_ARRAY_MAX_SIZE];
@@ -45,6 +48,8 @@ void InputHandler::GameKeyCallback(GLFWwindow* _window, int _key, int _scancode,
 	{
 		glfwSetWindowShouldClose(_window, GL_TRUE);
 	}
+
+	GameMovement();
 }
 
 void InputHandler::GameMouseButtonCallback(GLFWwindow* _window, int _key, int _action, int _mode)
@@ -53,4 +58,13 @@ void InputHandler::GameMouseButtonCallback(GLFWwindow* _window, int _key, int _a
 	{
 	glfwSetWindowShouldClose(_window, GL_TRUE);
 	}*/
+}
+
+uint8_t InputHandler::GameMovement()
+{
+	uint8_t movement = 0x0000000;
+
+	std::cout << (int)movement << '\n';
+	
+	return movement;
 }

@@ -45,9 +45,6 @@
     <ClInclude Include="Camera.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="ModelObject.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="MainWindow.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -87,9 +84,6 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelObject.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">

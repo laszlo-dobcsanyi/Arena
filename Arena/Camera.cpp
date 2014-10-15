@@ -14,7 +14,7 @@ Camera* Camera::GetCamera()
 
 void Camera::UpdateCameraVectors(const float& _xPos, const float& _yPos)
 {	
-	float xPos = _xPos - (MainWindow::GetWindowWidth() - HERO_WIDTH) / 2.0f;
+	float xPos = _xPos - (MainWindow::GetWindowWidth() - 32.0f) / 2.0f;
 
 	if (_yPos < WINDOW_CAMERA_BOTTOM_LIMIT)
 	{

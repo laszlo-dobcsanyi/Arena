@@ -1,6 +1,12 @@
 #ifndef INPUTHANDLER_HPP
 #define INPUTHANDLER_HPP
 
+#include <cstdint>
+
+// GLEW
+#define GLEW_STATIC
+#include <GL/glew.h>
+
 // GLFW
 #include <GLFW/glfw3.h>
 
@@ -17,6 +23,7 @@ public:
 	static void MenuMouseButtonCallback(GLFWwindow* _window, int _key, int _action, int _mode);
 	static void GameKeyCallback(GLFWwindow* _window, int _key, int _scancode, int _action, int _mode);
 	static void GameMouseButtonCallback(GLFWwindow* _window, int _key, int _action, int _mode);
+	static uint8_t GameMovement();
 
 private:
 	InputHandler() {}
