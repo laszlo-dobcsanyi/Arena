@@ -10,11 +10,12 @@
 // GLFW
 #include <GLFW/glfw3.h>
 
-#define KEY_ARRAY_MAX_SIZE		4
+#define KEY_ARRAY_MAX_SIZE		5
 #define KEY_UP					0
 #define KEY_LEFT				1
 #define KEY_DOWN				2
 #define KEY_RIGHT				3
+#define KEY_JUMP				4
 
 class InputHandler
 {
