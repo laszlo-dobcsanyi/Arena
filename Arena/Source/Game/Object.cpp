@@ -12,13 +12,13 @@ Object::Object(const Vector2& _center, const float& _width, const float& _height
 Collision_Type Object::Collide(const Object& _other)
 {
 	//   ^
-	//   |      6 \ |    2    | / 5
+	//   |      6 \ |    1    | / 5
 	//   |      ___\|_________|/___
 	//   |          |p1       |
-	//   |       3  |    0    |  1
+	//   |       4  |    0    |  3
 	//   |      ____|_______p2|____
 	//   |         /|         |\      |
-	//   |      7 / |    4    | \ 8
+	//   |      7 / |    2    | \ 8
 	//   |
 	// (0,0)---------------------->
 
@@ -31,30 +31,30 @@ Collision_Type Object::Collide(const Object& _other)
 	if (my_p1.x < _other.updated_center.x && _other.updated_center.x < my_p2.x	&&	my_p2.y < _other.updated_center.y && _other.updated_center.y < my_p1.y) return Collision_Type::INSIDE;
 
 	// case 1:
-	if (my_p2.x < _other.updated_center.x && my_p2.y <= _other.updated_center.y && _other.updated_center.y <= my_p1.y)
-	{
-		if (ur_p1.x <= my_p2.x) return Collision_Type::RIGHT;
-		else return  Collision_Type::NONE;
-	}
-
-	// case 2:
 	if (my_p1.y < _other.updated_center.y && my_p1.x <= _other.updated_center.x && _other.updated_center.x <= my_p2.x)
 	{
 		if (ur_p2.y <= my_p1.y) return Collision_Type::TOP;
 		else return  Collision_Type::NONE;
 	}
 
-	// case 3:
-	if (_other.updated_center.x < my_p1.x && my_p2.y <= _other.updated_center.y && _other.updated_center.y <= my_p1.y)
+	// case 2:
+	if (_other.updated_center.y < my_p2.y && my_p1.x <= _other.updated_center.x && _other.updated_center.x <= my_p2.x)
 	{
-		if (my_p1.x <= ur_p2.x) return Collision_Type::LEFT;
+		if (my_p2.y <= ur_p1.y) return Collision_Type::BOTTOM;
+		else return  Collision_Type::NONE;
+	}
+
+	// case 3:
+	if (my_p2.x < _other.updated_center.x && my_p2.y <= _other.updated_center.y && _other.updated_center.y <= my_p1.y)
+	{
+		if (ur_p1.x <= my_p2.x) return Collision_Type::RIGHT;
 		else return  Collision_Type::NONE;
 	}
 
 	// case 4:
-	if (_other.updated_center.y < my_p2.y && my_p1.x <= _other.updated_center.x && _other.updated_center.x <= my_p2.x)
+	if (_other.updated_center.x < my_p1.x && my_p2.y <= _other.updated_center.y && _other.updated_center.y <= my_p1.y)
 	{
-		if (my_p2.y <= ur_p1.y) return Collision_Type::BOTTOM;
+		if (my_p1.x <= ur_p2.x) return Collision_Type::LEFT;
 		else return  Collision_Type::NONE;
 	}
 
