@@ -1,9 +1,9 @@
 #include <cstdint>
 
-#include "Source\Game\Game.h"
-#include "Source\Game\Arena.h"
-#include "Source\Game\Hero.h"
-#include "Source\Graphics\InputHandler.h"
+#include "Game\Game.h"
+#include "Game\Arena.h"
+#include "Game\Hero.h"
+#include "Graphics\InputHandler.h"
 
 bool InputHandler::keys[KEY_ARRAY_MAX_SIZE];
 

@@ -13,6 +13,9 @@
     <Filter Include="Graphics\Shaders">
       <UniqueIdentifier>{805ced59-a7b3-49ce-ab05-b4a278e3fbd6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{fca948b7-668f-4156-900b-2cca2ba23be7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\BSP_Tree.hpp">
@@ -63,6 +66,27 @@
     <ClInclude Include="Source\Core\Logger.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game\Stage.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\Processor.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\Generator.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Network\Gateway.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\Configuration.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Network\Packet.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Network\Connection.h">
+      <Filter>Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Core.cpp">
@@ -103,6 +127,27 @@
     </ClCompile>
     <ClCompile Include="Source\Core\Logger.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Processor.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Generator.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Configuration.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Network\Gateway.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Network\Packet.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Network\Connection.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Network\Connection_HandleMessage.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

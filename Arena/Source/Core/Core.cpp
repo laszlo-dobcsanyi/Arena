@@ -2,16 +2,23 @@
 #define UPDATE_INTERVAL 1./50
 #define RENDER_INTERVAL 1./50
 
+#include "Macro"
+
 #include <boost\chrono.hpp>
 
-#include "Source\Macro"
-#include "Source\Game\Game.h"
-#include "Source\Graphics\Render.h"
-#include "Source\Graphics\MainWindow.h"
+#include "Core\Processor.h"
+#include "Game\Game.h"
+#include "Graphics\Render.h"
+#include "Graphics\MainWindow.h"
+#include "Network\Gateway.h"
+
+Processor* network_service = 0;
+Processor* updater_service = 0;
 
 int main()
 {
 	MainWindow* mainWindow = MainWindow::GetMainWindow();
+
 
 	Game *game = Game::Create(Game_Type::LOCAL);
 

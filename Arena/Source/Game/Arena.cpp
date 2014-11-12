@@ -1,4 +1,4 @@
-#include "Source\Game\Arena.h"
+#include "Game\Arena.h"
 
 #include <string>
 #include <fstream>
@@ -9,9 +9,9 @@
 #include <boost\foreach.hpp>
 #include <boost\lexical_cast.hpp>
 
-#include "Source\Macro"
-#include "Source\Game\Hero.h"
-#include "Source\Game\Wall.h"
+#include "Macro"
+#include "Game\Hero.h"
+#include "Game\Wall.h"
 
 boost::mt19937 rng(42u);
 float float_rng(float min, float max)

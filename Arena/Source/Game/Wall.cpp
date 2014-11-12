@@ -1,9 +1,9 @@
-#include "Source\Game\Wall.h"
+#include "Game\Wall.h"
 
 #include <iostream>
 
-#include "Source\Macro"
-#include "Source\Game\Hero.h"
+#include "Macro"
+#include "Game\Hero.h"
 
 Wall::Wall(const Vector2& _p1, const Vector2& _p2, const GLchar* _texturePath)
 	: Wall(_p1.x, _p1.y, _p2.x, _p2.y, _texturePath)

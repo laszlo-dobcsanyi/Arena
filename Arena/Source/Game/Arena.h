@@ -5,8 +5,8 @@
 
 #include <boost\shared_ptr.hpp>
 
-#include "Source\Core\BSP_Tree.hpp"
-#include "Source\Core\List_Processable.hpp"
+#include "Core\BSP_Tree.hpp"
+#include "Core\List_Processable.hpp"
 
 class Wall;
 class Hero;

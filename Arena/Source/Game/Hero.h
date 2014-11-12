@@ -5,7 +5,7 @@
 
 #include <boost\shared_ptr.hpp>
 
-#include "Source\Game\Object.h"
+#include "Game\Object.h"
 
 struct Hero_Movement
 {

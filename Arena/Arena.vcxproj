@@ -66,7 +66,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\boost_1_56_0;D:\Git\Arena\Arena\;D:\Git\Arena\OpenGL includes;F:\Git\Arena\Arena;F:\Git\Arena\OpenGL includes;F:\Programming\Boost\boost_1_56_0;$(IncludePath)</IncludePath>
+    <IncludePath>D:\boost_1_56_0;D:\Git\Arena\Arena\Source;D:\Git\Arena\OpenGL includes;F:\Git\Arena\Arena\Source\;F:\Git\Arena\OpenGL includes;F:\Programming\Boost\boost_1_56_0;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Git\Arena\OpenGL libs;F:\Git\Arena\OpenGL libs;F:\Programming\Boost\boost_1_56_0\stage\lib;D:\boost_1_56_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -81,6 +81,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -128,14 +129,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\BSP_Tree.hpp" />
+    <ClInclude Include="Source\Core\Configuration.h" />
+    <ClInclude Include="Source\Core\Generator.h" />
     <ClInclude Include="Source\Core\List_Lockable.hpp" />
     <ClInclude Include="Source\Core\List_Processable.hpp" />
     <ClInclude Include="Source\Core\List_Separatable.hpp" />
     <ClInclude Include="Source\Core\Logger.h" />
+    <ClInclude Include="Source\Core\Processor.h" />
     <ClInclude Include="Source\Game\Arena.h" />
     <ClInclude Include="Source\Game\Game.h" />
     <ClInclude Include="Source\Game\Hero.h" />
     <ClInclude Include="Source\Game\Object.h" />
+    <ClInclude Include="Source\Game\Stage.h" />
     <ClInclude Include="Source\Game\Wall.h" />
     <ClInclude Include="Source\Graphics\Camera.h" />
     <ClInclude Include="Source\Graphics\InputHandler.h" />
@@ -143,10 +148,16 @@
     <ClInclude Include="Source\Graphics\Render.h" />
     <ClInclude Include="Source\Graphics\Shader.h" />
     <ClInclude Include="Source\Graphics\Texture.h" />
+    <ClInclude Include="Source\Network\Connection.h" />
+    <ClInclude Include="Source\Network\Gateway.h" />
+    <ClInclude Include="Source\Network\Packet.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Core\Configuration.cpp" />
     <ClCompile Include="Source\Core\Core.cpp" />
+    <ClCompile Include="Source\Core\Generator.cpp" />
     <ClCompile Include="Source\Core\Logger.cpp" />
+    <ClCompile Include="Source\Core\Processor.cpp" />
     <ClCompile Include="Source\Game\Arena.cpp" />
     <ClCompile Include="Source\Game\Game.cpp" />
     <ClCompile Include="Source\Game\Hero.cpp" />
@@ -158,6 +169,10 @@
     <ClCompile Include="Source\Graphics\Render.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Graphics\Texture.cpp" />
+    <ClCompile Include="Source\Network\Connection.cpp" />
+    <ClCompile Include="Source\Network\Connection_HandleMessage.cpp" />
+    <ClCompile Include="Source\Network\Gateway.cpp" />
+    <ClCompile Include="Source\Network\Packet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Background.frag" />

@@ -1,4 +1,4 @@
-#include "Source\Graphics\Texture.h"
+#include "Graphics\Texture.h"
 
 Texture::Texture(const GLchar* _texturePath)
 {

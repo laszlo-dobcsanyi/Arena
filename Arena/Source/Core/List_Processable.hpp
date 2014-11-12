@@ -3,7 +3,7 @@
 
 #include <boost\foreach.hpp>
 
-#include "Source\Core\List_Lockable.hpp"
+#include "Core\List_Lockable.hpp"
 
 template<class T> class ListProcessable_Callback
 {

@@ -1,4 +1,4 @@
-#include "Source\Core\Logger.h"
+#include "Core\Logger.h"
 
 #include "Windows.h"
 
@@ -25,13 +25,14 @@ boost::atomic< unsigned_int > Logger::counter_list_lockable(0);
 boost::atomic< unsigned_int > Logger::counter_list_processable(0);
 boost::atomic< unsigned_int > Logger::counter_list_separatable(0);
 
-//boost::atomic< unsigned_int > Logger::counter_packets(0);
-//boost::atomic< unsigned_int > Logger::counter_packet_pairs(0);
-
 boost::atomic< unsigned_int > Logger::counter_heroes(0);
 boost::atomic< unsigned_int > Logger::counter_walls(0);
 
 boost::atomic< unsigned_int > Logger::counter_textures(0);
+
+boost::atomic< unsigned_int > Logger::counter_connections(0);
+boost::atomic< unsigned_int > Logger::counter_packets(0);
+boost::atomic< unsigned_int > Logger::counter_packet_pairs(0);
 
 void Logger::Write(const int& _mask, const int& _object, const std::string& _msg)
 {

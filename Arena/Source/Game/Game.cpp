@@ -1,9 +1,9 @@
-#include "Source\Game\Game.h"
+#include "Game\Game.h"
 
-#include "Source\Macro"
-#include "Source\Game\Hero.h"
-#include "Source\Game\Wall.h"
-#include "Source\Game\Arena.h"
+#include "Macro"
+#include "Game\Hero.h"
+#include "Game\Wall.h"
+#include "Game\Arena.h"
 
 Game * Game::game = 0;
 

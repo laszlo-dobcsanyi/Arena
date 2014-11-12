@@ -1,9 +1,9 @@
-#include "Source\Game\Hero.h"
+#include "Game\Hero.h"
 
 #include <iostream>
 
-#include "Source\Macro"
-#include "Source\Game\Wall.h"
+#include "Macro"
+#include "Game\Wall.h"
 
 /// Constructor/Destructor
 Hero::Hero(const Vector2& _center, const GLchar* _texturePath)

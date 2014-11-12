@@ -6,9 +6,9 @@
 #include <boost\shared_ptr.hpp>
 #include <boost\lexical_cast.hpp>
 
-#include "Source\Macro"
-#include "Source\Game\Object.h"
-#include "Source\Core\List_Separatable.hpp"
+#include "Macro"
+#include "Game\Object.h"
+#include "Core\List_Separatable.hpp"
 
 struct Partition
 {

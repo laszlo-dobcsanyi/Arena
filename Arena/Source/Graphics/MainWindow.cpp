@@ -1,7 +1,7 @@
-#include "Source\Graphics\Render.h"
-#include "Source\Graphics\InputHandler.h"
-#include "Source\Graphics\Shader.h"
-#include "Source\Graphics\MainWindow.h"
+#include "Graphics\Render.h"
+#include "Graphics\InputHandler.h"
+#include "Graphics\Shader.h"
+#include "Graphics\MainWindow.h"
 
 MainWindow* MainWindow::mainWindow;
 Render* MainWindow::render;
@@ -20,7 +20,7 @@ MainWindow::MainWindow()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	window = glfwCreateWindow(windowWidth, windowHeight, "Game", nullptr, nullptr);
+	assert(window = glfwCreateWindow(windowWidth, windowHeight, "Game", nullptr, nullptr));
 	glfwMakeContextCurrent(window);
 
 	glfwSetKeyCallback(window, &InputHandler::GameKeyCallback);
