@@ -19,7 +19,6 @@ int main()
 {
 	MainWindow* mainWindow = MainWindow::GetMainWindow();
 
-
 	Game *game = Game::Create(Game_Type::LOCAL);
 
 	mainWindow->GetRender()->InitGameRender();

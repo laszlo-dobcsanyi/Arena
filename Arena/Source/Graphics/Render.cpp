@@ -11,9 +11,18 @@
 #include "Graphics\Texture.h"
 
 Render::Render() :	shaderWall(new Shader("Shaders\\Wall.vs", "Shaders\\Wall.frag")), 
-					shaderHero(new Shader("Shaders\\Hero.vs", "Shaders\\Hero.frag")),				
+					shaderHero(new Shader("Shaders\\Hero.vs", "Shaders\\Hero.frag")),	
+					shaderText(new Shader("Shaders\\Text.vs", "Shaders\\Text.frag")),
 					camera(Camera::GetCamera())
 {
+	assert(!FT_Init_FreeType(&font_library) && "Could not init freetype library!");
+	assert(!FT_New_Face(font_library, "Fonts\\Outwrite.ttf", 0, &face_outwrite) && "Could not open Outwrite font!");
+	FT_Set_Pixel_Sizes(face_outwrite, 0, 200);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
@@ -103,6 +112,57 @@ void Render::DrawHeroes()
 
 	InitModelShape(game->arena->character);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	shaderText->Use();
+	DrawString(&face_outwrite, "ZOLKA", 16, 20, 1, 2);
+}
+
+void Render::DrawString(FT_Face *_face, const std::string &_text, float _x, float _y, const float &_sx, const float &_sy)
+{
+	GLint uniform_tex = glGetUniformLocation(shaderHero->shaderProgram, "model");
+
+	GLuint tex;
+	glActiveTexture(GL_TEXTURE0);
+	glGenTextures(1, &tex);
+	glBindTexture(GL_TEXTURE_2D, tex);
+
+	const char *p;
+
+	for (p = _text.c_str(); *p; p++)
+	{
+		if (FT_Load_Char(*_face, *p, FT_LOAD_RENDER)) continue;
+		FT_GlyphSlot g = (*_face)->glyph;
+
+		glTexImage2D(
+			GL_TEXTURE_2D,
+			0,
+			GL_ALPHA,
+			g->bitmap.width,
+			g->bitmap.rows,
+			0,
+			GL_ALPHA,
+			GL_UNSIGNED_BYTE,
+			g->bitmap.buffer
+			);
+
+		float x2 = _x + g->bitmap_left * _sx;
+		float y2 = -_y - g->bitmap_top * _sy;
+		float w = g->bitmap.width * _sx;
+		float h = g->bitmap.rows * _sy;
+
+		GLfloat box[4][4] = {
+			{ x2, -y2, 0, 0 },
+			{ x2 + w, -y2, 1, 0 },
+			{ x2, -y2 - h, 0, 1 },
+			{ x2 + w, -y2 - h, 1, 1 },
+		};
+
+		glBufferData(GL_ARRAY_BUFFER, sizeof box, box, GL_DYNAMIC_DRAW);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+		_x += (g->advance.x >> 6) * _sx;
+		_y += (g->advance.y >> 6) * _sy;
+	}
 }
 
 void Render::InitModelShape(const boost::shared_ptr< Object > _modelObject)

@@ -176,5 +176,11 @@
       <Filter>Graphics\Shaders</Filter>
     </None>
     <None Include="Source\Macro" />
+    <None Include="Shaders\Text.vs">
+      <Filter>Graphics\Shaders</Filter>
+    </None>
+    <None Include="Shaders\Text.frag">
+      <Filter>Graphics\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -1,21 +1,22 @@
 #ifndef GRAPHICS_RENDER_H
 #define GRAPHICS_RENDER_H
 
+#include <string>
 #include <forward_list>
 
 #include <boost\shared_ptr.hpp>
 
-// GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
 
-// GLFW
 #include <GLFW/glfw3.h>
 
-// GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 #define CAMERA_ASPECT_RATIO				16.0f/9.0f
 #define CAMERA_VIEW_MIN_DISTANCE		-100.0f
@@ -49,15 +50,20 @@ private:
 	void DrawBackground();
 	void DrawHeroes();
 	void DrawWalls();
-	// TODO: void DrawProjectiles();
+
+	void DrawString(FT_Face *_face, const std::string &_text, float _x, float _y, const float &_sx, const float &_sy);
 
 	GLuint VAO;
 	GLuint VBO;
 	GLuint EBO;
 
+	FT_Library font_library;
+	FT_Face face_outwrite;
+
 	Game* game;
 	Shader* shaderWall;
 	Shader* shaderHero;
+	Shader *shaderText;
 	Camera* camera;
 	ModelShape modelShape;
 	glm::mat4 modelMatrix;

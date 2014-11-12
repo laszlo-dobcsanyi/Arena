@@ -16,6 +16,9 @@
 //SOIL
 #include <SOIL/SOIL.h>
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 class Texture
 {
 public:
@@ -25,5 +28,4 @@ public:
 	int width;
 	int height;
 };
-
 #endif // TEXTURE_H
