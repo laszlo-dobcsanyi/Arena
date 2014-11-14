@@ -1,5 +1,7 @@
 #include "Macro"
 
+#include <assert.h>
+
 #include <boost\bind.hpp>
 
 #include "Core\Configuration.h"
@@ -10,10 +12,36 @@
 
 Game * Game::game = 0;
 
-Game::Game(const Game_Type::Type &_type) :
+Game * Game::Create(const Game_Type::Type &_type)
+{
+	assert(!game);
+	switch (_type)
+	{
+		case Game_Type::LOCAL:	game = new Game_Local(); break;
+		case Game_Type::SERVER:	game = new Game_Server(); break;
+		case Game_Type::CLIENT:	game = new Game_Client(); break;
+	}
+	assert(game);
+	return game;
+}
+
+Game * Game::Get()
+{ 
+	return game;
+}
+
+void Game::Destroy()
+{
+	delete game;
+	game = 0;
+}
+
+///
+
+Game::Game() :
 	arena(new Arena("Maps\\level0.data")), // 12
 	disposed(false),
-	updater(boost::bind(&Game::Update, this))
+	updater(boost::bind(&Game::Process, this))
 {
 	#ifdef LOGGING
 	Logger::Write(LogMask::constructor, LogObject::game, "<+ Game Created!");
@@ -36,25 +64,25 @@ Game::~Game()
 	#endif
 }
 
-void Game::Update()
+void Game::Process()
 {
 	float update_interval = Configuration::Get()->game_update_interval;
 
-	float elapsed_update_time = 0.;
+	float elapsed_time = 0.;
 	boost::chrono::steady_clock::time_point last_time = boost::chrono::steady_clock::now();
 	do
 	{
 		boost::chrono::steady_clock::time_point now = boost::chrono::steady_clock::now();
 		boost::chrono::duration<float> difference = now - last_time;
-		elapsed_update_time += difference.count();
+		elapsed_time += difference.count();
 		last_time = now;
 
 		// Update
-		if (update_interval < elapsed_update_time)
+		if (update_interval < elapsed_time)
 		{
-			arena->Update(elapsed_update_time);
+			Update(elapsed_time);
 
-			elapsed_update_time = 0.f;
+			elapsed_time = 0.f;
 		}
 	} while (!disposed);
 }

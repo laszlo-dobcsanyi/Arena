@@ -15,7 +15,7 @@ public:
 	int				network_packet_size;
 
 	static const Configuration* const Get();
-	static const Configuration* const Load(const std::string &_file);
+	static const Configuration* Load(const std::string &_file);
 
 private:
 	static Configuration* configuration;

@@ -160,6 +160,9 @@
     <ClCompile Include="Source\Core\Processor.cpp" />
     <ClCompile Include="Source\Game\Arena.cpp" />
     <ClCompile Include="Source\Game\Game.cpp" />
+    <ClCompile Include="Source\Game\Game_Client.cpp" />
+    <ClCompile Include="Source\Game\Game_Local.cpp" />
+    <ClCompile Include="Source\Game\Game_Server.cpp" />
     <ClCompile Include="Source\Game\Hero.cpp" />
     <ClCompile Include="Source\Game\Object.cpp" />
     <ClCompile Include="Source\Game\Wall.cpp" />

@@ -152,6 +152,15 @@
     <ClCompile Include="Source\Network\Connection_Server.cpp">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\Game_Local.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Game_Server.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Game_Client.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Background.frag">

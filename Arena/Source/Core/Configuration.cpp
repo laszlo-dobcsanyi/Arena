@@ -3,6 +3,7 @@
 #include  <assert.h>
 
 #include "Core\Configuration.h"
+#include "Game\Game.h"
 
 Configuration* Configuration::configuration = 0;
 
@@ -23,8 +24,11 @@ const Configuration* const Configuration::Get()
 	return configuration;
 }
 
-const Configuration* const Configuration::Load(const std::string &_file)
+const Configuration* Configuration::Load(const std::string &_file)
 {
-	// TODO do something...
+	if (Game::Get() == 0)
+	{
+		// TODO do something...
+	}
 	return Get();
 }
