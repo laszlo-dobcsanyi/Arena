@@ -6,6 +6,7 @@
 #include <boost\shared_ptr.hpp>
 
 #include "Core\Generator.h"
+#include "Core\Processor.h"
 
 class Connection;
 
@@ -18,7 +19,9 @@ private:
 	char* data = 0;
 	Generator port_generator;
 
+	Processor *network_processor;
 	boost::asio::ip::tcp::acceptor gateway;
+
 	boost::thread thread;
 
 	void Listen();

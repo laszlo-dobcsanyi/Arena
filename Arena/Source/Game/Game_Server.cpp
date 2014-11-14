@@ -1,7 +1,7 @@
 #include "Macro"
 
 #include "Game\Game.h"
-#includd "Game\Arena.h"
+#include "Game\Arena.h"
 
 Game_Server::Game_Server()
 {

@@ -4,14 +4,10 @@
 
 #include <boost\chrono.hpp>
 
-#include "Core\Processor.h"
 #include "Game\Game.h"
 #include "Graphics\Render.h"
 #include "Graphics\MainWindow.h"
 #include "Network\Gateway.h"
-
-Processor* network_service = 0;
-Processor* updater_service = 0;
 
 int main()
 {

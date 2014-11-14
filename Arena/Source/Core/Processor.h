@@ -8,6 +8,7 @@ class Processor
 {
 public:
 	Processor(const unsigned int &_threads);
+	virtual ~Processor();
 
 	boost::asio::io_service & Service() { return service; };
 
