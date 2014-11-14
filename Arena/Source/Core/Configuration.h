@@ -6,6 +6,7 @@
 class Configuration
 {
 public:
+	float			game_update_interval = 1.f / 50;
 	unsigned int	characters_number;
 
 	std::string		gateway_address;

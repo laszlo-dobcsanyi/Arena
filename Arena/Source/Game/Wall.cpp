@@ -15,7 +15,7 @@ Wall::Wall(const Vector2 &_center, const float &_width, const float &_height, co
 	: Object(_center, _width, _height, _texturePath)
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::constructor, LogObject::wall, "\t+> Creating Wall..");
+	Logger::Write(LogMask::constructor, LogObject::wall, "\t+> Wall Created!");
 	Logger::counter_walls++;
 	#endif
 }
@@ -25,7 +25,7 @@ Wall::Wall(const float& _x1, const float& _y1, const float& _x2, const float& _y
 	: Object(Vector2((_x1 + _x2) / 2.f, (_y1 + _y2) / 2.f), (_x2 - _x1) / 2.f, (_y1 - _y2) / 2.f, _texturePath)
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::constructor, LogObject::wall, "\t+> Creating Wall..");
+	Logger::Write(LogMask::constructor, LogObject::wall, "\t+> Wall Created!");
 	Logger::counter_walls++;
 	#endif
 }
@@ -33,8 +33,8 @@ Wall::Wall(const float& _x1, const float& _y1, const float& _x2, const float& _y
 Wall::~Wall()
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::wall, "\t<- Destroying Wall..");
-	Logger::counter_walls++;
+	Logger::Write(LogMask::destructor, LogObject::wall, "\t<- Wall Destroyed!");
+	Logger::counter_walls--;
 	#endif
 }
 

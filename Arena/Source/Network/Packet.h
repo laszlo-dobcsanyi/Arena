@@ -14,6 +14,8 @@ public:
 	Packet(const int &_command, const std::string &_message);
 	~Packet();
 
+	static std::string ToString(char* _data, unsigned int _size);
+
 private:
 	Packet(const Packet &_other);
 	Packet & operator=(const Packet &other);

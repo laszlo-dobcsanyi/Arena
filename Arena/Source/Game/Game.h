@@ -3,6 +3,9 @@
 
 #include <assert.h>
 
+#include <boost\atomic.hpp>
+#include <boost\thread.hpp>
+
 class Arena;
 
 class Game_Type
@@ -27,13 +30,16 @@ public:
 	static Game * Get() { assert(game);  return game; }
 	static void Destroy() { delete game; game = 0; }
 
-	void Update(const float& _elapsed_time);
-
 private:
 	static Game *game;
 
+	boost::atomic< bool > disposed;
+	boost::thread updater;
+
 	Game(const Game_Type::Type &_type);
 	~Game();
+
+	void Update();
 
 	Game(const Game& _other);
 	Game& operator=(const Game&_other);

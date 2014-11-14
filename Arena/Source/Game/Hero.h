@@ -3,6 +3,7 @@
 
 #include <cstdint>
 
+#include <boost\atomic.hpp>
 #include <boost\shared_ptr.hpp>
 
 #include "Game\Object.h"
@@ -37,6 +38,9 @@ public:
 	uint8_t movement;
 	void Move(const uint8_t &_state);
 	void Update(const float& _elapsed_time);
+
+	boost::atomic< bool > disposed;
+	void Dispose();
 
 	void Collision_Hero(boost::shared_ptr< Hero > _other, const Collision_Type& _type);
 	void Collision_Wall(boost::shared_ptr< Wall > _wall, const Collision_Type& _type);

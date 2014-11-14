@@ -1,4 +1,7 @@
 #include "Macro"
+
+#include  <assert.h>
+
 #include "Core\Configuration.h"
 
 Configuration* Configuration::configuration = 0;

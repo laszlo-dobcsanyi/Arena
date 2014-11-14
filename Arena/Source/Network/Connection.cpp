@@ -4,115 +4,148 @@
 
 #include "Macro"
 #include "Core\Configuration.h"
+#include "Game\Hero.h"
 #include "Network\Packet.h"
 #include "Network\Connection.h"
-//#include "Character.h"
 
-Connection::Connection(boost::asio::io_service& _io_service, const boost::asio::ip::udp::endpoint& _endpoint, const boost::asio::ip::udp::endpoint& _connected_endpoint, const std::string& _name) :
+Connection::Connection(boost::asio::io_service& _io_service) :
 	disposed(false),
 
-	data(new char[Configuration::Get()->network_packet_size]),
+	tcp_data(new char[Configuration::Get()->network_packet_size]),
+	udp_data(new char[Configuration::Get()->network_packet_size]),
 
-	socket(_io_service, _endpoint),
-
-	remote_endpoint(_connected_endpoint),
-	local_endpoint(_endpoint),
-	name(_name),
+	tcp_socket(_io_service),
+	udp_socket(_io_service),
 
 	timeout(_io_service, boost::posix_time::seconds(Configuration::Get()->network_timeout))
 {
 	#ifdef LOGGING
 	Logger::counter_connections++;
-	Logger::Write(LogMask::constructor, LogObject::connection, "> Connection constructor @ [" + boost::lexical_cast<std::string>(local_endpoint.address()) + ":" + boost::lexical_cast<std::string>(local_endpoint.port()) + "] for [" +
-		boost::lexical_cast<std::string>(remote_endpoint.address()) + ":" + boost::lexical_cast<std::string>(remote_endpoint.port()) + "]!");
+	Logger::Write(LogMask::constructor, LogObject::connection, "> Connection constructor!");
+	#endif
+}
+
+void Connection::Start(const int& _udp_port)
+{
+	#ifdef LOGGING
+	Logger::counter_connections++;
+	Logger::Write(LogMask::constructor, LogObject::connection, "> Connection starting on port " + boost::lexical_cast< std::string >(_udp_port) + "..");
 	#endif
 
+	udp_socket.bind(boost::asio::ip::udp::endpoint(boost::asio::ip::address::from_string(Configuration::Get()->gateway_address), _udp_port));
+	udp_socket.connect(boost::asio::ip::udp::endpoint(tcp_socket.remote_endpoint().address(), tcp_socket.remote_endpoint().port() + 1));
+
 	DWORD size = 64 * 1024;
-	setsockopt(socket.native(), SOL_SOCKET, SO_SNDBUF, (char *)&size, sizeof(WORD));
-	setsockopt(socket.native(), SOL_SOCKET, SO_RCVBUF, (char *)&size, sizeof(WORD));
+	setsockopt(udp_socket.native(), SOL_SOCKET, SO_SNDBUF, (char *)&size, sizeof(WORD));
+	setsockopt(udp_socket.native(), SOL_SOCKET, SO_RCVBUF, (char *)&size, sizeof(WORD));
+
+	Packet port_data(Command::Server::UDP_PORT, boost::lexical_cast< std::string >(_udp_port));
+	TCP_Send(&port_data);
+
+	TCP_Receive();
+	UDP_Receive();
 
 	timeout.expires_from_now(boost::posix_time::seconds(Configuration::Get()->network_timeout));
-	timeout.async_wait(boost::bind(&Connection::HandleTimeout, this, boost::asio::placeholders::error));
-
-	Receive();
+	timeout.async_wait(boost::bind(&Connection::Handle_Timeout, this, boost::asio::placeholders::error));
 }
 
-void Connection::Receive()
+// TCP
+
+void Connection::TCP_Receive()
 {
-	socket.async_receive_from(boost::asio::buffer(data, Configuration::Get()->network_packet_size), connected_endpoint,
-		boost::bind(&Connection::HandleReceive, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
+	tcp_socket.async_receive(boost::asio::buffer(tcp_data, Configuration::Get()->network_packet_size),
+		boost::bind(&Connection::Handle_TCP_Receive, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
 }
 
-void Connection::HandleReceive(const boost::system::error_code& _error, size_t _received)
+void Connection::Handle_TCP_Receive(const boost::system::error_code &_error, size_t _received)
 {
-	if ((!_error) && (0 < _received))
+	if ((!_error) && (4 <= _received))
 	{
-		if (connected_endpoint == remote_endpoint)
-		{
-			HandleMessage(_received);
+		Process(tcp_data, _received);
 
-			timeout.expires_from_now(boost::posix_time::seconds(Configuration::Get()->network_timeout));
-			timeout.async_wait(boost::bind(&Connection::HandleTimeout, this, boost::asio::placeholders::error));
-		}
-		else
-		{
-			#ifdef LOGGING
-			Logger::Write(LogMask::error, LogObject::connection, "# Corrupted Message received from [" + boost::lexical_cast<std::string>(connected_endpoint.address()) + ":" + boost::lexical_cast<std::string>(connected_endpoint.port()) + "]!");
-			#endif
-		}
-
-		Receive();
+		timeout.expires_from_now(boost::posix_time::seconds(Configuration::Get()->network_timeout));
+		timeout.async_wait(boost::bind(&Connection::Handle_Timeout, this, boost::asio::placeholders::error));
 	}
 	else
 	{
 		#ifdef LOGGING
-		Logger::Write(LogMask::error, LogObject::connection, "# Error @ Connection::HandleReceive " + _error.message() + " (" + boost::lexical_cast<std::string>(_received)+") from [" + boost::lexical_cast<std::string>(connected_endpoint.address()) + ":" + boost::lexical_cast<std::string>(connected_endpoint.port()) + "]!");
+		Logger::Write(LogMask::error, LogObject::connection, "# Error @ Connection::Handle_TCP_Receive " + _error.message() + "!");
 		#endif
-
-		Dispose();
 	}
+
+	TCP_Receive();
 }
 
-void Connection::Send(Packet* _packet)
+void Connection::TCP_Send(Packet *_packet)
 {
-	socket.async_send_to(boost::asio::buffer(_packet->data, _packet->size), remote_endpoint,
-		boost::bind(&Connection::HandleSend, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
+	tcp_socket.async_send(boost::asio::buffer(_packet->data, _packet->size),
+		boost::bind(&Connection::Handle_TCP_Send, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
 }
 
-void Connection::Send(boost::shared_ptr< Packet> _packet)
-{
-	//#ifdef LOGGING
-	//Logger::Write(LogMask::message, LogObject::connection, "> Connection sending packet..");
-	//#endif
-
-	socket.async_send_to(boost::asio::buffer(_packet->data, _packet->size), remote_endpoint,
-		boost::bind(&Connection::HandleSend, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
-}
-
-void Connection::Send(const int& _command, const std::string& _message)
-{
-	//#ifdef LOGGING
-	//Logger::Write(LogMask::message, LogObject::connection, "\t> Connection sending created packet..");
-	//#endif
-
-	Packet packet(_command, _message);
-	socket.async_send_to(boost::asio::buffer(packet.data, packet.size), remote_endpoint,
-		boost::bind(&Connection::HandleSend, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
-}
-
-void Connection::HandleSend(const boost::system::error_code& _error, const size_t& _sent)
+void Connection::Handle_TCP_Send(const boost::system::error_code &_error, size_t _sent)
 {
 	if (_error)
 	{
 		#ifdef LOGGING
-		Logger::Write(LogMask::error, LogObject::connection, "# Error @ Connection:HandleSend " + _error.message());
+		Logger::Write(LogMask::error, LogObject::connection, "# Error @ Connection:Handle_TCP_Send " + _error.message() + "!");
 		#endif
 	}
 }
 
-void Connection::HandleTimeout(const boost::system::error_code& _error)
+// UDP
+
+void Connection::UDP_Receive()
 {
-	if (!_error) Dispose();
+	udp_socket.async_receive(boost::asio::buffer(udp_data, Configuration::Get()->network_packet_size),
+		boost::bind(&Connection::Handle_UDP_Receive, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
+}
+
+void Connection::Handle_UDP_Receive(const boost::system::error_code &_error, size_t _received)
+{
+	if ((!_error) && (4 <= _received))
+	{
+		Process(udp_data, _received);
+
+		timeout.expires_from_now(boost::posix_time::seconds(Configuration::Get()->network_timeout));
+		timeout.async_wait(boost::bind(&Connection::Handle_Timeout, this, boost::asio::placeholders::error));
+	}
+	else
+	{
+		#ifdef LOGGING
+		Logger::Write(LogMask::error, LogObject::connection, "# Error @ Connection::Handle_UDP_Receive " + _error.message() + "!");
+		#endif
+	}
+
+	UDP_Receive();
+}
+
+void Connection::UDP_Send(Packet* _packet)
+{
+	udp_socket.async_send(boost::asio::buffer(_packet->data, _packet->size),
+		boost::bind(&Connection::Handle_UDP_Send, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
+}
+
+
+void Connection::Handle_UDP_Send(const boost::system::error_code& _error, const size_t& _sent)
+{
+	if (_error)
+	{
+		#ifdef LOGGING
+		Logger::Write(LogMask::error, LogObject::connection, "# Error @ Connection::Handle_UDP_Send " + _error.message() + "!");
+		#endif
+	}
+}
+
+void Connection::Handle_Timeout(const boost::system::error_code& _error)
+{
+	if (!_error)
+	{
+		#ifdef LOGGING
+		Logger::Write(LogMask::dispose, LogObject::connection, "> Connection" + boost::lexical_cast< std::string >(udp_socket.local_endpoint().port()) + " timeout!");
+		#endif
+
+		Dispose();
+	}
 }
 
 void Connection::Dispose()
@@ -120,28 +153,29 @@ void Connection::Dispose()
 	if (disposed) return; disposed = true;
 
 	#ifdef LOGGING
-	Logger::Write(LogMask::dispose, LogObject::connection, "> Disposing Connection" + boost::lexical_cast<std::string>(local_endpoint.port()) + "..");
+	Logger::Write(LogMask::dispose, LogObject::connection, "> Disposing Connection" + boost::lexical_cast< std::string >(udp_socket.local_endpoint().port()) + "..");
 	#endif
 
-	socket.close();
+	tcp_socket.close();
+	udp_socket.close();
 
-	/*if (character)
+	if (hero)
 	{
-		character->Dispose();
-		character.reset();
+		hero->Dispose();
+		hero.reset();
 
 	}
-	else */
-	delete this;
+	else delete this;
 }
 
 Connection::~Connection()
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::connection, "> Connection" + boost::lexical_cast<std::string>(local_endpoint.port()) + " destructor..");
+	Logger::Write(LogMask::destructor, LogObject::connection, "> Connection" + boost::lexical_cast< std::string >(udp_socket.local_endpoint().port()) + " destructor..");
 	#endif
 
-	delete[] data;
+	delete[] tcp_data;
+	delete[] udp_data;
 
 	#ifdef LOGGING
 	Logger::counter_connections--;

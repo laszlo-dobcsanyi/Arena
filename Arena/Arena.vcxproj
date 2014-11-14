@@ -170,7 +170,8 @@
     <ClCompile Include="Source\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Graphics\Texture.cpp" />
     <ClCompile Include="Source\Network\Connection.cpp" />
-    <ClCompile Include="Source\Network\Connection_HandleMessage.cpp" />
+    <ClCompile Include="Source\Network\Connection_Client.cpp" />
+    <ClCompile Include="Source\Network\Connection_Server.cpp" />
     <ClCompile Include="Source\Network\Gateway.cpp" />
     <ClCompile Include="Source\Network\Packet.cpp" />
   </ItemGroup>

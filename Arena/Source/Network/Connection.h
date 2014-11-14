@@ -9,7 +9,7 @@
 #include <boost\shared_ptr.hpp>
 
 struct Packet;
-class Character;
+class Hero;
 
 namespace Command
 {
@@ -17,29 +17,8 @@ namespace Command
 	{
 		enum Command_Type
 		{
-			LOGIN_OK = 0,
-			REGISTRATE_OK = 1,
-
-			HERO_DATA = 10,
-			HERO_WORLD = 11,
-			HERO_SPELLS = 12,
-
-			CHARACTER_ENTER = 20,
-			CHARACTER_MOVE = 21,
-			CHARACTER_LEAVE = 29,
-
-			OBJECT_ADD = 30,
-			OBJECT_REMOVE = 39,
-
-			GROUP_INVITATION = 40,
-			GROUP_ADD = 41,
-			GROUP_LEADER = 42,
-			GROUP_LEAVE = 43,
-
-			BATTLE_RELOCATE = 50,
-
-			ERROR_LOGIN = 1000,
-			ERROR_REGISTRATE = 1001
+			UDP_PORT = 0,
+			GAME_STATE = 1
 		};
 	}
 
@@ -47,67 +26,84 @@ namespace Command
 	{
 		enum Command_Type
 		{
-			LOGIN = 0,
-			LOGIN_RESPONSE = 1,
-
-			REGISTRATE = 2,
-			PING = 3,
-
-			HERO_MOVE = 10,
-			HERO_STOP = 11,
-			HERO_CAST = 12,
-
-			GROUP_INVITE = 40,
-			GROUP_ACCEPT = 41,
-			GROUP_DECLINE = 42,
-
-			BATTLE_JOIN = 50
+			LOGIN = 0
 		};
 	}
 }
 
 class Connection
 {
-
 public:
-	Connection(boost::asio::io_service &_io_service, const boost::asio::ip::udp::endpoint &_endpoint, const boost::asio::ip::udp::endpoint &_connected_endpoint, const std::string &_name);
-	~Connection();
+	Connection(boost::asio::io_service &_io_service);
+	virtual ~Connection();
 
-	void Send(Packet *_packet);
-	void Send(boost::shared_ptr< Packet > _packet);
-	void Send(const int &_command, const std::string &_message);
+	void Start(const int& _udp_port);
 
-	inline const boost::asio::ip::udp::endpoint& LocalEndPoint() const { return local_endpoint; };
-	inline const boost::asio::ip::udp::socket& Socket() { return socket; };
+	void TCP_Send(Packet *_packet);
+
+	void UDP_Send(Packet *_packet);
+
+	boost::asio::ip::tcp::socket & TCP_Socket() { return tcp_socket; };
+	boost::asio::ip::udp::socket & UDP_Socket() { return udp_socket; };
 
 	void Dispose();
 
+	virtual void Process(char *_data, size_t _received) = 0;
+
 private:
+	boost::shared_ptr< Hero > hero = 0;
+
 	boost::atomic< bool > disposed;
 
-	char *data;
-	std::string name;
-	boost::shared_ptr< Character > character;
+	// TCP
+	char *tcp_data = 0;
+	boost::asio::ip::tcp::socket tcp_socket;
 
-	boost::asio::ip::udp::socket socket;
+	void TCP_Receive();
+	void Handle_TCP_Receive(const boost::system::error_code &_error, size_t _received);
 
-	boost::asio::ip::udp::endpoint local_endpoint;
-	boost::asio::ip::udp::endpoint remote_endpoint;
-	boost::asio::ip::udp::endpoint connected_endpoint;
+	void Handle_TCP_Send(const boost::system::error_code &_error, size_t _sent);
 
+	// UDP
+	char *udp_data = 0;
+	boost::asio::ip::udp::socket udp_socket;
+
+	void UDP_Receive();
+	void Handle_UDP_Receive(const boost::system::error_code &_error, size_t _received);
+
+	void Handle_UDP_Send(const boost::system::error_code &_error, const size_t &_sent);
+
+	// Timeout
 	boost::asio::deadline_timer timeout;
-
-	std::string ToString(char *_data, unsigned int _size);
-
-	void Receive();
-
-	void HandleReceive(const boost::system::error_code &_error, size_t _received);
-	void HandleMessage(size_t _received);
-	void HandleSend(const boost::system::error_code &_error, const size_t &_sent);
-	void HandleTimeout(const boost::system::error_code &_error);
+	void Handle_Timeout(const boost::system::error_code &_error);
 
 	Connection(const Connection &_other);
 	Connection & operator=(const Connection &_other);
 };
 
+class Connection_Server : public Connection
+{
+public:
+	Connection_Server(boost::asio::io_service &_io_service);
+	virtual ~Connection_Server();
+
+	void Process(char *_data, size_t _received);
+
+private:
+	Connection_Server(const Connection_Server &_other);
+	Connection_Server & operator=(const Connection_Server &_other);
+};
+
+class Connection_Client : public Connection
+{
+public:
+	Connection_Client(boost::asio::io_service &_io_service);
+	virtual ~Connection_Client();
+
+	void Process(char *_data, size_t _received);
+
+private:
+	Connection_Client(const Connection_Client &_other);
+	Connection_Client & operator=(const Connection_Client &_other);
+};
 #endif

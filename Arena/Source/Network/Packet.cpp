@@ -21,21 +21,30 @@ Packet::~Packet()
 	#ifdef LOGGING
 	Logger::counter_packets--;
 	#endif
-};
+}
+
+std::string Packet::ToString(char* _data, unsigned int _size)
+{
+	std::string value = "";
+	for (unsigned int current = 0; current < _size; ++current) value += _data[current];
+	return value;
+}
+
+///
 
 PacketPair::PacketPair(Packet *_packet) : sender(0), packet(_packet)
 {
 	#ifdef LOGGING
 	Logger::counter_packet_pairs++;
 	#endif
-};
+}
 
 PacketPair::PacketPair(Packet *_packet, boost::shared_ptr< Character > _sender) : sender(_sender), packet(_packet)
 {
 	#ifdef LOGGING
 	Logger::counter_packet_pairs++;
 	#endif
-};
+}
 
 PacketPair::~PacketPair()
 {
@@ -44,4 +53,4 @@ PacketPair::~PacketPair()
 	#ifdef LOGGING
 	Logger::counter_packet_pairs--;
 	#endif
-};
+}

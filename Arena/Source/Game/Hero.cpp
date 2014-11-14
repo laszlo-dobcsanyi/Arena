@@ -6,6 +6,7 @@
 #include "Game\Wall.h"
 
 /// Constructor/Destructor
+
 Hero::Hero(const Vector2& _center, const GLchar* _texturePath)
 	: Object(_center, 32, 32, _texturePath),
 	  movement(0)
@@ -16,14 +17,6 @@ Hero::Hero(const Vector2& _center, const GLchar* _texturePath)
 	#endif
 
 	Move(0);
-}
-
-Hero::~Hero()
-{
-	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::hero, "\t<- Destroying Hero..");
-	Logger::counter_heroes--;
-	#endif
 }
 
 ///
@@ -115,4 +108,27 @@ void Hero::Collision_Wall(boost::shared_ptr< Wall > _wall, const Collision_Type&
 	}
 
 	//std::cout << "Hero COLLISION: " << _type << " : C [" << updated_center.x << ":" << updated_center.y << "] V [" << velocity.x << ":" << velocity.y << "]" << std::endl;
+}
+
+void Hero::Dispose()
+{
+	if (disposed) return; disposed = true;
+
+	#ifdef LOGGING
+	Logger::Write(LogMask::dispose, LogObject::hero, "\t<- Disposing Hero..");
+	#endif
+}
+
+Hero::~Hero()
+{
+	#ifdef LOGGING
+	Logger::Write(LogMask::destructor, LogObject::hero, "\t-> Destroying Hero..");
+	#endif
+
+	base = 0;
+
+	#ifdef LOGGING
+	Logger::Write(LogMask::destructor, LogObject::hero, "\t<- Hero Destroyed!");
+	Logger::counter_heroes--;
+	#endif
 }

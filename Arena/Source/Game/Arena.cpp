@@ -110,7 +110,13 @@ Arena::Arena(const std::string &_file)
 Arena::~Arena()
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::arena, "<- Destroying Arena..");
+	Logger::Write(LogMask::destructor, LogObject::arena, "-> Destroying Arena..");
+	#endif
+
+	delete collision_tree;
+
+	#ifdef LOGGING
+	Logger::Write(LogMask::destructor, LogObject::arena, "<- Arena Destroyed!");;
 	#endif
 }
 

@@ -58,6 +58,8 @@ public:
 
 	typedef unsigned int unsigned_int;
 
+	static boost::atomic< unsigned_int > counter_bsp_separator;
+	static boost::atomic< unsigned_int > counter_bsp_node;
 	static boost::atomic< unsigned_int > counter_bsp_tree;
 	static boost::atomic< unsigned_int > counter_list_lockable;
 	static boost::atomic< unsigned_int > counter_list_processable;
@@ -73,6 +75,7 @@ public:
 	static boost::atomic< unsigned_int > counter_packet_pairs;
 
 	static void Write(const int& _mask, const int& _object, const std::string& _msg);
+	static void Write_Counters();
 	static void SetColor(const unsigned short& _color);
 
 private:

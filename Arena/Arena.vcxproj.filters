@@ -146,7 +146,10 @@
     <ClCompile Include="Source\Network\Connection.cpp">
       <Filter>Network</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Network\Connection_HandleMessage.cpp">
+    <ClCompile Include="Source\Network\Connection_Client.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Network\Connection_Server.cpp">
       <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
