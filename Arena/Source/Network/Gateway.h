@@ -3,29 +3,37 @@
 
 #include <boost\asio.hpp>
 #include <boost\thread.hpp>
-#include <boost\shared_ptr.hpp>
+#include <boost\atomic.hpp>
 
 #include "Core\Generator.h"
 #include "Core\Processor.h"
 
-class Connection;
+class Connection_Server;
 
 class Gateway
 {
 public:
+	Processor *network_processor;
+
 	Gateway(const boost::asio::ip::tcp::endpoint &_endpoint);
+	virtual ~Gateway();
+
+	void Return(const int &_port);
+
+	void Dispose();
 
 private:
+	boost::atomic< bool > disposed;
+
 	char* data = 0;
 	Generator port_generator;
 
-	Processor *network_processor;
 	boost::asio::ip::tcp::acceptor gateway;
 
 	boost::thread thread;
 
 	void Listen();
-	void Handle_Accept(boost::shared_ptr< Connection > _connection, const boost::system::error_code &_error);
+	void Handle_Accept(Connection_Server* _connection, const boost::system::error_code &_error);
 
 	Gateway(const Gateway& _other);
 	Gateway& operator=(const Gateway* _other);

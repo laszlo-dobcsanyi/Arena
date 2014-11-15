@@ -8,6 +8,11 @@ Generator::Generator(const unsigned int &_range) : current(_range)
 		values[current] = current;
 }
 
+Generator::~Generator()
+{
+	delete[] values;
+}
+
 const unsigned int & Generator::Next()
 {
 	boost::unique_lock<boost::shared_mutex> lock(mutex);

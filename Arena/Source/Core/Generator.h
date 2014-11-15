@@ -7,6 +7,7 @@ class Generator
 {
 public:
 	Generator(const unsigned int &_range);
+	virtual ~Generator();
 
 	const unsigned int & Next();
 	void Return(const unsigned int &_value);

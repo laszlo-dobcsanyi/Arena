@@ -1,6 +1,7 @@
 #ifndef GAME_GAME_H
 #define GAME_GAME_H
 
+#include <boost\asio.hpp>
 #include <boost\atomic.hpp>
 #include <boost\thread.hpp>
 
@@ -8,6 +9,8 @@ class Arena;
 class Game_Local;
 class Game_Server;
 class Game_Client;
+class Gateway;
+class Connection_Client;
 
 namespace Game_Type
 {
@@ -54,7 +57,6 @@ public:
 	void Update(const float &_elapsed_time);
 
 private:
-
 	Game_Local(const Game_Local &_other);
 	Game_Local & operator=(const Game_Local &_other);
 };
@@ -66,7 +68,9 @@ public:
 	virtual ~Game_Server();
 
 	void Update(const float &_elapsed_time);
+
 private:
+	Gateway* gateway = 0;
 
 	Game_Server(const Game_Server &_other);
 	Game_Server operator=(const Game_Server &_other);
@@ -78,8 +82,15 @@ public:
 	Game_Client();
 	virtual ~Game_Client();
 
+	void Connect(const boost::asio::ip::tcp::endpoint &_local_endpoint);
+
 	void Update(const float &_elapsed_time);
+
 private:
+	boost::asio::io_service io_service;
+	boost::thread thread;
+
+	Connection_Client* connection = 0;
 
 	Game_Client(const Game_Client &_other);
 	Game_Client & operator=(const Game_Client &_other);

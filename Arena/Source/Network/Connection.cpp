@@ -1,8 +1,8 @@
 //#undef ERROR
+#include "Macro"
 
 #include <boost\lexical_cast.hpp>
 
-#include "Macro"
 #include "Core\Configuration.h"
 #include "Game\Hero.h"
 #include "Network\Packet.h"
@@ -25,22 +25,11 @@ Connection::Connection(boost::asio::io_service& _io_service) :
 	#endif
 }
 
-void Connection::Start(const int& _udp_port)
+void Connection::Start()
 {
 	#ifdef LOGGING
-	Logger::counter_connections++;
-	Logger::Write(LogMask::constructor, LogObject::connection, "> Connection starting on port " + boost::lexical_cast< std::string >(_udp_port) + "..");
+	Logger::Write(LogMask::constructor, LogObject::connection, "> Connection starting..");
 	#endif
-
-	udp_socket.bind(boost::asio::ip::udp::endpoint(boost::asio::ip::address::from_string(Configuration::Get()->gateway_address), _udp_port));
-	udp_socket.connect(boost::asio::ip::udp::endpoint(tcp_socket.remote_endpoint().address(), tcp_socket.remote_endpoint().port() + 1));
-
-	DWORD size = 64 * 1024;
-	setsockopt(udp_socket.native(), SOL_SOCKET, SO_SNDBUF, (char *)&size, sizeof(WORD));
-	setsockopt(udp_socket.native(), SOL_SOCKET, SO_RCVBUF, (char *)&size, sizeof(WORD));
-
-	Packet port_data(Command::Server::UDP_PORT, boost::lexical_cast< std::string >(_udp_port));
-	TCP_Send(&port_data);
 
 	TCP_Receive();
 	UDP_Receive();
@@ -71,9 +60,11 @@ void Connection::Handle_TCP_Receive(const boost::system::error_code &_error, siz
 		#ifdef LOGGING
 		Logger::Write(LogMask::error, LogObject::connection, "# Error @ Connection::Handle_TCP_Receive " + _error.message() + "!");
 		#endif
+
+		Dispose();
 	}
 
-	TCP_Receive();
+	if (!disposed) TCP_Receive();
 }
 
 void Connection::TCP_Send(Packet *_packet)
@@ -89,6 +80,8 @@ void Connection::Handle_TCP_Send(const boost::system::error_code &_error, size_t
 		#ifdef LOGGING
 		Logger::Write(LogMask::error, LogObject::connection, "# Error @ Connection:Handle_TCP_Send " + _error.message() + "!");
 		#endif
+
+		Dispose();
 	}
 }
 
@@ -114,9 +107,11 @@ void Connection::Handle_UDP_Receive(const boost::system::error_code &_error, siz
 		#ifdef LOGGING
 		Logger::Write(LogMask::error, LogObject::connection, "# Error @ Connection::Handle_UDP_Receive " + _error.message() + "!");
 		#endif
+
+		Dispose();
 	}
 
-	UDP_Receive();
+	if (!disposed) UDP_Receive();
 }
 
 void Connection::UDP_Send(Packet* _packet)
@@ -133,6 +128,8 @@ void Connection::Handle_UDP_Send(const boost::system::error_code& _error, const 
 		#ifdef LOGGING
 		Logger::Write(LogMask::error, LogObject::connection, "# Error @ Connection::Handle_UDP_Send " + _error.message() + "!");
 		#endif
+
+		Dispose();
 	}
 }
 
@@ -171,13 +168,14 @@ void Connection::Dispose()
 Connection::~Connection()
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::connection, "> Connection" + boost::lexical_cast< std::string >(udp_socket.local_endpoint().port()) + " destructor..");
+	Logger::Write(LogMask::destructor, LogObject::connection, "-> Destroying Connection..");
 	#endif
 
 	delete[] tcp_data;
 	delete[] udp_data;
 
 	#ifdef LOGGING
+	Logger::Write(LogMask::destructor, LogObject::connection, "<- Connection Destroyed!");
 	Logger::counter_connections--;
 	#endif
 }

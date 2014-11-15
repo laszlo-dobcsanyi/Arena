@@ -7,14 +7,9 @@
 
 Configuration* Configuration::configuration = 0;
 
-Configuration::Configuration():
-	characters_number(4),
-
-	gateway_address("127.0.0.1"),
-
-	network_timeout(5),
-	network_packet_size(512)
+Configuration::Configuration()
 {
+
 }
 
 const Configuration* const Configuration::Get()

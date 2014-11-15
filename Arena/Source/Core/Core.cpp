@@ -11,14 +11,24 @@
 
 int main()
 {
+	Game_Type::Type game_type;
+	std::cout << "1)LOCAL\n2)SERVER\n3)CLIENT\n"; char num = std::cin.get();
+	switch (num)
+	{
+		case '1': game_type = Game_Type::LOCAL; break;
+		case '2': game_type = Game_Type::SERVER; break;
+		case '3': game_type = Game_Type::CLIENT; break;
+		default: return 0;
+	}
+
 	MainWindow* mainWindow = MainWindow::GetMainWindow();
 
-	Game *game = Game::Create(Game_Type::LOCAL);
+	Game *game = Game::Create(game_type);
 
 	mainWindow->GetRender()->InitGameRender();
 
 	#ifdef LOGGING
-	Logger::Write_Counters();
+	//Logger::Write_Counters();
 	#endif
 
 	float elapsed_render_time = 0.;

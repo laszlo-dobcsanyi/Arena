@@ -41,7 +41,7 @@ void Logger::Write(const int& _mask, const int& _object, const std::string& _msg
 	if ((mask & _mask) && (object & _object))
 	{
 		//SetConsoleTextAttribute(console, ((0 <= _level) &&(_level <= 9)) ? colors[_level] : 0x0F);
-		std::cout << _msg.c_str() << std::endl;
+		std::cout << (_msg + "\n");
 	}
 }
 

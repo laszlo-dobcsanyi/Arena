@@ -10,8 +10,8 @@
 
 #define OPENGL_MAJOR_VERSION	3
 #define OPENGL_MINOR_VERSION	3
-#define WINDOW_WIDTH			1280
-#define WINDOW_HEIGHT			720
+#define WINDOW_WIDTH			30
+#define WINDOW_HEIGHT			30
 
 class Render;
 
