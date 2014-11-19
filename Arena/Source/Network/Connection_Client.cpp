@@ -8,10 +8,13 @@
 #include <boost\algorithm\string.hpp>
 
 #include "Network\Packet.h"
-#include "Network\Connection.h"
+#include "Network\Connection_Client.h"
 
 Connection_Client::Connection_Client(boost::asio::io_service &_io_service, const boost::asio::ip::tcp::endpoint &_local_endpoint) :
-	Connection(_io_service)
+	Connection(_io_service),
+
+	lobby(0),
+	game(0)
 {
 	#ifdef LOGGING
 	Logger::Write(LogMask::constructor, LogObject::connection, "+> Creating Connection_Client..");
@@ -110,4 +113,19 @@ void Connection_Client::Process(char *_data, size_t _received)
 	default:
 		break;
 	}
+}
+
+void Connection_Client::Render()
+{
+
+}
+
+void Connection_Client::Handle_Key(GLFWwindow* _window, const int &_key, const int &_scancode, const int &_action, const int &_mode)
+{
+
+}
+
+void Connection_Client::Handle_Mouse(GLFWwindow* _window, const int &_key, const int &_action, const int &_mode)
+{
+
 }

@@ -5,13 +5,14 @@
 #include <boost\lexical_cast.hpp>
 #include <boost\algorithm\string.hpp>
 
+#include "Core\Processor.h"
 #include "Core\Configuration.h"
 #include "Network\Packet.h"
 #include "Network\Gateway.h"
-#include "Network\Connection.h"
+#include "Network\Connection_Server.h"
 
 Connection_Server::Connection_Server(Gateway* _gateway) :
-	Connection(_gateway->network_processor->Service()),
+	Connection(_gateway->processor->Service()),
 	gateway(_gateway)
 {
 	#ifdef LOGGING

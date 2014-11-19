@@ -3,9 +3,9 @@
 #include <boost\asio.hpp>
 
 #include "Core\Configuration.h"
-#include "Game\Game.h"
 #include "Game\Arena.h"
-#include "Network\Connection.h"
+#include "Game\Game_Client.h"
+#include "Network\Connection_Client.h"
 
 Game_Client::Game_Client() :
 	thread(boost::bind(&boost::asio::io_service::run, &io_service))

@@ -35,7 +35,7 @@ namespace Graphics
 	extern FT_Face face_outwrite;
 
 	extern Shader *shaderText;
-	void DrawString(FT_Face *_face, const std::string &_text, float _x, float _y, const float &_sx, const float &_sy);
+	void DrawString(const FT_Face &_face, const std::string &_text, float _x, float _y, const float &_sx, const float &_sy);
 
 	extern GLFWwindow *window;
 };

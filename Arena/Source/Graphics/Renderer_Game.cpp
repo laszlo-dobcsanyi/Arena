@@ -12,6 +12,7 @@
 #include "Graphics\Shader.h"
 #include "Graphics\Texture.h"
 #include "Graphics\Renderer_Game.h"
+#include "Stages\Stage_Handler.h"
 
 Renderer_Game::Renderer_Game(Game *_game) :
 	game(_game),
@@ -33,16 +34,26 @@ Renderer_Game::~Renderer_Game()
 
 void Renderer_Game::Render()
 {
-	glBindVertexArray(Graphics::VAO);
+	if (game)
+	{
+		glBindVertexArray(Graphics::VAO);
 
-	camera->UpdateCameraVectors(game->arena->character->center.x, game->arena->character->center.y);
-	viewMatrix = glm::lookAt(camera->GetCenterVec(), camera->GetEyeVec(), camera->GetUpVec());
+		camera->UpdateCameraVectors(game->arena->character->center.x, game->arena->character->center.y);
+		viewMatrix = glm::lookAt(camera->GetCenterVec(), camera->GetEyeVec(), camera->GetUpVec());
 
-	DrawBackground();
-	DrawWalls();
-	DrawHeroes();
+		DrawBackground();
+		DrawWalls();
+		DrawHeroes();
+	
+		glBindVertexArray(0);
+	}
+	else
+	{
+		// TODO draw loading!
+	}
 
-	glBindVertexArray(0);
+	//Graphics::DrawString(Graphics::face_outwrite, "ZOLKA", 200.f, 200.f, 1.f, 1.f);
+
 }
 
 void Renderer_Game::DrawBackground()
@@ -203,37 +214,50 @@ void Renderer_Game::InitModelShape(const boost::shared_ptr< Object > _modelObjec
 
 void Renderer_Game::Handle_Key(GLFWwindow* _window, const int &_key, const int &_scancode, const int &_action, const int &_mode)
 {
-	switch (_key)
+	if (game)
 	{
+		switch (_key)
+		{
 		case GLFW_KEY_W: keys[Game_Keys::KEY_UP] = (_action == GLFW_PRESS ? true : (_action == GLFW_RELEASE ? false : keys[Game_Keys::KEY_UP])); break;
 		case GLFW_KEY_A: keys[Game_Keys::KEY_LEFT] = (_action == GLFW_PRESS ? true : (_action == GLFW_RELEASE ? false : keys[Game_Keys::KEY_LEFT])); break;
 		case GLFW_KEY_S: keys[Game_Keys::KEY_DOWN] = (_action == GLFW_PRESS ? true : (_action == GLFW_RELEASE ? false : keys[Game_Keys::KEY_DOWN])); break;
 		case GLFW_KEY_D: keys[Game_Keys::KEY_RIGHT] = (_action == GLFW_PRESS ? true : (_action == GLFW_RELEASE ? false : keys[Game_Keys::KEY_RIGHT])); break;
 		case GLFW_KEY_SPACE: keys[Game_Keys::KEY_JUMP] = (_action == GLFW_PRESS ? true : (_action == GLFW_RELEASE ? false : keys[Game_Keys::KEY_JUMP])); break;
-	}
+		}
 
-	if (_key == GLFW_KEY_ESCAPE && _action == GLFW_PRESS) glfwSetWindowShouldClose(_window, GL_TRUE);
-
-	if (_action == GLFW_PRESS || _action == GLFW_RELEASE)
-	{
-		uint8_t movement = 0x0000000;
-
-		movement |= Hero_Movement::RIGHT * keys[Game_Keys::KEY_RIGHT];
-		movement |= Hero_Movement::DOWN * keys[Game_Keys::KEY_DOWN];
-		movement |= Hero_Movement::LEFT * keys[Game_Keys::KEY_LEFT];
-		movement |= Hero_Movement::UP * keys[Game_Keys::KEY_UP];
-		movement |= Hero_Movement::JUMP * keys[Game_Keys::KEY_JUMP];
-
-		game->arena->character->Move(movement);
-		BOOST_FOREACH(boost::shared_ptr< Hero > hero, game->arena->heroes.data.list)
+		if (_action == GLFW_PRESS || _action == GLFW_RELEASE)
 		{
-			hero->Move(movement);
+			uint8_t movement = 0x0000000;
+
+			movement |= Hero_Movement::RIGHT * keys[Game_Keys::KEY_RIGHT];
+			movement |= Hero_Movement::DOWN * keys[Game_Keys::KEY_DOWN];
+			movement |= Hero_Movement::LEFT * keys[Game_Keys::KEY_LEFT];
+			movement |= Hero_Movement::UP * keys[Game_Keys::KEY_UP];
+			movement |= Hero_Movement::JUMP * keys[Game_Keys::KEY_JUMP];
+
+			game->arena->character->Move(movement);
+			BOOST_FOREACH(boost::shared_ptr< Hero > hero, game->arena->heroes.data.list)
+			{
+				hero->Move(movement);
+			}
 		}
 	}
+	else
+	{
+	}
+
+	if (_key == GLFW_KEY_ESCAPE && _action == GLFW_PRESS) Stage_Handler::SetStage(Stages::MENU);
 }
 
 void Renderer_Game::Handle_Mouse(GLFWwindow* _window, const int &_key, const int &_action, const int &_mode)
 {
+	if (game)
+	{
 
+	}
+	else
+	{
+
+	}
 }
 

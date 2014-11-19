@@ -2,15 +2,14 @@
 
 #include <boost\chrono.hpp>
 
-#include "Core\Program.h"
 #include "Core\Configuration.h"
 #include "Graphics\Graphics.h"
+#include "Stages\Stage_Handler.h"
 
 int main()
 {
 	Graphics::Create();
-
-	Program::Create();
+	Stage_Handler::Create();
 
 	#ifdef LOGGING
 	//Logger::Write_Counters();
@@ -31,7 +30,7 @@ int main()
 		{
 			glfwPollEvents();
 
-			Program::Render();
+			Stage_Handler::Render();
 
 			glfwSwapBuffers(Graphics::window);
 
@@ -39,8 +38,7 @@ int main()
 		}
 	} while (!glfwWindowShouldClose(Graphics::window));
 
-	Program::Destroy();
-
+	Stage_Handler::Destroy();
 	Graphics::Destroy();
 	
 	#ifdef LOGGING

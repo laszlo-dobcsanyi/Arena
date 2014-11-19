@@ -27,6 +27,8 @@ namespace Game_Keys
 	};
 };
 
+class Game;
+
 class Renderer_Game : public Renderer
 {
 public:

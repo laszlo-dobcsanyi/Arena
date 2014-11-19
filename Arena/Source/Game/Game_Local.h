@@ -4,9 +4,7 @@
 #include "Game\Game.h"
 #include "Graphics\Renderer_Game.h"
 
-class Game_Renderer;
-
-class Game_Local : public Game, public Renderer_Game
+class Game_Local : public Game
 {
 public:
 	Game_Local();

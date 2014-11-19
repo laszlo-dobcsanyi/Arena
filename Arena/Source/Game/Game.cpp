@@ -11,6 +11,8 @@
 #include "Game\Arena.h"
 
 Game::Game() :
+	Renderer_Game(this),
+
 	disposed(false)
 {
 	#ifdef LOGGING
@@ -18,42 +20,22 @@ Game::Game() :
 	#endif
 
 	arena = new Arena("Maps\\level0.data");  // 12
-	updater = boost::thread(boost::bind(&Game::Process, this));
 
 	#ifdef LOGGING
 	Logger::Write(LogMask::constructor, LogObject::game, "\t<+ Game Created!");
 	#endif
 }
 
-Game::~Game()
+void Game::Start()
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::game, "\t-> Destroying Game..");
+	Logger::Write(LogMask::message, LogObject::game, "\t-> Starting Game..");
 	#endif
 
-	delete arena;
+	updater = boost::thread(boost::bind(&Game::Process, this));
 
 	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::game, "\t<- Game Destroyed!");
-	#endif
-}
-
-void Game::Dispose()
-{
-	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::game, "\t-> Disposing Game..");
-	#endif
-
-	if (!disposed) disposed = true;
-	updater.interrupt();
-	updater.join();
-
-	//
-
-	delete this;
-
-	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::game, "\t<- Game Disposed!");
+	Logger::Write(LogMask::message, LogObject::game, "\t<- Game Started!");
 	#endif
 }
 
@@ -78,4 +60,36 @@ void Game::Process()
 			elapsed_time = 0.f;
 		}
 	} while (!disposed);
+}
+
+void Game::Dispose()
+{
+	#ifdef LOGGING
+	Logger::Write(LogMask::dispose, LogObject::game, "\t-> Disposing Game..");
+	#endif
+
+	if (!disposed) disposed = true;
+	updater.interrupt();
+	updater.join();
+
+	//
+
+	delete this;
+
+	#ifdef LOGGING
+	Logger::Write(LogMask::dispose, LogObject::game, "\t<- Game Disposed!");
+	#endif
+}
+
+Game::~Game()
+{
+	#ifdef LOGGING
+	Logger::Write(LogMask::destructor, LogObject::game, "\t-> Destroying Game..");
+	#endif
+
+	delete arena;
+
+	#ifdef LOGGING
+	Logger::Write(LogMask::destructor, LogObject::game, "\t<- Game Destroyed!");
+	#endif
 }

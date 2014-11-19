@@ -34,19 +34,20 @@ namespace LogObject
 
 		arena				= 1 << 7,
 		game				= 1 << 8,
-		hero				= 1 << 9,
-		object				= 1 << 10,
-		wall				= 1 << 11,
+		lobby				= 1 << 9,
+		hero				= 1 << 10,
+		object				= 1 << 11,
+		wall				= 1 << 12,
 
-		camera				= 1 << 12,
-		input_handler		= 1 << 13,
-		main_window			= 1 << 14,
-		render				= 1 << 15,
-		shader				= 1 << 16,
-		texture				= 1 << 17,
+		camera				= 1 << 13,
+		input_handler		= 1 << 14,
+		main_window			= 1 << 15,
+		render				= 1 << 16,
+		shader				= 1 << 17,
+		texture				= 1 << 18,
 
-		gateway				= 1 << 18,
-		connection			= 1 << 19
+		gateway				= 1 << 19,
+		connection			= 1 << 20
 	};
 };
 

@@ -16,6 +16,9 @@
     <Filter Include="Network">
       <UniqueIdentifier>{fca948b7-668f-4156-900b-2cca2ba23be7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Stages">
+      <UniqueIdentifier>{e1fa2bbb-ea3d-4c97-b5ae-1cda732722ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\BSP_Tree.hpp">
@@ -90,14 +93,44 @@
     <ClInclude Include="Source\Graphics\Renderer_Lobby.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Core\Program.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Graphics\Graphics.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\Game_Local.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Game_Client.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Game_Server.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Lobby.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Network\Connection_Client.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Network\Connection_Server.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Stages\Stage_Handler.h">
+      <Filter>Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Stages\Stage.h">
+      <Filter>Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Stages\Stage_Menu.h">
+      <Filter>Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Stages\Stage_Server.h">
+      <Filter>Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Stages\Stage_Client.h">
+      <Filter>Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Stages\Stage_Local.h">
+      <Filter>Stages</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -176,11 +209,29 @@
     <ClCompile Include="Source\Graphics\Renderer_Lobby.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Core\Program.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Graphics\Graphics.cpp">
       <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Lobby.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Stages\Stage_Handler.cpp">
+      <Filter>Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Stages\Stage.cpp">
+      <Filter>Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Stages\Stage_Menu.cpp">
+      <Filter>Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Stages\Stage_Server.cpp">
+      <Filter>Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Stages\Stage_Client.cpp">
+      <Filter>Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Stages\Stage_Local.cpp">
+      <Filter>Stages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

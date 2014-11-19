@@ -84,35 +84,4 @@ private:
 	Connection & operator=(const Connection &_other);
 };
 
-class Connection_Server : public Connection
-{
-public:
-	Connection_Server(Gateway* gateway);
-	virtual ~Connection_Server();
-
-	void Start(const int& _udp_port);
-
-	void Process(char *_data, size_t _received);
-
-private:
-	Gateway* gateway;
-	Connection_Server(const Connection_Server &_other);
-	Connection_Server & operator=(const Connection_Server &_other);
-};
-
-class Connection_Client : public Connection
-{
-public:
-	Connection_Client(boost::asio::io_service &_io_service, const boost::asio::ip::tcp::endpoint &_local_endpoint);
-	virtual ~Connection_Client();
-
-	void Connect(const boost::asio::ip::tcp::endpoint &_remote_endpoint);
-	void Process(char *_data, size_t _received);
-
-private:
-	void Handle_Connect(const boost::system::error_code &_error);
-
-	Connection_Client(const Connection_Client &_other);
-	Connection_Client & operator=(const Connection_Client &_other);
-};
 #endif

@@ -63,50 +63,31 @@ void Graphics::Destroy()
 	// TODO other stuff too!
 }
 
-void Graphics::DrawString(FT_Face *_face, const std::string &_text, float _x, float _y, const float &_sx, const float &_sy)
+void Graphics::DrawString(const FT_Face &_face, const std::string &_text, float _x, float _y, const float &_sx, const float &_sy)
 {
-	/*GLint uniform_tex = glGetUniformLocation(shaderText.shaderProgram, "model");
+	/*const char *p;
 
-	GLuint tex;
-	glActiveTexture(GL_TEXTURE0);
-	glGenTextures(1, &tex);
-	glBindTexture(GL_TEXTURE_2D, tex);
-
-	const char *p;
-
+	GLsizei width = 0, height = 0;
 	for (p = _text.c_str(); *p; p++)
 	{
-	if (FT_Load_Char(*_face, *p, FT_LOAD_RENDER)) continue;
-	FT_GlyphSlot g = (*_face)->glyph;
+		if (FT_Load_Char(_face, *p, FT_LOAD_RENDER)) continue;
+		FT_GlyphSlot g = _face->glyph;
+		width += g->bitmap.width;
+		height += g->bitmap.rows;
+	}
 
-	glTexImage2D(
-	GL_TEXTURE_2D,
-	0,
-	GL_ALPHA,
-	g->bitmap.width,
-	g->bitmap.rows,
-	0,
-	GL_ALPHA,
-	GL_UNSIGNED_BYTE,
-	g->bitmap.buffer
-	);
+	GLfloat *pixels = new GLfloat[width * height * 4];
+	for (int outer = 0; outer < height; ++outer)
+		for (int inner = 0; inner < width; ++inner)
+		{
+			pixels[outer * height + inner + 0] = outer * inner * 1;
+			pixels[outer * height + inner + 1] = outer * inner * 2;
+			pixels[outer * height + inner + 2] = outer * inner * 3;
+			pixels[outer * height + inner + 3] = outer * inner * 4;
+		}
 
-	float x2 = _x + g->bitmap_left * _sx;
-	float y2 = -_y - g->bitmap_top * _sy;
-	float w = g->bitmap.width * _sx;
-	float h = g->bitmap.rows * _sy;
+	glDrawPixels(width, height, GL_RGBA, GL_FLOAT, pixels);
+	glfwSwapBuffers(Graphics::window);
 
-	GLfloat box[4][4] = {
-	{ x2, -y2, 0, 0 },
-	{ x2 + w, -y2, 1, 0 },
-	{ x2, -y2 - h, 0, 1 },
-	{ x2 + w, -y2 - h, 1, 1 },
-	};
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof box, box, GL_DYNAMIC_DRAW);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-	_x += (g->advance.x >> 6) * _sx;
-	_y += (g->advance.y >> 6) * _sy;
-	}*/
+	delete[] pixels;*/
 }

@@ -1,12 +1,10 @@
 #include "Macro"
 
 #include "Core\Configuration.h"
-#include "Game\Game.h"
 #include "Game\Arena.h"
-#include "Network\Gateway.h"
+#include "Game\Game_Server.h"
 
-Game_Server::Game_Server() :
-	gateway(new Gateway(boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(Configuration::gateway_address), Configuration::gateway_port)))
+Game_Server::Game_Server()
 {
 
 }

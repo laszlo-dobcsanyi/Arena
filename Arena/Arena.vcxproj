@@ -136,11 +136,13 @@
     <ClInclude Include="Source\Core\List_Separatable.hpp" />
     <ClInclude Include="Source\Core\Logger.h" />
     <ClInclude Include="Source\Core\Processor.h" />
-    <ClInclude Include="Source\Core\Program.h" />
     <ClInclude Include="Source\Game\Arena.h" />
     <ClInclude Include="Source\Game\Game.h" />
+    <ClInclude Include="Source\Game\Game_Client.h" />
     <ClInclude Include="Source\Game\Game_Local.h" />
+    <ClInclude Include="Source\Game\Game_Server.h" />
     <ClInclude Include="Source\Game\Hero.h" />
+    <ClInclude Include="Source\Game\Lobby.h" />
     <ClInclude Include="Source\Game\Object.h" />
     <ClInclude Include="Source\Game\Stage.h" />
     <ClInclude Include="Source\Game\Wall.h" />
@@ -153,8 +155,16 @@
     <ClInclude Include="Source\Graphics\Shader.h" />
     <ClInclude Include="Source\Graphics\Texture.h" />
     <ClInclude Include="Source\Network\Connection.h" />
+    <ClInclude Include="Source\Network\Connection_Client.h" />
+    <ClInclude Include="Source\Network\Connection_Server.h" />
     <ClInclude Include="Source\Network\Gateway.h" />
     <ClInclude Include="Source\Network\Packet.h" />
+    <ClInclude Include="Source\Stages\Stage.h" />
+    <ClInclude Include="Source\Stages\Stage_Client.h" />
+    <ClInclude Include="Source\Stages\Stage_Handler.h" />
+    <ClInclude Include="Source\Stages\Stage_Local.h" />
+    <ClInclude Include="Source\Stages\Stage_Menu.h" />
+    <ClInclude Include="Source\Stages\Stage_Server.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Configuration.cpp" />
@@ -163,13 +173,13 @@
     <ClCompile Include="Source\Core\Generator.cpp" />
     <ClCompile Include="Source\Core\Logger.cpp" />
     <ClCompile Include="Source\Core\Processor.cpp" />
-    <ClCompile Include="Source\Core\Program.cpp" />
     <ClCompile Include="Source\Game\Arena.cpp" />
     <ClCompile Include="Source\Game\Game.cpp" />
     <ClCompile Include="Source\Game\Game_Client.cpp" />
     <ClCompile Include="Source\Game\Game_Local.cpp" />
     <ClCompile Include="Source\Game\Game_Server.cpp" />
     <ClCompile Include="Source\Game\Hero.cpp" />
+    <ClCompile Include="Source\Game\Lobby.cpp" />
     <ClCompile Include="Source\Game\Object.cpp" />
     <ClCompile Include="Source\Game\Wall.cpp" />
     <ClCompile Include="Source\Graphics\Camera.cpp" />
@@ -184,6 +194,12 @@
     <ClCompile Include="Source\Network\Connection_Server.cpp" />
     <ClCompile Include="Source\Network\Gateway.cpp" />
     <ClCompile Include="Source\Network\Packet.cpp" />
+    <ClCompile Include="Source\Stages\Stage.cpp" />
+    <ClCompile Include="Source\Stages\Stage_Client.cpp" />
+    <ClCompile Include="Source\Stages\Stage_Handler.cpp" />
+    <ClCompile Include="Source\Stages\Stage_Local.cpp" />
+    <ClCompile Include="Source\Stages\Stage_Menu.cpp" />
+    <ClCompile Include="Source\Stages\Stage_Server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Background.frag" />
