@@ -10,63 +10,56 @@
 #include "Game\Wall.h"
 #include "Game\Arena.h"
 
-Game * Game::game = 0;
-
-Game * Game::Create(const Game_Type::Type &_type)
-{
-	assert(!game);
-	switch (_type)
-	{
-		case Game_Type::LOCAL:	game = new Game_Local(); break;
-		case Game_Type::SERVER:	game = new Game_Server(); break;
-		case Game_Type::CLIENT:	game = new Game_Client(); break;
-	}
-	assert(game);
-	return game;
-}
-
-Game * Game::Get()
-{ 
-	return game;
-}
-
-void Game::Destroy()
-{
-	delete game;
-	game = 0;
-}
-
-///
-
 Game::Game() :
-	arena(new Arena("Maps\\level0.data")), // 12
-	disposed(false),
-	updater(boost::bind(&Game::Process, this))
+	disposed(false)
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::constructor, LogObject::game, "<+ Game Created!");
+	Logger::Write(LogMask::constructor, LogObject::game, "\t+> Creating Game..");
+	#endif
+
+	arena = new Arena("Maps\\level0.data");  // 12
+	updater = boost::thread(boost::bind(&Game::Process, this));
+
+	#ifdef LOGGING
+	Logger::Write(LogMask::constructor, LogObject::game, "\t<+ Game Created!");
 	#endif
 }
 
 Game::~Game()
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::game, "-> Destroying Game..");
+	Logger::Write(LogMask::destructor, LogObject::game, "\t-> Destroying Game..");
 	#endif
-
-	if (!disposed) disposed = true;
-	updater.join();
 
 	delete arena;
 
 	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::game, "<- Game Destroyed!");
+	Logger::Write(LogMask::destructor, LogObject::game, "\t<- Game Destroyed!");
+	#endif
+}
+
+void Game::Dispose()
+{
+	#ifdef LOGGING
+	Logger::Write(LogMask::destructor, LogObject::game, "\t-> Disposing Game..");
+	#endif
+
+	if (!disposed) disposed = true;
+	updater.interrupt();
+	updater.join();
+
+	//
+
+	delete this;
+
+	#ifdef LOGGING
+	Logger::Write(LogMask::destructor, LogObject::game, "\t<- Game Disposed!");
 	#endif
 }
 
 void Game::Process()
 {
-	float update_interval = Configuration::Get()->game_update_interval;
+	float update_interval = Configuration::game_update_interval;
 
 	float elapsed_time = 0.;
 	boost::chrono::steady_clock::time_point last_time = boost::chrono::steady_clock::now();

@@ -136,16 +136,20 @@
     <ClInclude Include="Source\Core\List_Separatable.hpp" />
     <ClInclude Include="Source\Core\Logger.h" />
     <ClInclude Include="Source\Core\Processor.h" />
+    <ClInclude Include="Source\Core\Program.h" />
     <ClInclude Include="Source\Game\Arena.h" />
     <ClInclude Include="Source\Game\Game.h" />
+    <ClInclude Include="Source\Game\Game_Local.h" />
     <ClInclude Include="Source\Game\Hero.h" />
     <ClInclude Include="Source\Game\Object.h" />
     <ClInclude Include="Source\Game\Stage.h" />
     <ClInclude Include="Source\Game\Wall.h" />
     <ClInclude Include="Source\Graphics\Camera.h" />
-    <ClInclude Include="Source\Graphics\InputHandler.h" />
-    <ClInclude Include="Source\Graphics\MainWindow.h" />
-    <ClInclude Include="Source\Graphics\Render.h" />
+    <ClInclude Include="Source\Graphics\Graphics.h" />
+    <ClInclude Include="Source\Graphics\Renderer.h" />
+    <ClInclude Include="Source\Graphics\Renderer_Game.h" />
+    <ClInclude Include="Source\Graphics\Renderer_Lobby.h" />
+    <ClInclude Include="Source\Graphics\Renderer_Menu.h" />
     <ClInclude Include="Source\Graphics\Shader.h" />
     <ClInclude Include="Source\Graphics\Texture.h" />
     <ClInclude Include="Source\Network\Connection.h" />
@@ -154,10 +158,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Configuration.cpp" />
+    <ClCompile Include="Source\Core\Configuration_Defaults.cpp" />
     <ClCompile Include="Source\Core\Core.cpp" />
     <ClCompile Include="Source\Core\Generator.cpp" />
     <ClCompile Include="Source\Core\Logger.cpp" />
     <ClCompile Include="Source\Core\Processor.cpp" />
+    <ClCompile Include="Source\Core\Program.cpp" />
     <ClCompile Include="Source\Game\Arena.cpp" />
     <ClCompile Include="Source\Game\Game.cpp" />
     <ClCompile Include="Source\Game\Game_Client.cpp" />
@@ -167,9 +173,10 @@
     <ClCompile Include="Source\Game\Object.cpp" />
     <ClCompile Include="Source\Game\Wall.cpp" />
     <ClCompile Include="Source\Graphics\Camera.cpp" />
-    <ClCompile Include="Source\Graphics\InputHandler.cpp" />
-    <ClCompile Include="Source\Graphics\MainWindow.cpp" />
-    <ClCompile Include="Source\Graphics\Render.cpp" />
+    <ClCompile Include="Source\Graphics\Graphics.cpp" />
+    <ClCompile Include="Source\Graphics\Renderer_Game.cpp" />
+    <ClCompile Include="Source\Graphics\Renderer_Lobby.cpp" />
+    <ClCompile Include="Source\Graphics\Renderer_Menu.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Graphics\Texture.cpp" />
     <ClCompile Include="Source\Network\Connection.cpp" />

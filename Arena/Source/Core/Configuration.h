@@ -6,31 +6,42 @@
 class Configuration
 {
 public:
-	float			game_update_interval = 1.f / 50;
+	static float			render_interval;
 
-	int				network_timeout = 5;
-	int				network_packet_size = 512;
-	unsigned int	network_processor_threads = 4;
-	unsigned int	network_connections_number = 4;
+	//
 
-	std::string		gateway_address = "192.168.1.102";
-	unsigned int	gateway_port = 1425;
+	static float			game_update_interval;
 
-	unsigned int	connection_server_port_offset = 40000;
+	//
+	
+	static int				window_width;
+	static int				window_height;
 
-	std::string		connection_client_server_address = gateway_address;
-	unsigned int	connection_client_server_port = gateway_port;
+	static float			camera_min_distance;
+	static float			camera_max_distance;
+	static float			camera_bottom_limit;
+	
+	//
 
-	static const Configuration* const Get();
-	static const Configuration* Load(const std::string &_file);
+	static int				network_timeout;
+	static int				network_packet_size;
+	static unsigned int		network_processor_threads;
+	static unsigned int		network_connections_number;
+
+	static std::string		gateway_address;
+	static unsigned int		gateway_port;
+
+	static unsigned int		connection_server_port_offset;
+
+	static std::string		connection_client_server_address;
+	static unsigned int		connection_client_server_port;
+
+	//
+
+	static void Load(const std::string &_file);
 
 private:
-	static Configuration* configuration;
-
 	Configuration();
-
-	Configuration(const Configuration &_other);
-	Configuration & operator=(const Configuration &_other);
 };
 
 #endif

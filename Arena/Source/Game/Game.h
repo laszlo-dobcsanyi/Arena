@@ -12,53 +12,27 @@ class Game_Client;
 class Gateway;
 class Connection_Client;
 
-namespace Game_Type
-{
-	enum Type
-	{
-		LOCAL,
-		SERVER,
-		CLIENT
-	};
-};
-
 class Game
 {
 public:
 	Arena *arena = 0;
 
-	static Game * Create(const Game_Type::Type &_type);
-	static Game * Get();
-	static void Destroy();
+	virtual void Dispose();
 
 protected:
+	boost::atomic< bool > disposed;
+
 	Game();
 	virtual ~Game();
 
-	boost::atomic< bool > disposed;
 	boost::thread updater;
 
 	void Process();
 	virtual void Update(const float &_elapsed_time) = 0;
 
 private:
-	static Game *game;
-
 	Game(const Game& _other);
 	Game& operator=(const Game&_other);
-};
-
-class Game_Local : public Game
-{
-public:
-	Game_Local();
-	virtual ~Game_Local();
-
-	void Update(const float &_elapsed_time);
-
-private:
-	Game_Local(const Game_Local &_other);
-	Game_Local & operator=(const Game_Local &_other);
 };
 
 class Game_Server : public Game

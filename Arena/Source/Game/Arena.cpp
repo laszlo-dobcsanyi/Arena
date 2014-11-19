@@ -24,7 +24,7 @@ float float_rng(float min, float max)
 Arena::Arena(const int &_seed)
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::constructor, LogObject::arena, "+> Creating Generated Arena with seed " + boost::lexical_cast< std::string >(_seed) + "..");
+	Logger::Write(LogMask::constructor, LogObject::arena, "\t\t+> Creating Generated Arena with seed " + boost::lexical_cast< std::string >(_seed) + "..");
 	#endif
 
 	const float block = 128.;
@@ -38,7 +38,7 @@ Arena::Arena(const int &_seed)
 	}
 
 	#ifdef LOGGING
-	Logger::Write(LogMask::message, LogObject::arena, "\t:> Arena: Generating walls..");
+	Logger::Write(LogMask::message, LogObject::arena, "\t\t\t:> Arena: Generating walls..");
 	#endif
 
 	SLL< boost::shared_ptr< Wall > > *wall_segment = new SLL< boost::shared_ptr< Wall > >();
@@ -61,7 +61,7 @@ Arena::Arena(const int &_seed)
 	}
 
 	#ifdef LOGGING
-	Logger::Write(LogMask::message, LogObject::arena, "\t:> Arena: Creating BSP Tree..");
+	Logger::Write(LogMask::message, LogObject::arena, "\t\t\t:> Arena: Creating BSP Tree..");
 	#endif
 
 	collision_tree = new BSP_Tree< boost::shared_ptr< Wall > >(wall_segment);
@@ -70,7 +70,7 @@ Arena::Arena(const int &_seed)
 Arena::Arena(const std::string &_file)
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::constructor, LogObject::arena, "+> Creating Constructed Arena from " + _file + "..");
+	Logger::Write(LogMask::constructor, LogObject::arena, "\t\t+> Creating Constructed Arena from " + _file + "..");
 	#endif
 
 	character = boost::shared_ptr< Hero >(new Hero(Vector2(600., 400.), "Textures\\awesomeface.png"));
@@ -83,7 +83,7 @@ Arena::Arena(const std::string &_file)
 	//
 
 	#ifdef LOGGING
-	Logger::Write(LogMask::message, LogObject::arena, "\t:> Arena: Loading data..");
+	Logger::Write(LogMask::message, LogObject::arena, "\t\t\t:> Arena: Loading data..");
 	#endif
 
 	SLL< boost::shared_ptr< Wall > > *wall_segment = new SLL< boost::shared_ptr< Wall > >();
@@ -101,7 +101,7 @@ Arena::Arena(const std::string &_file)
 	data.close();
 
 	#ifdef LOGGING
-	Logger::Write(LogMask::message, LogObject::arena, "\t:> Arena: Creating BSP Tree..");
+	Logger::Write(LogMask::message, LogObject::arena, "\t\t\t:> Arena: Creating BSP Tree..");
 	#endif
 
 	collision_tree = new BSP_Tree< boost::shared_ptr< Wall > >(wall_segment);
@@ -110,13 +110,13 @@ Arena::Arena(const std::string &_file)
 Arena::~Arena()
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::arena, "-> Destroying Arena..");
+	Logger::Write(LogMask::destructor, LogObject::arena, "\t\t-> Destroying Arena..");
 	#endif
 
 	delete collision_tree;
 
 	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::arena, "<- Arena Destroyed!");;
+	Logger::Write(LogMask::destructor, LogObject::arena, "\t\t<- Arena Destroyed!");;
 	#endif
 }
 

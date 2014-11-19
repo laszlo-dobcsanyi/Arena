@@ -15,10 +15,10 @@
 Gateway::Gateway(const boost::asio::ip::tcp::endpoint &_endpoint) :
 	disposed(false),
 
-	data(new char[Configuration::Get()->network_packet_size]),
-	port_generator(Configuration::Get()->network_connections_number),
+	data(new char[Configuration::network_packet_size]),
+	port_generator(Configuration::network_connections_number),
 
-	network_processor(new Processor(Configuration::Get()->network_processor_threads)),
+	network_processor(new Processor(Configuration::network_processor_threads)),
 	gateway(network_processor->Service(), _endpoint),
 
 	thread(boost::bind(&Gateway::Listen, this))
@@ -61,7 +61,7 @@ void Gateway::Handle_Accept(Connection_Server* _connection, const boost::system:
 
 	if (!_error)
 	{
-		_connection->Start(Configuration::Get()->connection_server_port_offset + port_generator.Next());
+		_connection->Start(Configuration::connection_server_port_offset + port_generator.Next());
 	}
 
 	if (!disposed) Listen();
@@ -73,7 +73,7 @@ void Gateway::Return(const int &_port)
 	Logger::Write(LogMask::destructor, LogObject::gateway, "-> Gateway Returning port..");
 	#endif
 
-	port_generator.Return(_port - Configuration::Get()->connection_server_port_offset);
+	port_generator.Return(_port - Configuration::connection_server_port_offset);
 }
 
 void Gateway::Dispose()

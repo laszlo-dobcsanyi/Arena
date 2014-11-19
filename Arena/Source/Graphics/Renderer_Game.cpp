@@ -1,63 +1,57 @@
-#include <boost\foreach.hpp>
+#include "Macro"
 
+#include <cstdint>
+
+#include "Core\Configuration.h"
 #include "Game\Arena.h"
 #include "Game\Game.h"
 #include "Game\Hero.h"
 #include "Game\Wall.h"
-#include "Graphics\Render.h"
-#include "Graphics\MainWindow.h"
-#include "Graphics\Shader.h"
+#include "Graphics\Graphics.h"
 #include "Graphics\Camera.h"
+#include "Graphics\Shader.h"
 #include "Graphics\Texture.h"
+#include "Graphics\Renderer_Game.h"
 
-Render::Render() :	shaderWall(new Shader("Shaders\\Wall.vs", "Shaders\\Wall.frag")), 
-					shaderHero(new Shader("Shaders\\Hero.vs", "Shaders\\Hero.frag")),	
-					shaderText(new Shader("Shaders\\Text.vs", "Shaders\\Text.frag")),
-					camera(Camera::GetCamera())
+Renderer_Game::Renderer_Game(Game *_game) :
+	game(_game),
+
+	shaderWall(new Shader("Shaders\\Wall.vs", "Shaders\\Wall.frag")),
+	shaderHero(new Shader("Shaders\\Hero.vs", "Shaders\\Hero.frag")),
+
+	camera(Camera::GetCamera())
+
 {
-	assert(!FT_Init_FreeType(&font_library) && "Could not init freetype library!");
-	assert(!FT_New_Face(font_library, "Fonts\\Outwrite.ttf", 0, &face_outwrite) && "Could not open Outwrite font!");
-	FT_Set_Pixel_Sizes(face_outwrite, 0, 200);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
-
 	projectionMatrix = glm::mat4();
-	projectionMatrix = glm::ortho(0.0f, (float)MainWindow::GetWindowWidth(), 0.0f, (float)MainWindow::GetWindowHeight(), CAMERA_VIEW_MIN_DISTANCE, CAMERA_VIEW_MAX_DISTANCE);
+	projectionMatrix = glm::ortho(0.0f, (float)Configuration::window_width, 0.0f, (float)Configuration::window_height, Configuration::camera_min_distance, Configuration::camera_max_distance);
 }
 
-void Render::InitGameRender() { game = Game::Get(); }
-
-void Render::Draw()
+Renderer_Game::~Renderer_Game()
 {
-	glBindVertexArray(VAO);
 
-	DrawBackground();
+}
+
+void Renderer_Game::Render()
+{
+	glBindVertexArray(Graphics::VAO);
 
 	camera->UpdateCameraVectors(game->arena->character->center.x, game->arena->character->center.y);
-	
 	viewMatrix = glm::lookAt(camera->GetCenterVec(), camera->GetEyeVec(), camera->GetUpVec());
 
+	DrawBackground();
 	DrawWalls();
 	DrawHeroes();
 
 	glBindVertexArray(0);
-	
-	// TODO: DrawProjectiles();
 }
 
-void Render::DrawBackground()
+void Renderer_Game::DrawBackground()
 {
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Render::DrawWalls()
+void Renderer_Game::DrawWalls()
 {
 	shaderWall->Use();
 
@@ -81,7 +75,7 @@ void Render::DrawWalls()
 	}
 }
 
-void Render::DrawHeroes()
+void Renderer_Game::DrawHeroes()
 {
 	shaderHero->Use();
 
@@ -112,60 +106,10 @@ void Render::DrawHeroes()
 
 	InitModelShape(game->arena->character);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-	shaderText->Use();
-	DrawString(&face_outwrite, "ZOLKA", 16, 20, 1, 2);
 }
 
-void Render::DrawString(FT_Face *_face, const std::string &_text, float _x, float _y, const float &_sx, const float &_sy)
-{
-	GLint uniform_tex = glGetUniformLocation(shaderHero->shaderProgram, "model");
 
-	GLuint tex;
-	glActiveTexture(GL_TEXTURE0);
-	glGenTextures(1, &tex);
-	glBindTexture(GL_TEXTURE_2D, tex);
-
-	const char *p;
-
-	for (p = _text.c_str(); *p; p++)
-	{
-		if (FT_Load_Char(*_face, *p, FT_LOAD_RENDER)) continue;
-		FT_GlyphSlot g = (*_face)->glyph;
-
-		glTexImage2D(
-			GL_TEXTURE_2D,
-			0,
-			GL_ALPHA,
-			g->bitmap.width,
-			g->bitmap.rows,
-			0,
-			GL_ALPHA,
-			GL_UNSIGNED_BYTE,
-			g->bitmap.buffer
-			);
-
-		float x2 = _x + g->bitmap_left * _sx;
-		float y2 = -_y - g->bitmap_top * _sy;
-		float w = g->bitmap.width * _sx;
-		float h = g->bitmap.rows * _sy;
-
-		GLfloat box[4][4] = {
-			{ x2, -y2, 0, 0 },
-			{ x2 + w, -y2, 1, 0 },
-			{ x2, -y2 - h, 0, 1 },
-			{ x2 + w, -y2 - h, 1, 1 },
-		};
-
-		glBufferData(GL_ARRAY_BUFFER, sizeof box, box, GL_DYNAMIC_DRAW);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-		_x += (g->advance.x >> 6) * _sx;
-		_y += (g->advance.y >> 6) * _sy;
-	}
-}
-
-void Render::InitModelShape(const boost::shared_ptr< Object > _modelObject)
+void Renderer_Game::InitModelShape(const boost::shared_ptr< Object > _modelObject)
 {
 	float shapeWidth = (float)(_modelObject->width);
 	float shapeHeight = (float)(_modelObject->height);
@@ -174,32 +118,32 @@ void Render::InitModelShape(const boost::shared_ptr< Object > _modelObject)
 
 	// TOP RIGHT:
 	// Position Coords:
-	modelShape.vertices[ 0] =  shapeWidth;
-	modelShape.vertices[ 1] =  shapeHeight;
+	modelShape.vertices[0] = shapeWidth;
+	modelShape.vertices[1] = shapeHeight;
 
 	// Colors:
-	modelShape.vertices[ 2] =  1.0f;
-	modelShape.vertices[ 3] =  0.0f;
-	modelShape.vertices[ 4] =  0.0f;
+	modelShape.vertices[2] = 1.0f;
+	modelShape.vertices[3] = 0.0f;
+	modelShape.vertices[4] = 0.0f;
 
 	// Texture Coords:
-	modelShape.vertices[ 5] =  textureWidthRatio;
-	modelShape.vertices[ 6] =  textureHeightRatio;
+	modelShape.vertices[5] = textureWidthRatio;
+	modelShape.vertices[6] = textureHeightRatio;
 	// ----------------------------
 
 	// BOTTOM RIGHT:
 	// Position Coords:
-	modelShape.vertices[ 7] =  shapeWidth;
-	modelShape.vertices[ 8] = -shapeHeight;
+	modelShape.vertices[7] = shapeWidth;
+	modelShape.vertices[8] = -shapeHeight;
 
 	// Colors:
-	modelShape.vertices[ 9] =  0.0f;
-	modelShape.vertices[10] =  1.0f;
-	modelShape.vertices[11] =  0.0f;
+	modelShape.vertices[9] = 0.0f;
+	modelShape.vertices[10] = 1.0f;
+	modelShape.vertices[11] = 0.0f;
 
 	// Texture Coords:
-	modelShape.vertices[12] =  textureWidthRatio;
-	modelShape.vertices[13] =  0.0f;
+	modelShape.vertices[12] = textureWidthRatio;
+	modelShape.vertices[13] = 0.0f;
 	// ----------------------------
 
 	// BOTTOM LEFT:
@@ -208,28 +152,28 @@ void Render::InitModelShape(const boost::shared_ptr< Object > _modelObject)
 	modelShape.vertices[15] = -shapeHeight;
 
 	// Colors:
-	modelShape.vertices[16] =  0.0f;
-	modelShape.vertices[17] =  0.0f;
-	modelShape.vertices[18] =  1.0f;
+	modelShape.vertices[16] = 0.0f;
+	modelShape.vertices[17] = 0.0f;
+	modelShape.vertices[18] = 1.0f;
 
 	// Texture Coords:
-	modelShape.vertices[19] =  0.0f;
-	modelShape.vertices[20] =  0.0f;
+	modelShape.vertices[19] = 0.0f;
+	modelShape.vertices[20] = 0.0f;
 	// ----------------------------
 
 	// TOP LEFT:
 	// Position Coords:
 	modelShape.vertices[21] = -shapeWidth;
-	modelShape.vertices[22] =  shapeHeight;
+	modelShape.vertices[22] = shapeHeight;
 
 	// Colors:
-	modelShape.vertices[23] =  1.0f;
-	modelShape.vertices[24] =  1.0f;
-	modelShape.vertices[25] =  0.0f;
+	modelShape.vertices[23] = 1.0f;
+	modelShape.vertices[24] = 1.0f;
+	modelShape.vertices[25] = 0.0f;
 
 	// Texture Coords:
-	modelShape.vertices[26] =  0.0f;
-	modelShape.vertices[27] =  textureHeightRatio;
+	modelShape.vertices[26] = 0.0f;
+	modelShape.vertices[27] = textureHeightRatio;
 	// ----------------------------
 
 	modelShape.indices[0] = 0;
@@ -239,10 +183,10 @@ void Render::InitModelShape(const boost::shared_ptr< Object > _modelObject)
 	modelShape.indices[4] = 2;
 	modelShape.indices[5] = 3;
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, Graphics::VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(modelShape.vertices), modelShape.vertices, GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Graphics::EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(modelShape.indices), modelShape.indices, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)0);
@@ -254,3 +198,42 @@ void Render::InitModelShape(const boost::shared_ptr< Object > _modelObject)
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(2);
 }
+
+//
+
+void Renderer_Game::Handle_Key(GLFWwindow* _window, const int &_key, const int &_scancode, const int &_action, const int &_mode)
+{
+	switch (_key)
+	{
+		case GLFW_KEY_W: keys[Game_Keys::KEY_UP] = (_action == GLFW_PRESS ? true : (_action == GLFW_RELEASE ? false : keys[Game_Keys::KEY_UP])); break;
+		case GLFW_KEY_A: keys[Game_Keys::KEY_LEFT] = (_action == GLFW_PRESS ? true : (_action == GLFW_RELEASE ? false : keys[Game_Keys::KEY_LEFT])); break;
+		case GLFW_KEY_S: keys[Game_Keys::KEY_DOWN] = (_action == GLFW_PRESS ? true : (_action == GLFW_RELEASE ? false : keys[Game_Keys::KEY_DOWN])); break;
+		case GLFW_KEY_D: keys[Game_Keys::KEY_RIGHT] = (_action == GLFW_PRESS ? true : (_action == GLFW_RELEASE ? false : keys[Game_Keys::KEY_RIGHT])); break;
+		case GLFW_KEY_SPACE: keys[Game_Keys::KEY_JUMP] = (_action == GLFW_PRESS ? true : (_action == GLFW_RELEASE ? false : keys[Game_Keys::KEY_JUMP])); break;
+	}
+
+	if (_key == GLFW_KEY_ESCAPE && _action == GLFW_PRESS) glfwSetWindowShouldClose(_window, GL_TRUE);
+
+	if (_action == GLFW_PRESS || _action == GLFW_RELEASE)
+	{
+		uint8_t movement = 0x0000000;
+
+		movement |= Hero_Movement::RIGHT * keys[Game_Keys::KEY_RIGHT];
+		movement |= Hero_Movement::DOWN * keys[Game_Keys::KEY_DOWN];
+		movement |= Hero_Movement::LEFT * keys[Game_Keys::KEY_LEFT];
+		movement |= Hero_Movement::UP * keys[Game_Keys::KEY_UP];
+		movement |= Hero_Movement::JUMP * keys[Game_Keys::KEY_JUMP];
+
+		game->arena->character->Move(movement);
+		BOOST_FOREACH(boost::shared_ptr< Hero > hero, game->arena->heroes.data.list)
+		{
+			hero->Move(movement);
+		}
+	}
+}
+
+void Renderer_Game::Handle_Mouse(GLFWwindow* _window, const int &_key, const int &_action, const int &_mode)
+{
+
+}
+

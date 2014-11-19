@@ -40,7 +40,7 @@ void Connection_Server::Start(const int& _udp_port)
 	try
 	{
 		udp_socket.open(boost::asio::ip::udp::v4());
-		udp_socket.bind(boost::asio::ip::udp::endpoint(boost::asio::ip::address::from_string(Configuration::Get()->gateway_address), _udp_port));
+		udp_socket.bind(boost::asio::ip::udp::endpoint(boost::asio::ip::address::from_string(Configuration::gateway_address), _udp_port));
 		udp_socket.connect(boost::asio::ip::udp::endpoint(tcp_socket.remote_endpoint().address(), tcp_socket.remote_endpoint().port() + 1));
 	}
 	catch (const boost::system::system_error &_error)

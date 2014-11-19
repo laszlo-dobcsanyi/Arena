@@ -1,31 +1,16 @@
-#define RENDER_INTERVAL 1./50
-
 #include "Macro"
 
 #include <boost\chrono.hpp>
 
-#include "Game\Game.h"
-#include "Graphics\Render.h"
-#include "Graphics\MainWindow.h"
-#include "Network\Gateway.h"
+#include "Core\Program.h"
+#include "Core\Configuration.h"
+#include "Graphics\Graphics.h"
 
 int main()
 {
-	Game_Type::Type game_type;
-	std::cout << "1)LOCAL\n2)SERVER\n3)CLIENT\n"; char num = std::cin.get();
-	switch (num)
-	{
-		case '1': game_type = Game_Type::LOCAL; break;
-		case '2': game_type = Game_Type::SERVER; break;
-		case '3': game_type = Game_Type::CLIENT; break;
-		default: return 0;
-	}
+	Graphics::Create();
 
-	MainWindow* mainWindow = MainWindow::GetMainWindow();
-
-	Game *game = Game::Create(game_type);
-
-	mainWindow->GetRender()->InitGameRender();
+	Program::Create();
 
 	#ifdef LOGGING
 	//Logger::Write_Counters();
@@ -42,20 +27,21 @@ int main()
 		last_time = now;
 		
 		// Render
-		if (RENDER_INTERVAL < elapsed_render_time)
+		if (Configuration::render_interval < elapsed_render_time)
 		{
 			glfwPollEvents();
 
-			mainWindow->GetRender()->Draw();
+			Program::Render();
 
-			glfwSwapBuffers(mainWindow->GetWindow());
+			glfwSwapBuffers(Graphics::window);
 
 			elapsed_render_time = 0.f;
 		}
-	} while (!glfwWindowShouldClose(mainWindow->GetWindow()));
+	} while (!glfwWindowShouldClose(Graphics::window));
 
-	mainWindow->DeleteWindow();
-	game->Destroy();
+	Program::Destroy();
+
+	Graphics::Destroy();
 	
 	#ifdef LOGGING
 	Logger::Write_Counters();

@@ -11,13 +11,13 @@
 Connection::Connection(boost::asio::io_service& _io_service) :
 	disposed(false),
 
-	tcp_data(new char[Configuration::Get()->network_packet_size]),
-	udp_data(new char[Configuration::Get()->network_packet_size]),
+	tcp_data(new char[Configuration::network_packet_size]),
+	udp_data(new char[Configuration::network_packet_size]),
 
 	tcp_socket(_io_service),
 	udp_socket(_io_service),
 
-	timeout(_io_service, boost::posix_time::seconds(Configuration::Get()->network_timeout))
+	timeout(_io_service, boost::posix_time::seconds(Configuration::network_timeout))
 {
 	#ifdef LOGGING
 	Logger::counter_connections++;
@@ -34,7 +34,7 @@ void Connection::Start()
 	TCP_Receive();
 	UDP_Receive();
 
-	timeout.expires_from_now(boost::posix_time::seconds(Configuration::Get()->network_timeout));
+	timeout.expires_from_now(boost::posix_time::seconds(Configuration::network_timeout));
 	timeout.async_wait(boost::bind(&Connection::Handle_Timeout, this, boost::asio::placeholders::error));
 }
 
@@ -42,7 +42,7 @@ void Connection::Start()
 
 void Connection::TCP_Receive()
 {
-	tcp_socket.async_receive(boost::asio::buffer(tcp_data, Configuration::Get()->network_packet_size),
+	tcp_socket.async_receive(boost::asio::buffer(tcp_data, Configuration::network_packet_size),
 		boost::bind(&Connection::Handle_TCP_Receive, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
 }
 
@@ -52,7 +52,7 @@ void Connection::Handle_TCP_Receive(const boost::system::error_code &_error, siz
 	{
 		Process(tcp_data, _received);
 
-		timeout.expires_from_now(boost::posix_time::seconds(Configuration::Get()->network_timeout));
+		timeout.expires_from_now(boost::posix_time::seconds(Configuration::network_timeout));
 		timeout.async_wait(boost::bind(&Connection::Handle_Timeout, this, boost::asio::placeholders::error));
 	}
 	else
@@ -89,7 +89,7 @@ void Connection::Handle_TCP_Send(const boost::system::error_code &_error, size_t
 
 void Connection::UDP_Receive()
 {
-	udp_socket.async_receive(boost::asio::buffer(udp_data, Configuration::Get()->network_packet_size),
+	udp_socket.async_receive(boost::asio::buffer(udp_data, Configuration::network_packet_size),
 		boost::bind(&Connection::Handle_UDP_Receive, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
 }
 
@@ -99,7 +99,7 @@ void Connection::Handle_UDP_Receive(const boost::system::error_code &_error, siz
 	{
 		Process(udp_data, _received);
 
-		timeout.expires_from_now(boost::posix_time::seconds(Configuration::Get()->network_timeout));
+		timeout.expires_from_now(boost::posix_time::seconds(Configuration::network_timeout));
 		timeout.async_wait(boost::bind(&Connection::Handle_Timeout, this, boost::asio::placeholders::error));
 	}
 	else

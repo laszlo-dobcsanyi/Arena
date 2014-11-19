@@ -1,3 +1,6 @@
+#include "Macro"
+
+#include "Core\Configuration.h"
 #include "Graphics\Camera.h"
 
 Camera* Camera::camera;
@@ -14,9 +17,9 @@ Camera* Camera::GetCamera()
 
 void Camera::UpdateCameraVectors(const float& _xPos, const float& _yPos)
 {	
-	float xPos = _xPos - (MainWindow::GetWindowWidth() - 32.0f) / 2.0f;
+	float xPos = _xPos - (Configuration::window_width - 32.0f) / 2.0f;
 
-	if (_yPos < WINDOW_CAMERA_BOTTOM_LIMIT)
+	if (_yPos < Configuration::camera_bottom_limit)
 	{
 
 		centerVec = glm::vec3(xPos, 0.0f, 1.0f);
@@ -24,7 +27,7 @@ void Camera::UpdateCameraVectors(const float& _xPos, const float& _yPos)
 	}
 	else
 	{
-		float yPos = _yPos - WINDOW_CAMERA_BOTTOM_LIMIT;
+		float yPos = _yPos - Configuration::camera_bottom_limit;
 
 		centerVec = glm::vec3(xPos, yPos, 1.0f);
 		eyeVec = glm::vec3(xPos, yPos, 0.0f);

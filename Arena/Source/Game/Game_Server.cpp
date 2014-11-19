@@ -6,7 +6,7 @@
 #include "Network\Gateway.h"
 
 Game_Server::Game_Server() :
-	gateway(new Gateway(boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(Configuration::Get()->gateway_address), Configuration::Get()->gateway_port)))
+	gateway(new Gateway(boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(Configuration::gateway_address), Configuration::gateway_port)))
 {
 
 }
