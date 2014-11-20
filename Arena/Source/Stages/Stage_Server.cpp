@@ -15,7 +15,7 @@ Stage_Server::Stage_Server() :
 	game(0)
 {
 	processor = new Processor(Configuration::network_processor_threads);
-	gateway = new Gateway(processor, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 0));
+	gateway = new Gateway(processor, boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(Configuration::gateway_address), Configuration::gateway_port));
 }
 
 void Stage_Server::Render()

@@ -1,30 +1,25 @@
 #ifndef NETWORK_CONNECTION_CLIENT_H
 #define NETWORK_CONNECTION_CLIENT_H
 
-#include "Graphics\Renderer.h"
+#include <boost\atomic.hpp>
+
 #include "Network\Connection.h"
 
-class Lobby;
-class Game_Client;
-
-class Connection_Client : public Connection, public Renderer
+class Connection_Client : public Connection
 {
 public:
 	Connection_Client(boost::asio::io_service &_io_service, const boost::asio::ip::tcp::endpoint &_local_endpoint);
-	virtual ~Connection_Client();
 
 	void Connect(const boost::asio::ip::tcp::endpoint &_remote_endpoint);
 
 	void Process(char *_data, size_t _received);
 
-	void Render();
+	void Dispose();
 
-	void Handle_Key(GLFWwindow* _window, const int &_key, const int &_scancode, const int &_action, const int &_mode);
-	void Handle_Mouse(GLFWwindow* _window, const int &_key, const int &_action, const int &_mode);
+	virtual ~Connection_Client();
 
 private:
-	Lobby *lobby;
-	Game_Client *game;
+	boost::atomic< bool > disposed;
 
 	void Handle_Connect(const boost::system::error_code &_error);
 

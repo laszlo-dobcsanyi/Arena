@@ -15,27 +15,26 @@ Connection::Connection(boost::asio::io_service& _io_service) :
 	udp_data(new char[Configuration::network_packet_size]),
 
 	tcp_socket(_io_service),
-	udp_socket(_io_service),
-
-	timeout(_io_service, boost::posix_time::seconds(Configuration::network_timeout))
+	udp_socket(_io_service)
 {
 	#ifdef LOGGING
 	Logger::counter_connections++;
-	Logger::Write(LogMask::constructor, LogObject::connection, "> Connection constructor!");
+	Logger::Write(LogMask::constructor, LogObject::connection, "\t+ Connection constructor!");
 	#endif
 }
 
 void Connection::Start()
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::constructor, LogObject::connection, "> Connection starting..");
+	Logger::Write(LogMask::constructor, LogObject::connection, "\t-> Starting Connection..");
 	#endif
 
 	TCP_Receive();
 	UDP_Receive();
 
-	timeout.expires_from_now(boost::posix_time::seconds(Configuration::network_timeout));
-	timeout.async_wait(boost::bind(&Connection::Handle_Timeout, this, boost::asio::placeholders::error));
+	#ifdef LOGGING
+	Logger::Write(LogMask::constructor, LogObject::connection, "\t<- Connection Started!");
+	#endif
 }
 
 // TCP
@@ -48,12 +47,11 @@ void Connection::TCP_Receive()
 
 void Connection::Handle_TCP_Receive(const boost::system::error_code &_error, size_t _received)
 {
+	if (_error.value() == 995) return;
+
 	if ((!_error) && (4 <= _received))
 	{
 		Process(tcp_data, _received);
-
-		timeout.expires_from_now(boost::posix_time::seconds(Configuration::network_timeout));
-		timeout.async_wait(boost::bind(&Connection::Handle_Timeout, this, boost::asio::placeholders::error));
 	}
 	else
 	{
@@ -75,13 +73,13 @@ void Connection::TCP_Send(Packet *_packet)
 
 void Connection::Handle_TCP_Send(const boost::system::error_code &_error, size_t _sent)
 {
+	if (_error.value() == 995) return;
+
 	if (_error)
 	{
 		#ifdef LOGGING
 		Logger::Write(LogMask::error, LogObject::connection, "# Error @ Connection:Handle_TCP_Send " + _error.message() + "!");
 		#endif
-
-		Dispose();
 	}
 }
 
@@ -95,12 +93,11 @@ void Connection::UDP_Receive()
 
 void Connection::Handle_UDP_Receive(const boost::system::error_code &_error, size_t _received)
 {
+	if (_error.value() == 995) return;
+
 	if ((!_error) && (4 <= _received))
 	{
 		Process(udp_data, _received);
-
-		timeout.expires_from_now(boost::posix_time::seconds(Configuration::network_timeout));
-		timeout.async_wait(boost::bind(&Connection::Handle_Timeout, this, boost::asio::placeholders::error));
 	}
 	else
 	{
@@ -123,22 +120,12 @@ void Connection::UDP_Send(Packet* _packet)
 
 void Connection::Handle_UDP_Send(const boost::system::error_code& _error, const size_t& _sent)
 {
+	if (_error.value() == 995) return;
+
 	if (_error)
 	{
 		#ifdef LOGGING
 		Logger::Write(LogMask::error, LogObject::connection, "# Error @ Connection::Handle_UDP_Send " + _error.message() + "!");
-		#endif
-
-		Dispose();
-	}
-}
-
-void Connection::Handle_Timeout(const boost::system::error_code& _error)
-{
-	if (!_error)
-	{
-		#ifdef LOGGING
-		Logger::Write(LogMask::dispose, LogObject::connection, "> Connection" + boost::lexical_cast< std::string >(udp_socket.local_endpoint().port()) + " timeout!");
 		#endif
 
 		Dispose();
@@ -150,9 +137,10 @@ void Connection::Dispose()
 	if (disposed) return; disposed = true;
 
 	#ifdef LOGGING
-	Logger::Write(LogMask::dispose, LogObject::connection, "> Disposing Connection" + boost::lexical_cast< std::string >(udp_socket.local_endpoint().port()) + "..");
+	Logger::Write(LogMask::dispose, LogObject::connection, "\t-> Disposing Connection" + boost::lexical_cast< std::string >(udp_socket.local_endpoint().port()) + "..");
 	#endif
 
+	//tcp_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
 	tcp_socket.close();
 	udp_socket.close();
 
@@ -163,19 +151,23 @@ void Connection::Dispose()
 
 	}
 	else delete this;
+
+	#ifdef LOGGING
+	Logger::Write(LogMask::dispose, LogObject::connection, "\t<- Connection Disposed!");
+	#endif
 }
 
 Connection::~Connection()
 {
 	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::connection, "-> Destroying Connection..");
+	Logger::Write(LogMask::destructor, LogObject::connection, "\t-> Destroying Connection..");
 	#endif
 
 	delete[] tcp_data;
 	delete[] udp_data;
 
 	#ifdef LOGGING
-	Logger::Write(LogMask::destructor, LogObject::connection, "<- Connection Destroyed!");
+	Logger::Write(LogMask::destructor, LogObject::connection, "\t<- Connection Destroyed!");
 	Logger::counter_connections--;
 	#endif
 }

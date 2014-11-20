@@ -75,10 +75,6 @@ protected:
 
 	void Handle_UDP_Send(const boost::system::error_code &_error, const size_t &_sent);
 
-	// Timeout
-	boost::asio::deadline_timer timeout;
-	void Handle_Timeout(const boost::system::error_code &_error);
-
 private:
 	Connection(const Connection &_other);
 	Connection & operator=(const Connection &_other);

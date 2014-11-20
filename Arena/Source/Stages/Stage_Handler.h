@@ -40,7 +40,6 @@ private:
 	static Stage* stage;
 	static boost::shared_mutex mutex;
 
-
 	Stage_Handler();
 };
 #endif

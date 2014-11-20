@@ -13,8 +13,7 @@
 Connection_Client::Connection_Client(boost::asio::io_service &_io_service, const boost::asio::ip::tcp::endpoint &_local_endpoint) :
 	Connection(_io_service),
 
-	lobby(0),
-	game(0)
+	disposed(false)
 {
 	#ifdef LOGGING
 	Logger::Write(LogMask::constructor, LogObject::connection, "+> Creating Connection_Client..");
@@ -56,12 +55,6 @@ Connection_Client::Connection_Client(boost::asio::io_service &_io_service, const
 	#endif
 }
 
-Connection_Client::~Connection_Client()
-{
-	#ifdef LOGGING
-	Logger::Write(LogMask::constructor, LogObject::connection, "<- Connection_Client Destroyed!");
-	#endif
-}
 
 void Connection_Client::Connect(const boost::asio::ip::tcp::endpoint &_remote_endpoint)
 {
@@ -87,6 +80,8 @@ void Connection_Client::Handle_Connect(const boost::system::error_code &_error)
 		#ifdef LOGGING
 		Logger::Write(LogObject::connection, LogMask::error, " # Connection_Client failed to connect to server (TCP)!");
 		#endif
+
+		Dispose();
 	}
 }
 
@@ -115,17 +110,24 @@ void Connection_Client::Process(char *_data, size_t _received)
 	}
 }
 
-void Connection_Client::Render()
+void Connection_Client::Dispose()
 {
+	if (disposed) return; disposed = true;
 
+	#ifdef LOGGING
+	Logger::Write(LogMask::dispose, LogObject::connection, "-> Disposing Connection_Client..");
+	#endif
+
+	Connection::Dispose();
+
+	#ifdef LOGGING
+	Logger::Write(LogMask::dispose, LogObject::connection, "<- Connection_Client Disposed!");
+	#endif
 }
 
-void Connection_Client::Handle_Key(GLFWwindow* _window, const int &_key, const int &_scancode, const int &_action, const int &_mode)
+Connection_Client::~Connection_Client()
 {
-
-}
-
-void Connection_Client::Handle_Mouse(GLFWwindow* _window, const int &_key, const int &_action, const int &_mode)
-{
-
+	#ifdef LOGGING
+	Logger::Write(LogMask::destructor, LogObject::connection, "<- Connection_Client Destroyed!");
+	#endif
 }
