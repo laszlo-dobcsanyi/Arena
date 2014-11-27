@@ -21,6 +21,7 @@
 #include FT_FREETYPE_H
 
 class Shader;
+class Texture;
 
 namespace Graphics
 {
@@ -31,11 +32,27 @@ namespace Graphics
 	extern GLuint VBO;
 	extern GLuint EBO;
 
+	extern GLint viewLoc;
+	extern glm::mat4 viewMatrix;
+	extern GLint projLoc;
+	extern glm::mat4 projectionMatrix;
+
 	extern FT_Library font_library;
 	extern FT_Face face_outwrite;
 
 	extern Shader *shaderText;
-	void DrawString(const FT_Face &_face, const std::string &_text, float _x, float _y, const float &_sx, const float &_sy);
+	extern Texture* font_arial_black;
+	
+	namespace StringAlignment
+	{
+		enum Type
+		{
+			LEFT,
+			MIDDLE,
+			RIGHT
+		};
+	};
+	void DrawString(const Texture *_font_texture, const std::string &_text, const float &_x, const float &_y, const StringAlignment::Type &_alignment);
 
 	extern GLFWwindow *window;
 };

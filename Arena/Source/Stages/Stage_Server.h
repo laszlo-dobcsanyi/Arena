@@ -21,12 +21,12 @@ public:
 	void Dispose();
 
 private:
-	~Stage_Server();
-
 	Processor *processor;
 	Gateway *gateway;
 	Lobby *lobby;
 	Game_Server *game;
+
+	~Stage_Server();
 
 	Stage_Server(const Stage_Server &_other);
 	Stage_Server & operator=(const Stage_Server &_other);

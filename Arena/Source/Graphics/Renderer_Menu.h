@@ -14,6 +14,9 @@ public:
 	void Handle_Key(GLFWwindow* _window, const int &_key, const int &_scancode, const int &_action, const int &_mode);
 	void Handle_Mouse(GLFWwindow* _window, const int &_key, const int &_action, const int &_mode);
 
+protected:
+	unsigned int current = 0;
+
 private:
 	Renderer_Menu(const Renderer_Menu &_other);
 	Renderer_Menu & operator=(const Renderer_Menu &_other);

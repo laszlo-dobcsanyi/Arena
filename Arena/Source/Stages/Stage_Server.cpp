@@ -48,7 +48,26 @@ void Stage_Server::Render()
 
 void Stage_Server::Handle_Key(GLFWwindow* _window, const int &_key, const int &_scancode, const int &_action, const int &_mode)
 {
-	if (_key == GLFW_KEY_ESCAPE && _action == GLFW_PRESS) Stage_Handler::SetStage(Stages::MENU);
+	if (_key == GLFW_KEY_ESCAPE && _action == GLFW_PRESS) { Stage_Handler::SetStage(Stages::MENU); return; }
+
+	if (gateway)
+	{
+		if (lobby)
+		{
+			lobby->Handle_Key(_window, _key, _scancode, _action, _mode);
+		}
+		else
+		{
+			if (game)
+			{
+
+			}
+			else
+			{
+
+			}
+		}
+	}
 }
 
 void Stage_Server::Handle_Mouse(GLFWwindow* _window, const int &_key, const int &_action, const int &_mode)

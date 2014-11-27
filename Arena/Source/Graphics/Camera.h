@@ -6,8 +6,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 
-#define WINDOW_CAMERA_BOTTOM_LIMIT		
-
 class Camera
 {
 public:

@@ -47,10 +47,6 @@ private:
 
 	GLint modelLoc;
 	glm::mat4 modelMatrix;
-	GLint viewLoc;
-	glm::mat4 viewMatrix;
-	GLint projLoc;
-	glm::mat4 projectionMatrix;
 
 	Shader *shaderWall;
 	Shader *shaderHero;
@@ -60,7 +56,7 @@ private:
 	void DrawHeroes();
 	void DrawWalls();
 
-	void InitModelShape(const boost::shared_ptr< Object > _modelObject);
+	void DrawObject(const boost::shared_ptr< Object > _object);
 
 	bool keys[Game_Keys::keys_number];
 

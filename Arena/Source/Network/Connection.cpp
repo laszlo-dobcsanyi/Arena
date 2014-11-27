@@ -140,7 +140,6 @@ void Connection::Dispose()
 	Logger::Write(LogMask::dispose, LogObject::connection, "\t-> Disposing Connection" + boost::lexical_cast< std::string >(udp_socket.local_endpoint().port()) + "..");
 	#endif
 
-	//tcp_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
 	tcp_socket.close();
 	udp_socket.close();
 
