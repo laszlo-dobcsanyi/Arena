@@ -8,20 +8,26 @@
 #include "Graphics\Shader.h"
 #include "Graphics\Texture.h"
 
-/// Descriptor
-Hero_Descriptor::Hero_Descriptor() :
+/// Descriptors
+/*Hero_Network_Descriptor::Hero_Network_Descriptor() :
 	Descriptor(Vector2(0.f, 0.f), 32.f, 32.f)
+{
+
+}*/
+
+Hero_Descriptor::Hero_Descriptor() :
+	Descriptor_Dynamic(Vector2(0.f, 0.f), 32.f, 32.f)
 {
 
 }
 
 Hero_Descriptor::Hero_Descriptor(const Vector2& _center) :
-	Descriptor(_center, 32.f, 32.f)
+	Descriptor_Dynamic(_center, 32.f, 32.f)
 {
 
 }
 
-Hero_Descriptor::Hero_Descriptor(const Hero_Descriptor &_other) :
+/*Hero_Descriptor::Hero_Descriptor(const Hero_Descriptor &_other) :
 	Descriptor(_other)
 {
 
@@ -30,19 +36,24 @@ Hero_Descriptor::Hero_Descriptor(const Hero_Descriptor &_other) :
 Hero_Descriptor & Hero_Descriptor::operator=(const Hero_Descriptor &_other)
 {
 	Descriptor::operator=(_other);
+
+	movement = _other.movement;
+
+	velocity = _other.velocity;
+	force = _other.force;
+
+	base = _other.base;
+	base_type = _other.base_type;
+
 	return *this;
 }
 
-void Hero_Descriptor::Represent(char * _segment)
-{
-	memcpy(_segment, this, sizeof(this));
-}
 
 
 Hero_Descriptor::~Hero_Descriptor()
 {
 
-}
+}*/
 
 /// Representation
 Hero_Representation::Hero_Representation(const char* _texture_path) :
@@ -166,9 +177,7 @@ Hero_Representation::~Hero_Representation()
 
 Hero::Hero(const Hero_Descriptor &_state, const char* _texture_path) :
 	Object_Dynamic< Hero_Descriptor >(Configuration::hero_state_buffer_size, _state), 
-	Hero_Representation(_texture_path),
-
-	movement(0)
+	Hero_Representation(_texture_path)
 {
 	#ifdef LOGGING
 	Logger::Write(LogMask::constructor, LogObject::hero, "\t+> Creating Hero..");
@@ -185,10 +194,10 @@ void Hero::Update(const float& _elapsed_time)
 	Hero_Descriptor *current = states.Current();
 	Hero_Descriptor *next = states.Next();
 
-	if (base_type != Collision_Type::NONE)
+	if (current->base_type != Collision_Type::NONE)
 	{
-		if (!(movement & Hero_Movement::RIGHT) && 0.f < current->velocity.x) next->velocity.x = current->velocity.x < 1.f ? 0.f : current->velocity.x * 0.95f;
-		if (!(movement & Hero_Movement::LEFT) && current->velocity.x < 0.f) next->velocity.x = -1.f < current->velocity.x ? 0.f : current->velocity.x * 0.95f;
+		if (!(current->movement & Hero_Movement::RIGHT) && 0.f < current->velocity.x) next->velocity.x = current->velocity.x < 1.f ? 0.f : current->velocity.x * 0.95f;
+		if (!(current->movement & Hero_Movement::LEFT) && current->velocity.x < 0.f) next->velocity.x = -1.f < current->velocity.x ? 0.f : current->velocity.x * 0.95f;
 	}
 
 	const float max_speed = 64.f;
@@ -205,33 +214,33 @@ void Hero::Move(const uint8_t &_state)
 	Hero_Descriptor *next = states.Next();
 
 	const float speed = 16.f;
-	switch (base_type)
+	switch (current->base_type)
 	{
 		case Collision_Type::NONE:
 		next->force = Vector2(0., -speed);
-		if (!(movement & Hero_Movement::RIGHT) && _state & Hero_Movement::RIGHT)	{ next->force.x += +speed; movement |= Hero_Movement::RIGHT; }
-		if (!(movement & Hero_Movement::LEFT) && _state & Hero_Movement::LEFT)		{ next->force.x += -speed; movement |= Hero_Movement::LEFT; }
+		if (!(current->movement & Hero_Movement::RIGHT) && _state & Hero_Movement::RIGHT)	{ next->force.x += +speed; current->movement |= Hero_Movement::RIGHT; }
+		if (!(current->movement & Hero_Movement::LEFT) && _state & Hero_Movement::LEFT)		{ next->force.x += -speed; current->movement |= Hero_Movement::LEFT; }
 		break;
 
 		case Collision_Type::RIGHT:
 		next->force = Vector2(0., -speed);
-		if (!(movement & Hero_Movement::UP) && _state & Hero_Movement::UP)			{ next->force.y += +speed / 2.f; movement |= Hero_Movement::UP; }
-		if (!(movement & Hero_Movement::DOWN) && _state & Hero_Movement::DOWN)		{ next->force.y += -speed / 2.f; movement |= Hero_Movement::DOWN; }
-		if (!(movement & Hero_Movement::JUMP) && _state & Hero_Movement::JUMP)		{ if (current->velocity.y <= 0.f) { next->force = next->force + Vector2(+speed * 24, +speed * 32); movement |= Hero_Movement::JUMP; } }
+		if (!(current->movement & Hero_Movement::UP) && _state & Hero_Movement::UP)			{ next->force.y += +speed / 2.f; current->movement |= Hero_Movement::UP; }
+		if (!(current->movement & Hero_Movement::DOWN) && _state & Hero_Movement::DOWN)		{ next->force.y += -speed / 2.f; current->movement |= Hero_Movement::DOWN; }
+		if (!(current->movement & Hero_Movement::JUMP) && _state & Hero_Movement::JUMP)		{ if (current->velocity.y <= 0.f) { next->force = next->force + Vector2(+speed * 24, +speed * 32); current->movement |= Hero_Movement::JUMP; } }
 		break;
 
 		case Collision_Type::TOP:
 		next->force = Vector2(0., 0.);
-		if (!(movement & Hero_Movement::RIGHT) && _state & Hero_Movement::RIGHT)	{ next->force.x += +speed; movement |= Hero_Movement::RIGHT; }
-		if (!(movement & Hero_Movement::LEFT) && _state & Hero_Movement::LEFT)		{ next->force.x += -speed; movement |= Hero_Movement::LEFT; }
-		if (!(movement & Hero_Movement::JUMP) && _state & Hero_Movement::JUMP)		{ if (current->velocity.y <= 0.f) { next->force.y += +speed * 32; movement |= Hero_Movement::JUMP; } }
+		if (!(current->movement & Hero_Movement::RIGHT) && _state & Hero_Movement::RIGHT)	{ next->force.x += +speed; current->movement |= Hero_Movement::RIGHT; }
+		if (!(current->movement & Hero_Movement::LEFT) && _state & Hero_Movement::LEFT)		{ next->force.x += -speed; current->movement |= Hero_Movement::LEFT; }
+		if (!(current->movement & Hero_Movement::JUMP) && _state & Hero_Movement::JUMP)		{ if (current->velocity.y <= 0.f) { next->force.y += +speed * 32; current->movement |= Hero_Movement::JUMP; } }
 		break;
 
 		case Collision_Type::LEFT:
 		next->force = Vector2(0., -speed);
-		if (!(movement & Hero_Movement::UP) && _state & Hero_Movement::UP)			{ next->force.y += +speed / 2.f; movement |= Hero_Movement::UP; }
-		if (!(movement & Hero_Movement::DOWN) && _state & Hero_Movement::DOWN)		{ next->force.y += -speed / 2.f; movement |= Hero_Movement::DOWN; }
-		if (!(movement & Hero_Movement::JUMP) && _state & Hero_Movement::JUMP)		{ if (current->velocity.y <= 0.f) { next->force = next->force + Vector2(-speed * 24, +speed * 32); movement |= Hero_Movement::JUMP; } }
+		if (!(current->movement & Hero_Movement::UP) && _state & Hero_Movement::UP)			{ next->force.y += +speed / 2.f; current->movement |= Hero_Movement::UP; }
+		if (!(current->movement & Hero_Movement::DOWN) && _state & Hero_Movement::DOWN)		{ next->force.y += -speed / 2.f; current->movement |= Hero_Movement::DOWN; }
+		if (!(current->movement & Hero_Movement::JUMP) && _state & Hero_Movement::JUMP)		{ if (current->velocity.y <= 0.f) { next->force = next->force + Vector2(-speed * 24, +speed * 32); current->movement |= Hero_Movement::JUMP; } }
 		break;
 
 		case Collision_Type::BOTTOM:
@@ -239,11 +248,11 @@ void Hero::Move(const uint8_t &_state)
 		break;
 	}
 
-	if (movement & Hero_Movement::UP && !(_state & Hero_Movement::UP))			{ movement &= ~Hero_Movement::UP; }
-	if (movement & Hero_Movement::DOWN && !(_state & Hero_Movement::DOWN))		{ movement &= ~Hero_Movement::DOWN; }
-	if (movement & Hero_Movement::RIGHT && !(_state & Hero_Movement::RIGHT))	{ movement &= ~Hero_Movement::RIGHT; }
-	if (movement & Hero_Movement::LEFT && !(_state & Hero_Movement::LEFT))		{ movement &= ~Hero_Movement::LEFT; }
-	if (movement & Hero_Movement::JUMP && !(_state & Hero_Movement::JUMP))		{ movement &= ~Hero_Movement::JUMP; }
+	if (current->movement & Hero_Movement::UP && !(_state & Hero_Movement::UP))			{ current->movement &= ~Hero_Movement::UP; }
+	if (current->movement & Hero_Movement::DOWN && !(_state & Hero_Movement::DOWN))		{ current->movement &= ~Hero_Movement::DOWN; }
+	if (current->movement & Hero_Movement::RIGHT && !(_state & Hero_Movement::RIGHT))	{ current->movement &= ~Hero_Movement::RIGHT; }
+	if (current->movement & Hero_Movement::LEFT && !(_state & Hero_Movement::LEFT))		{ current->movement &= ~Hero_Movement::LEFT; }
+	if (current->movement & Hero_Movement::JUMP && !(_state & Hero_Movement::JUMP))		{ current->movement &= ~Hero_Movement::JUMP; }
 }
 
 ///
@@ -255,20 +264,22 @@ void Hero::Collision_Hero(boost::shared_ptr< Hero > _other, const Collision_Type
 
 void Hero::Collision_Wall(boost::shared_ptr< Wall > _wall, const Collision_Type::Type& _type)
 {
-	if (base)
+	Hero_Descriptor *next = states.Next();
+
+	if (next->base)
 	{
-		if (_type < base_type)
+		if (_type < next->base_type)
 		{
-			base = _wall;
-			base_type = _type;
+			next->base = _wall;
+			next->base_type = _type;
 		}
 	}
 	else
 	{
-		if (base_type != Collision_Type::BOTTOM)
+		if (next->base_type != Collision_Type::BOTTOM)
 		{
-			base = _wall;
-			base_type = _type;
+			next->base = _wall;
+			next->base_type = _type;
 		}
 	}
 
@@ -290,7 +301,7 @@ Hero::~Hero()
 	Logger::Write(LogMask::destructor, LogObject::hero, "\t-> Destroying Hero..");
 	#endif
 
-	base = 0;
+	//base = 0;
 	// TODO should be dispose, right?!
 	delete texture;
 

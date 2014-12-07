@@ -22,7 +22,7 @@ namespace Collision
 {
 	//template< class T1, class T2 > Collision_Type::Type Resolve(const T1 &_current, const T2 &_other);
 	//template< > Collision_Type::Type Resolve< Descriptor, Descriptor >(const Descriptor &_current, const Descriptor &_other);
-	Collision_Type::Type Resolve(const Descriptor &_current, const Descriptor &_other);
+	Collision_Type::Type Resolve(const Descriptor &_current, const Descriptor_Dynamic &_other);
 	/*Collision_Type::Type Resolve(const Wall_Descriptor &_wall, const Hero_Descriptor &_hero)
 	{
 		return Resolve< Descriptor, Descriptor >(_wall, _hero);

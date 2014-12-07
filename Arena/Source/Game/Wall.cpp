@@ -27,7 +27,7 @@ Wall_Descriptor::Wall_Descriptor(const Vector2& _center, const float& _width, co
 
 }
 
-Wall_Descriptor::Wall_Descriptor(const Wall_Descriptor &_other) :
+/*Wall_Descriptor::Wall_Descriptor(const Wall_Descriptor &_other) :
 	Descriptor(_other)
 {
 
@@ -37,17 +37,17 @@ Wall_Descriptor & Wall_Descriptor::operator=(const Wall_Descriptor &_other)
 {
 	Descriptor::operator=(_other);
 	return *this;
-}
+}*/
 
-void Wall_Descriptor::Represent(char * _segment)
+void Wall_Descriptor::Describe(char * _segment)
 {
 	memcpy(_segment, this, sizeof(this));
 }
 
-Wall_Descriptor::~Wall_Descriptor()
+/*Wall_Descriptor::~Wall_Descriptor()
 {
 
-}
+}*/
 
 
 /// Representation

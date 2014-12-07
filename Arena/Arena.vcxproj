@@ -185,7 +185,6 @@
     <ClCompile Include="Source\Game\Game_Server.cpp" />
     <ClCompile Include="Source\Game\Hero.cpp" />
     <ClCompile Include="Source\Game\Lobby.cpp" />
-    <ClCompile Include="Source\Game\Object.cpp" />
     <ClCompile Include="Source\Game\Wall.cpp" />
     <ClCompile Include="Source\Graphics\Camera.cpp" />
     <ClCompile Include="Source\Graphics\Graphics.cpp" />

@@ -27,17 +27,17 @@ namespace Hero_Movement
 	};
 };
 
-
-struct Hero_Descriptor : public Descriptor
+struct Hero_Descriptor : public Descriptor_Dynamic
 {
 public:
-	Hero_Descriptor();
-	Hero_Descriptor(const Vector2& _center);
-	Hero_Descriptor(const Hero_Descriptor &_other);
-	Hero_Descriptor & operator=(const Hero_Descriptor &_other);
-	~Hero_Descriptor();
+	boost::shared_ptr< Wall > base = 0;
+	Collision_Type::Type base_type = Collision_Type::NONE;
 
-	void Represent(char * _segment);
+	Hero_Descriptor();
+	Hero_Descriptor(const Vector2 &_center);
+	//Hero_Descriptor(const Hero_Descriptor &_other);
+	//Hero_Descriptor & operator=(const Hero_Descriptor &_other);
+	//~Hero_Descriptor();
 };
 
 class Hero_Representation : public Representation< Hero_Descriptor >
@@ -59,13 +59,9 @@ private:
 class Hero : public Object_Dynamic< Hero_Descriptor >, public Hero_Representation
 {
 public:
-	boost::shared_ptr< Wall > base = 0;
-	Collision_Type::Type base_type = Collision_Type::NONE;
-
 	Hero(const Hero_Descriptor& _state, const char* _texture_path);
 	~Hero();
 
-	uint8_t movement;
 	void Move(const uint8_t &_state);
 	void Update(const float& _elapsed_time);
 

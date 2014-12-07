@@ -4,7 +4,7 @@
 #include "Game\Descriptor.h"
 #include "Game\Collision.h"
 
-Collision_Type::Type Collision::Resolve(const Descriptor &_current, const Descriptor &_other)
+Collision_Type::Type Collision::Resolve(const Descriptor &_current, const Descriptor_Dynamic &_other)
 {
 	//   ^
 	//   |      6 \ |    1    | / 5

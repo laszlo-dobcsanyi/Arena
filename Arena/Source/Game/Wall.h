@@ -20,11 +20,11 @@ public:
 	Wall_Descriptor(const Vector2 &_p1, const Vector2 &_p2);
 	Wall_Descriptor(const Vector2& _center, const float& _width, const float& _height);
 	Wall_Descriptor(const float &_x1, const float &_y1, const float &_x2, const float &_y2);
-	Wall_Descriptor(const Wall_Descriptor &_other);
-	Wall_Descriptor & operator=(const Wall_Descriptor &_other);
-	~Wall_Descriptor();
+	//Wall_Descriptor(const Wall_Descriptor &_other);
+	//Wall_Descriptor & operator=(const Wall_Descriptor &_other);
+	//~Wall_Descriptor();
 
-	void Represent(char * _segment);
+	void Describe(char * _segment);
 };
 
 class Wall_Representation : public Representation< Wall_Descriptor >

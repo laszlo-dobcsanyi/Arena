@@ -153,14 +153,14 @@ void Arena::Update_Hero(boost::shared_ptr< Hero > _hero, const float &_elapsed_t
 		}
 	}
 
-	if (_hero->base)
+	if (next->base)
 	{
-		Collision_Type::Type collision = Collision::Attachment(*(_hero->base), *next);
-		if (collision != _hero->base_type)
+		Collision_Type::Type collision = Collision::Attachment(*(next->base), *next);
+		if (collision != next->base_type)
 		{
-			_hero->base_type = collision;
-			_hero->Move(_hero->movement);
-			if (collision == Collision_Type::NONE) _hero->base = 0;
+			next->base_type = collision;
+			//next->Move(_hero->movement); // TODO ASDASDASD
+			if (collision == Collision_Type::NONE) next->base = 0;
 		}
 	}
 
