@@ -8,7 +8,7 @@
 #include <boost\shared_ptr.hpp>
 #include <boost\lexical_cast.hpp>
 
-#include "Game\Object.h"
+#include "Game\Object.hpp"
 #include "Core\List_Separatable.hpp"
 
 struct Partition

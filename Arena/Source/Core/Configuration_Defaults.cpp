@@ -8,6 +8,9 @@ float			Configuration::render_interval = 1.f / 50;
 
 float			Configuration::game_update_interval = 1.f / 50;
 
+unsigned int	Configuration::hero_state_buffer_size = 4;
+
+
 //
 
 int				Configuration::window_width = 800;

@@ -1,17 +1,10 @@
 #ifndef GRAPHICS_RENDER_GAME_H
 #define GRAPHICS_RENDER_GAME_H
 
-#include "Game\Object.h"
+#include "Game\Hero.h"
 #include "Graphics\Shader.h"
 #include "Graphics\Camera.h"
 #include "Graphics\Renderer.h"
-
-struct ModelShape
-{
-public:
-	GLfloat vertices[28];
-	GLuint indices[6];
-};
 
 namespace Game_Keys
 {
@@ -45,18 +38,9 @@ private:
 
 	Camera *camera;
 
-	GLint modelLoc;
-	glm::mat4 modelMatrix;
-
-	Shader *shaderWall;
-	Shader *shaderHero;
-	ModelShape modelShape;
-
 	void DrawBackground();
-	void DrawHeroes();
 	void DrawWalls();
-
-	void DrawObject(const boost::shared_ptr< Object > _object);
+	void DrawHeroes(const Hero_Descriptor &_character);
 
 	bool keys[Game_Keys::keys_number];
 

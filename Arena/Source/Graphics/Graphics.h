@@ -20,7 +20,10 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-class Shader;
+#include <boost\shared_ptr.hpp>
+
+#include "Graphics\Shader.h"
+
 class Texture;
 
 namespace Graphics
@@ -37,10 +40,12 @@ namespace Graphics
 	extern GLint projLoc;
 	extern glm::mat4 projectionMatrix;
 
+	extern Shader *shader_text;
+	extern Shader *shader_wall;
+	extern Shader *shader_hero;
+
 	extern FT_Library font_library;
 	extern FT_Face face_outwrite;
-
-	extern Shader *shaderText;
 	extern Texture* font_arial_black;
 	
 	namespace StringAlignment
@@ -53,6 +58,7 @@ namespace Graphics
 		};
 	};
 	void DrawString(const Texture *_font_texture, const std::string &_text, const float &_x, const float &_y, const StringAlignment::Type &_alignment);
+	void DrawTexture(const Texture *_texture, const float &_x, const float &_y, const float &_width, const float &_height);
 
 	extern GLFWwindow *window;
 };

@@ -17,18 +17,17 @@
 Renderer_Game::Renderer_Game(Game *_game) :
 	game(_game),
 
-	shaderWall(new Shader("Shaders\\Wall.vs", "Shaders\\Wall.frag")),
-	shaderHero(new Shader("Shaders\\Hero.vs", "Shaders\\Hero.frag")),
 
 	camera(Camera::GetCamera())
-
 {
-
+	Graphics::shader_wall = new Shader("Shaders\\Wall.vs", "Shaders\\Wall.frag");
+	Graphics::shader_hero = new Shader("Shaders\\Hero.vs", "Shaders\\Hero.frag");
 }
 
 Renderer_Game::~Renderer_Game()
 {
-
+	delete Graphics::shader_wall;
+	delete Graphics::shader_hero;
 }
 
 void Renderer_Game::Render()
@@ -37,14 +36,15 @@ void Renderer_Game::Render()
 	{
 		glBindVertexArray(Graphics::VAO);
 
-		camera->UpdateCameraVectors(game->arena->character->center.x, game->arena->character->center.y);
+		Hero_Descriptor character_current = game->arena->character->states.Current_Copy();
+		camera->UpdateCameraVectors(character_current.center.x, character_current.center.y);
+
 		Graphics::viewMatrix = glm::lookAt(camera->GetCenterVec(), camera->GetEyeVec(), camera->GetUpVec());
 
 		DrawBackground();
 		DrawWalls();
-		DrawHeroes();
+		DrawHeroes(character_current);
 	
-		//Graphics::DrawString(Graphics::font_arial_black, "Lacko", game->arena->character->center.x, game->arena->character->center.y);
 		glBindVertexArray(0);
 	}
 	else
@@ -61,136 +61,38 @@ void Renderer_Game::DrawBackground()
 
 void Renderer_Game::DrawWalls()
 {
-	shaderWall->Use();
+	Graphics::shader_wall->Use();
 
-	modelLoc = glGetUniformLocation(shaderWall->shaderProgram, "model");
-	Graphics::viewLoc = glGetUniformLocation(shaderWall->shaderProgram, "view");
-	Graphics::projLoc = glGetUniformLocation(shaderWall->shaderProgram, "projection");
+	//
+	Graphics::viewLoc = glGetUniformLocation(Graphics::shader_wall->shaderProgram, "view");
+	Graphics::projLoc = glGetUniformLocation(Graphics::shader_wall->shaderProgram, "projection");
 
 	glUniformMatrix4fv(Graphics::viewLoc, 1, GL_FALSE, glm::value_ptr(Graphics::viewMatrix));
 	glUniformMatrix4fv(Graphics::projLoc, 1, GL_FALSE, glm::value_ptr(Graphics::projectionMatrix));
 
 	BOOST_FOREACH(boost::shared_ptr < Wall > wall, game->arena->walls.data.list)
 	{
-		DrawObject(wall);
+		wall->Draw(*wall);
 	}
 }
 
-void Renderer_Game::DrawHeroes()
+void Renderer_Game::DrawHeroes(const Hero_Descriptor &_character)
 {
-	shaderHero->Use();
+	Graphics::shader_hero->Use();
 
-	modelLoc = glGetUniformLocation(shaderHero->shaderProgram, "model");
-	Graphics::viewLoc = glGetUniformLocation(shaderHero->shaderProgram, "view");
-	Graphics::projLoc = glGetUniformLocation(shaderHero->shaderProgram, "projection");
+	//modelLoc = glGetUniformLocation(shaderHero->shaderProgram, "model");
+	Graphics::viewLoc = glGetUniformLocation(Graphics::shader_hero->shaderProgram, "view");
+	Graphics::projLoc = glGetUniformLocation(Graphics::shader_hero->shaderProgram, "projection");
 
 	glUniformMatrix4fv(Graphics::viewLoc, 1, GL_FALSE, glm::value_ptr(Graphics::viewMatrix));
 	glUniformMatrix4fv(Graphics::projLoc, 1, GL_FALSE, glm::value_ptr(Graphics::projectionMatrix));
 
 	BOOST_FOREACH(boost::shared_ptr < Hero > hero, game->arena->heroes.data.list)
 	{
-		DrawObject(hero);
+		hero->Draw(*(hero->states.Current()));
 	}
 
-	DrawObject(game->arena->character);
-}
-
-void Renderer_Game::DrawObject(const boost::shared_ptr< Object > _object)
-{
-	glBindTexture(GL_TEXTURE_2D, _object->texture->textureID);
-	modelMatrix = glm::mat4();
-
-	modelMatrix = glm::translate(modelMatrix, glm::vec3(_object->center.x, _object->center.y, -10.0f));
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-
-	float shapeWidth = (float)(_object->width);
-	float shapeHeight = (float)(_object->height);
-	float textureWidthRatio = (float)(shapeWidth * 2 / _object->texture->width);
-	float textureHeightRatio = (float)(shapeHeight * 2 / _object->texture->height);
-
-	// TOP RIGHT:
-	// Position Coords:
-	modelShape.vertices[0] = shapeWidth;
-	modelShape.vertices[1] = shapeHeight;
-
-	// Colors:
-	modelShape.vertices[2] = 1.0f;
-	modelShape.vertices[3] = 0.0f;
-	modelShape.vertices[4] = 0.0f;
-
-	// Texture Coords:
-	modelShape.vertices[5] = textureWidthRatio;
-	modelShape.vertices[6] = textureHeightRatio;
-	// ----------------------------
-
-	// BOTTOM RIGHT:
-	// Position Coords:
-	modelShape.vertices[7] = shapeWidth;
-	modelShape.vertices[8] = -shapeHeight;
-
-	// Colors:
-	modelShape.vertices[9] = 0.0f;
-	modelShape.vertices[10] = 1.0f;
-	modelShape.vertices[11] = 0.0f;
-
-	// Texture Coords:
-	modelShape.vertices[12] = textureWidthRatio;
-	modelShape.vertices[13] = 0.0f;
-	// ----------------------------
-
-	// BOTTOM LEFT:
-	// Position Coords:
-	modelShape.vertices[14] = -shapeWidth;
-	modelShape.vertices[15] = -shapeHeight;
-
-	// Colors:
-	modelShape.vertices[16] = 0.0f;
-	modelShape.vertices[17] = 0.0f;
-	modelShape.vertices[18] = 1.0f;
-
-	// Texture Coords:
-	modelShape.vertices[19] = 0.0f;
-	modelShape.vertices[20] = 0.0f;
-	// ----------------------------
-
-	// TOP LEFT:
-	// Position Coords:
-	modelShape.vertices[21] = -shapeWidth;
-	modelShape.vertices[22] = shapeHeight;
-
-	// Colors:
-	modelShape.vertices[23] = 1.0f;
-	modelShape.vertices[24] = 1.0f;
-	modelShape.vertices[25] = 0.0f;
-
-	// Texture Coords:
-	modelShape.vertices[26] = 0.0f;
-	modelShape.vertices[27] = textureHeightRatio;
-	// ----------------------------
-
-	modelShape.indices[0] = 0;
-	modelShape.indices[1] = 1;
-	modelShape.indices[2] = 3;
-	modelShape.indices[3] = 1;
-	modelShape.indices[4] = 2;
-	modelShape.indices[5] = 3;
-
-	glBindBuffer(GL_ARRAY_BUFFER, Graphics::VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(modelShape.vertices), modelShape.vertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Graphics::EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(modelShape.indices), modelShape.indices, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)0);
-	glEnableVertexAttribArray(0);
-
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(1);
-
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(2);
-
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	game->arena->character->Draw(_character);
 }
 
 //

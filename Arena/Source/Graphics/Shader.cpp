@@ -68,3 +68,8 @@ Shader::Shader(const GLchar* _vertexPath, const GLchar* _fragmentPath)
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 }
+
+Shader::~Shader()
+{
+	// TODO
+}

@@ -13,11 +13,16 @@
 class Shader
 {
 public:
-	Shader(const GLchar* _vertexPath, const GLchar* _fragmentPath);
-
-	void Use() { glUseProgram(shaderProgram); }
-
 	GLuint shaderProgram;
+
+	Shader(const GLchar* _vertexPath, const GLchar* _fragmentPath);
+	~Shader();
+
+	void Use() const { glUseProgram(shaderProgram); }
+
+private:
+	Shader(const Shader &_other);
+	Shader operator=(const Shader &_other);
 };
 
 #endif // SHDADER_H

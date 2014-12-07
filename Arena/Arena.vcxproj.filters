@@ -33,9 +33,6 @@
     <ClInclude Include="Source\Game\Hero.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Object.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Game\Wall.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -131,6 +128,21 @@
     </ClInclude>
     <ClInclude Include="Source\Stages\Stage_Local.h">
       <Filter>Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\State_Buffer.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Object.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Collision.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\Representation.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Descriptor.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +244,9 @@
     </ClCompile>
     <ClCompile Include="Source\Stages\Stage_Local.cpp">
       <Filter>Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Collision.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,7 @@ private:
 	boost::thread thread;
 	boost::asio::io_service service;
 	
-	Connection_Client *connection;
+	boost::shared_ptr< Connection_Client > connection;
 	
 	~Stage_Client();
 

@@ -30,6 +30,8 @@ void Renderer_Menu::Render()
 	static const float center_x = Configuration::window_width / 2.0f;
 	static const float center_y = 200.f;
 
+	Graphics::shader_text->Use();
+
 	Graphics::DrawString(Graphics::font_arial_black, ">> Arena <<", center_x, Configuration::window_height - 2 * 32.0f, Graphics::StringAlignment::MIDDLE);
 
 	Graphics::DrawString(Graphics::font_arial_black, (current == 0 ? ">Local Game" : "Local Game"), center_x, center_y + 4 * 48.f, Graphics::StringAlignment::MIDDLE);

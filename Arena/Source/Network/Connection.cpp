@@ -149,7 +149,7 @@ void Connection::Dispose()
 		hero.reset();
 
 	}
-	else delete this;
+	//else delete this;
 
 	#ifdef LOGGING
 	Logger::Write(LogMask::dispose, LogObject::connection, "\t<- Connection Disposed!");

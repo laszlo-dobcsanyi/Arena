@@ -12,6 +12,8 @@ public:
 
 	static float			game_update_interval;
 
+	static unsigned int		hero_state_buffer_size;
+
 	//
 	
 	static int				window_width;

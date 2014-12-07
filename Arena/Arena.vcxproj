@@ -136,14 +136,17 @@
     <ClInclude Include="Source\Core\List_Separatable.hpp" />
     <ClInclude Include="Source\Core\Logger.h" />
     <ClInclude Include="Source\Core\Processor.h" />
+    <ClInclude Include="Source\Core\State_Buffer.hpp" />
     <ClInclude Include="Source\Game\Arena.h" />
+    <ClInclude Include="Source\Game\Collision.h" />
+    <ClInclude Include="Source\Game\Descriptor.h" />
     <ClInclude Include="Source\Game\Game.h" />
     <ClInclude Include="Source\Game\Game_Client.h" />
     <ClInclude Include="Source\Game\Game_Local.h" />
     <ClInclude Include="Source\Game\Game_Server.h" />
     <ClInclude Include="Source\Game\Hero.h" />
     <ClInclude Include="Source\Game\Lobby.h" />
-    <ClInclude Include="Source\Game\Object.h" />
+    <ClInclude Include="Source\Game\Object.hpp" />
     <ClInclude Include="Source\Game\Stage.h" />
     <ClInclude Include="Source\Game\Wall.h" />
     <ClInclude Include="Source\Graphics\Camera.h" />
@@ -152,6 +155,7 @@
     <ClInclude Include="Source\Graphics\Renderer_Game.h" />
     <ClInclude Include="Source\Graphics\Renderer_Lobby.h" />
     <ClInclude Include="Source\Graphics\Renderer_Menu.h" />
+    <ClInclude Include="Source\Graphics\Representation.h" />
     <ClInclude Include="Source\Graphics\Shader.h" />
     <ClInclude Include="Source\Graphics\Texture.h" />
     <ClInclude Include="Source\Network\Connection.h" />
@@ -174,6 +178,7 @@
     <ClCompile Include="Source\Core\Logger.cpp" />
     <ClCompile Include="Source\Core\Processor.cpp" />
     <ClCompile Include="Source\Game\Arena.cpp" />
+    <ClCompile Include="Source\Game\Collision.cpp" />
     <ClCompile Include="Source\Game\Game.cpp" />
     <ClCompile Include="Source\Game\Game_Client.cpp" />
     <ClCompile Include="Source\Game\Game_Local.cpp" />

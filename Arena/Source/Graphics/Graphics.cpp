@@ -3,6 +3,7 @@
 #include <boost\foreach.hpp>
 
 #include "Core\Configuration.h"
+#include "Game\Object.hpp"
 #include "Graphics\Graphics.h"
 #include "Graphics\Shader.h"
 #include "Graphics\Camera.h"
@@ -21,9 +22,11 @@ namespace Graphics
 
 	FT_Library Graphics::font_library;
 	FT_Face Graphics::face_outwrite;
-
 	Texture* font_arial_black;
-	Shader *shaderText;
+
+	Shader *shader_text;
+	Shader *shader_wall;
+	Shader *shader_hero;
 
 	GLFWwindow *window;
 }
@@ -47,12 +50,14 @@ void Graphics::Create()
 
 	glViewport(0, 0, Configuration::window_width, Configuration::window_height);
 
-	shaderText = new Shader("Shaders\\Text.vs", "Shaders\\Text.frag");
-	font_arial_black = new Texture("Fonts\\arial_black.png");
+	shader_text = new Shader("Shaders\\Text.vs", "Shaders\\Text.frag");
+
 
 	assert(!FT_Init_FreeType(&font_library) && "Could not init freetype library!");
 	assert(!FT_New_Face(font_library, "Fonts\\Outwrite.ttf", 0, &face_outwrite) && "Could not open Outwrite font!");
 	FT_Set_Pixel_Sizes(face_outwrite, 0, 16);
+
+	font_arial_black = new Texture("Fonts\\arial_black.png");
 
 	/*glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -77,16 +82,15 @@ void Graphics::DrawString(const Texture *_font_texture, const std::string &_text
 {
 	static const unsigned int glyph_count = 16;
 
-	shaderText->Use();
+	glBindTexture(GL_TEXTURE_2D, _font_texture->textureID);
 
-	GLint modelLoc = glGetUniformLocation(shaderText->shaderProgram, "model");
-	projLoc = glGetUniformLocation(shaderText->shaderProgram, "projection");
-	viewLoc = glGetUniformLocation(shaderText->shaderProgram, "view");
+	GLint modelLoc = glGetUniformLocation(shader_text->shaderProgram, "model");
+	projLoc = glGetUniformLocation(shader_text->shaderProgram, "projection");
+	viewLoc = glGetUniformLocation(shader_text->shaderProgram, "view");
 
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 
-	glBindTexture(GL_TEXTURE_2D, _font_texture->textureID);
 
 	float glyph_Width = (float)_font_texture->width / glyph_count;
 	float glyph_Height = (float)_font_texture->height / glyph_count;
@@ -202,3 +206,213 @@ void Graphics::DrawString(const Texture *_font_texture, const std::string &_text
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
 }
+
+void Graphics::DrawTexture(const Texture *_texture, const float &_x, const float &_y, const float &_width, const float &_height)
+{
+	/*//_shader.Use();
+	//GLint modelLoc = glGetUniformLocation(_shader.shaderProgram, "model");
+	glBindTexture(GL_TEXTURE_2D, _texture->textureID);
+	//glm::mat4 modelMatrix = glm::mat4();
+
+	//modelMatrix = glm::translate(modelMatrix, glm::vec3(_object->center.x, _object->center.y, -10.0f));
+	//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+
+	struct ModelShape
+	{
+	public:
+		GLfloat vertices[28];
+		GLuint indices[6];
+	} modelShape;
+
+	// TOP RIGHT:
+	// Position Coords:
+	modelShape.vertices[0] = _x + _width;
+	modelShape.vertices[1] = _y +;
+
+	// Colors:
+	modelShape.vertices[2] = 1.0f;
+	modelShape.vertices[3] = 0.0f;
+	modelShape.vertices[4] = 0.0f;
+
+	// Texture Coords:
+	modelShape.vertices[5] = textureWidthRatio;
+	modelShape.vertices[6] = textureHeightRatio;
+	// ----------------------------
+
+	// BOTTOM RIGHT:
+	// Position Coords:
+	modelShape.vertices[7] = shapeWidth;
+	modelShape.vertices[8] = -shapeHeight;
+
+	// Colors:
+	modelShape.vertices[9] = 0.0f;
+	modelShape.vertices[10] = 1.0f;
+	modelShape.vertices[11] = 0.0f;
+
+	// Texture Coords:
+	modelShape.vertices[12] = textureWidthRatio;
+	modelShape.vertices[13] = 0.0f;
+	// ----------------------------
+
+	// BOTTOM LEFT:
+	// Position Coords:
+	modelShape.vertices[14] = -shapeWidth;
+	modelShape.vertices[15] = -shapeHeight;
+
+	// Colors:
+	modelShape.vertices[16] = 0.0f;
+	modelShape.vertices[17] = 0.0f;
+	modelShape.vertices[18] = 1.0f;
+
+	// Texture Coords:
+	modelShape.vertices[19] = 0.0f;
+	modelShape.vertices[20] = 0.0f;
+	// ----------------------------
+
+	// TOP LEFT:
+	// Position Coords:
+	modelShape.vertices[21] = -shapeWidth;
+	modelShape.vertices[22] = shapeHeight;
+
+	// Colors:
+	modelShape.vertices[23] = 1.0f;
+	modelShape.vertices[24] = 1.0f;
+	modelShape.vertices[25] = 0.0f;
+
+	// Texture Coords:
+	modelShape.vertices[26] = 0.0f;
+	modelShape.vertices[27] = textureHeightRatio;
+	// ----------------------------
+
+	modelShape.indices[0] = 0;
+	modelShape.indices[1] = 1;
+	modelShape.indices[2] = 3;
+	modelShape.indices[3] = 1;
+	modelShape.indices[4] = 2;
+	modelShape.indices[5] = 3;
+
+	glBindBuffer(GL_ARRAY_BUFFER, Graphics::VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(modelShape.vertices), modelShape.vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Graphics::EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(modelShape.indices), modelShape.indices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(2);
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);*/
+}
+
+/*
+void Graphics::DrawObject(const Shader& _shader, const boost::shared_ptr< Object > _object)
+{
+	_shader.Use();
+	GLint modelLoc = glGetUniformLocation(_shader.shaderProgram, "model");
+	glBindTexture(GL_TEXTURE_2D, _object->texture->textureID);
+	glm::mat4 modelMatrix = glm::mat4();
+
+	modelMatrix = glm::translate(modelMatrix, glm::vec3(_object->center.x, _object->center.y, -10.0f));
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+
+	float shapeWidth = (float)(_object->width);
+	float shapeHeight = (float)(_object->height);
+	float textureWidthRatio = (float)(shapeWidth * 2 / _object->texture->width);
+	float textureHeightRatio = (float)(shapeHeight * 2 / _object->texture->height);
+
+	struct ModelShape
+	{
+	public:
+		GLfloat vertices[28];
+		GLuint indices[6];
+	} modelShape;
+
+	// TOP RIGHT:
+	// Position Coords:
+	modelShape.vertices[0] = shapeWidth;
+	modelShape.vertices[1] = shapeHeight;
+
+	// Colors:
+	modelShape.vertices[2] = 1.0f;
+	modelShape.vertices[3] = 0.0f;
+	modelShape.vertices[4] = 0.0f;
+
+	// Texture Coords:
+	modelShape.vertices[5] = textureWidthRatio;
+	modelShape.vertices[6] = textureHeightRatio;
+	// ----------------------------
+
+	// BOTTOM RIGHT:
+	// Position Coords:
+	modelShape.vertices[7] = shapeWidth;
+	modelShape.vertices[8] = -shapeHeight;
+
+	// Colors:
+	modelShape.vertices[9] = 0.0f;
+	modelShape.vertices[10] = 1.0f;
+	modelShape.vertices[11] = 0.0f;
+
+	// Texture Coords:
+	modelShape.vertices[12] = textureWidthRatio;
+	modelShape.vertices[13] = 0.0f;
+	// ----------------------------
+
+	// BOTTOM LEFT:
+	// Position Coords:
+	modelShape.vertices[14] = -shapeWidth;
+	modelShape.vertices[15] = -shapeHeight;
+
+	// Colors:
+	modelShape.vertices[16] = 0.0f;
+	modelShape.vertices[17] = 0.0f;
+	modelShape.vertices[18] = 1.0f;
+
+	// Texture Coords:
+	modelShape.vertices[19] = 0.0f;
+	modelShape.vertices[20] = 0.0f;
+	// ----------------------------
+
+	// TOP LEFT:
+	// Position Coords:
+	modelShape.vertices[21] = -shapeWidth;
+	modelShape.vertices[22] = shapeHeight;
+
+	// Colors:
+	modelShape.vertices[23] = 1.0f;
+	modelShape.vertices[24] = 1.0f;
+	modelShape.vertices[25] = 0.0f;
+
+	// Texture Coords:
+	modelShape.vertices[26] = 0.0f;
+	modelShape.vertices[27] = textureHeightRatio;
+	// ----------------------------
+
+	modelShape.indices[0] = 0;
+	modelShape.indices[1] = 1;
+	modelShape.indices[2] = 3;
+	modelShape.indices[3] = 1;
+	modelShape.indices[4] = 2;
+	modelShape.indices[5] = 3;
+
+	glBindBuffer(GL_ARRAY_BUFFER, Graphics::VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(modelShape.vertices), modelShape.vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Graphics::EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(modelShape.indices), modelShape.indices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(2);
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}*/
