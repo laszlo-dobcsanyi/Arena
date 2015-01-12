@@ -174,7 +174,6 @@ Hero_Representation::~Hero_Representation()
 }
 
 /// Object
-
 Hero::Hero(const Hero_Descriptor &_state, const char* _texture_path) :
 	Object_Dynamic< Hero_Descriptor >(Configuration::hero_state_buffer_size, _state), 
 	Hero_Representation(_texture_path)
